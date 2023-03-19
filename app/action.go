@@ -54,6 +54,13 @@ func action(ctx *cli.Context) error {
 		return err
 	}
 
+	if ctx.Bool("savetodb") {
+		err := lister.SaveToDB()
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

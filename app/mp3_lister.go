@@ -10,7 +10,14 @@ import (
 	"strings"
 
 	"github.com/bogem/id3v2/v2"
+	"github.com/duke-git/lancet/v2/slice"
 	"github.com/spf13/cast"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+
+	"gitea.caiknife.live/caiknife/mp3lister/config"
+	"gitea.caiknife.live/caiknife/mp3lister/orm/dal"
+	"gitea.caiknife.live/caiknife/mp3lister/orm/model"
 )
 
 type MP3Lister struct {
@@ -98,6 +105,44 @@ func (m *MP3Lister) Do() error {
 	sort.Sort(m.all)
 
 	return m.writeToFile()
+}
+
+func (m *MP3Lister) SaveToDB() error {
+	if m.all.Len() < 1 {
+		return ErrDataIsEmpty
+	}
+
+	db, err := gorm.Open(mysql.Open(config.Config.GetString("mysql.dsn")))
+	if err != nil {
+		return nil
+	}
+
+	dal.SetDefault(db)
+
+	// 清空表
+	_, err = dal.Song.Unscoped().Delete()
+	if err != nil {
+		return nil
+	}
+
+	// 插入数据
+	songs := slice.Map[*MP3, *model.Song](m.all, func(index int, item *MP3) *model.Song {
+		song := &model.Song{
+			Title:      item.Title,
+			Artist:     item.Artist,
+			Album:      item.Album,
+			Bpm:        item.BPM,
+			OriginFile: item.OriginFile,
+		}
+		return song
+	})
+
+	err = dal.Song.CreateInBatches(songs, 100)
+	if err != nil {
+		return err
+	}
+	
+	return nil
 }
 
 func (m *MP3Lister) writeToFile() error {
