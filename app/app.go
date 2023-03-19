@@ -44,7 +44,7 @@ func New() *cli.App {
 			},
 			&cli.StringFlag{
 				Name:    "output",
-				Value:   "mp3lister",
+				Value:   "",
 				Aliases: []string{"o"},
 				Usage:   "output file name for mp3 lister",
 			},

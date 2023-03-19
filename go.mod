@@ -9,6 +9,8 @@ require (
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
+	github.com/duke-git/lancet/v2 v2.1.16 // indirect
+	github.com/golang-module/carbon/v2 v2.2.3 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
