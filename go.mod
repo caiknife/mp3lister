@@ -8,7 +8,12 @@ require (
 	github.com/fatih/color v1.15.0
 	github.com/golang-module/carbon/v2 v2.2.3
 	github.com/spf13/cast v1.5.0
+	github.com/spf13/viper v1.15.0
 	github.com/urfave/cli/v2 v2.25.0
+	gorm.io/driver/mysql v1.4.0
+	gorm.io/gen v0.3.21
+	gorm.io/gorm v1.24.0
+	gorm.io/plugin/dbresolver v1.3.0
 )
 
 require (
@@ -27,19 +32,15 @@ require (
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.15.0 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
+	golang.org/x/exp v0.0.0-20221208152030-732eee02a75a // indirect
+	golang.org/x/mod v0.6.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.5.0 // indirect
-	golang.org/x/tools v0.1.12 // indirect
+	golang.org/x/tools v0.2.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/datatypes v1.0.7 // indirect
-	gorm.io/driver/mysql v1.4.0 // indirect
-	gorm.io/gen v0.3.21 // indirect
-	gorm.io/gorm v1.24.0 // indirect
 	gorm.io/hints v1.1.0 // indirect
-	gorm.io/plugin/dbresolver v1.3.0 // indirect
 )
