@@ -1,0 +1,2 @@
+mysql:
+    dsn: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local

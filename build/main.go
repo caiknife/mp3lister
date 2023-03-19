@@ -1,0 +1,28 @@
+package main
+
+import (
+	"fmt"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gen"
+	"gorm.io/gorm"
+
+	"gitea.caiknife.live/caiknife/mp3lister/config"
+)
+
+func main() {
+	db, err := gorm.Open(mysql.Open(config.Config.GetString("mysql.dsn")))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	g := gen.NewGenerator(gen.Config{
+		OutPath: "./orm/dal",
+		Mode:    gen.WithDefaultQuery | gen.WithoutContext,
+	})
+
+	g.UseDB(db)
+	g.ApplyBasic(g.GenerateAllTable()...)
+	g.Execute()
+}
