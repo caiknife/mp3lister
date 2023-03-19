@@ -30,11 +30,12 @@ func action(ctx *cli.Context) error {
 	}
 	inputPath = result
 
+	fmt.Printf("working in %s\n", inputPath)
+
 	if !fileutil.IsDir(inputPath) {
 		return ErrInputIsNotDir
 	}
 
-	fmt.Printf("working in %s\n", inputPath)
 	// 输出名称
 	name, err := getOutputName(ctx.String("output"))
 	if err != nil {
@@ -52,9 +53,9 @@ func getInputPath(path string) (result string, err error) {
 		if err != nil {
 			return "", err
 		}
-		result = dir
+		path = dir
 	}
-	result, err = filepath.Abs(result)
+	result, err = filepath.Abs(path)
 	if err != nil {
 		return "", err
 	}
