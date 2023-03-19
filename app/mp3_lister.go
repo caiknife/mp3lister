@@ -61,7 +61,7 @@ func (m *MP3Lister) Do() error {
 		return ErrOutputExtIsEmpty
 	}
 
-	filepath.WalkDir(m.InputPath, func(path string, d fs.DirEntry, err error) error {
+	err := filepath.WalkDir(m.InputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -82,6 +82,22 @@ func (m *MP3Lister) Do() error {
 
 		return nil
 	})
+	if err != nil {
+		return err
+	}
 
+	return m.writeToFile()
+}
+
+func (m *MP3Lister) writeToFile() error {
+	switch m.OutputExt {
+	case "csv":
+		return m.writeToCSV()
+	default:
+	}
+	return nil
+}
+
+func (m *MP3Lister) writeToCSV() error {
 	return nil
 }
