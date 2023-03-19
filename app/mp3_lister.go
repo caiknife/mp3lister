@@ -15,7 +15,6 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"gitea.caiknife.live/caiknife/mp3lister/config"
 	"gitea.caiknife.live/caiknife/mp3lister/orm/dal"
 	"gitea.caiknife.live/caiknife/mp3lister/orm/model"
 )
@@ -107,12 +106,12 @@ func (m *MP3Lister) Do() error {
 	return m.writeToFile()
 }
 
-func (m *MP3Lister) SaveToDB() error {
+func (m *MP3Lister) SaveToDB(dsn string) error {
 	if m.all.Len() < 1 {
 		return ErrDataIsEmpty
 	}
 
-	db, err := gorm.Open(mysql.Open(config.Config.GetString("mysql.dsn")))
+	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
 		return nil
 	}

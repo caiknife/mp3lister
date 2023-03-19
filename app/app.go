@@ -36,10 +36,10 @@ func New() *cli.App {
 				Aliases: []string{"d"},
 				Usage:   "debug mode",
 			},
-			&cli.BoolFlag{
+			&cli.StringFlag{
 				Name:    "savetodb",
 				Aliases: []string{"s"},
-				Usage:   "all mp3 files info will be save to a mysql database",
+				Usage:   "all mp3 files info will be save to a mysql database, please fill a dsn",
 			},
 			&cli.StringFlag{
 				Name:    "input",
