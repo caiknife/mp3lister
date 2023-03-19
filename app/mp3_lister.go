@@ -120,11 +120,10 @@ func (m *MP3Lister) SaveToDB() error {
 	dal.SetDefault(db)
 
 	// 清空表
-	_, err = dal.Song.Unscoped().Where(dal.Song.ID.Gt(0)).Delete()
+	_, err = dal.Song.Unscoped().Where(dal.Song.ID).Delete()
 	if err != nil {
 		return nil
 	}
-
 	// 插入数据
 	songs := slice.Map[*MP3, *model.Song](m.all, func(index int, item *MP3) *model.Song {
 		song := &model.Song{
