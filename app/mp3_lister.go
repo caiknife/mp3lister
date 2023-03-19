@@ -1,9 +1,14 @@
 package app
 
 import (
+	"encoding/csv"
 	"io/fs"
+	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+
+	"github.com/spf13/cast"
 )
 
 type MP3Lister struct {
@@ -12,7 +17,7 @@ type MP3Lister struct {
 	OutputExt  string
 
 	finalOutput string
-	all         []*MP3
+	all         MP3Collection
 }
 
 type Option func(lister *MP3Lister)
@@ -86,6 +91,8 @@ func (m *MP3Lister) Do() error {
 		return err
 	}
 
+	sort.Sort(m.all)
+
 	return m.writeToFile()
 }
 
@@ -99,5 +106,32 @@ func (m *MP3Lister) writeToFile() error {
 }
 
 func (m *MP3Lister) writeToCSV() error {
+	file, err := os.Create(m.finalOutput)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	headline := []string{"No.", "Artist", "Album", "Title", "BPM", "OriginFile"}
+	err = writer.Write(headline)
+	if err != nil {
+		return err
+	}
+
+	for i, mp3 := range m.all {
+		err := writer.Write([]string{
+			cast.ToString(i + 1),
+			mp3.Artist,
+			mp3.Album,
+			mp3.Title,
+			mp3.BPM,
+			mp3.OriginFile,
+		})
+		if err != nil {
+			return err
+		}
+	}
+	writer.Flush()
 	return nil
 }

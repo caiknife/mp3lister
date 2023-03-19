@@ -1,6 +1,8 @@
 package app
 
-import "github.com/bogem/id3v2/v2"
+import (
+	"github.com/bogem/id3v2/v2"
+)
 
 type MP3 struct {
 	OriginFile string
@@ -26,5 +28,22 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Title = tag.Title()
 	m.Artist = tag.Artist()
 	m.Album = tag.Album()
+
 	return m, nil
+}
+
+type MP3Collection []*MP3
+
+func (m MP3Collection) Len() int {
+	return len(m)
+}
+
+func (m MP3Collection) Less(i, j int) bool {
+	return m[i].Artist < m[j].Artist &&
+		m[i].Album < m[j].Album &&
+		m[i].Title < m[j].Title
+}
+
+func (m MP3Collection) Swap(i, j int) {
+	m[i], m[j] = m[j], m[i]
 }
