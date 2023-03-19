@@ -44,6 +44,16 @@ func action(ctx *cli.Context) error {
 	outputName = name
 	fmt.Printf("output name is %s\n", outputName)
 
+	lister := NewMP3Lister(
+		WithInputPath(inputPath),
+		WithOutputName(outputName),
+		WithOutputExt("csv"),
+	)
+	err = lister.Do()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
