@@ -8,6 +8,7 @@ import (
 
 const (
 	NullSeperator = "\u0000"
+	NBSPSeperator = " "
 )
 
 type MP3 struct {
@@ -43,6 +44,11 @@ func (m *MP3) transformNullSeperator(input string) string {
 		// split := strings.Split(input, NullSeperator)
 		// input = strings.Join(split, "|")
 		input = strings.ReplaceAll(input, NullSeperator, "|")
+	}
+	if strings.Contains(input, NBSPSeperator) {
+		// split := strings.Split(input, NullSeperator)
+		// input = strings.Join(split, "|")
+		input = strings.ReplaceAll(input, NBSPSeperator, " ")
 	}
 	return input
 }
