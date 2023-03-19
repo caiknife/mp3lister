@@ -2,12 +2,14 @@ package app
 
 import (
 	"encoding/csv"
+	"errors"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 
+	"github.com/bogem/id3v2/v2"
 	"github.com/spf13/cast"
 )
 
@@ -50,7 +52,7 @@ func NewMP3Lister(ops ...Option) *MP3Lister {
 	for _, op := range ops {
 		op(lister)
 	}
-
+	lister.all = make(MP3Collection, 0)
 	lister.finalOutput = lister.OutputName + "." + lister.OutputExt
 	return lister
 }
@@ -75,14 +77,16 @@ func (m *MP3Lister) Do() error {
 			return nil
 		}
 		// 忽略非mp3文件
-		if !strings.HasPrefix(d.Name(), ".mp3") {
+		if !strings.HasSuffix(d.Name(), ".mp3") {
 			return nil
 		}
 		mp3, err := NewMP3(path)
 		if err != nil {
+			if errors.Is(err, id3v2.ErrUnsupportedVersion) {
+				return nil
+			}
 			return err
 		}
-
 		m.all = append(m.all, mp3)
 
 		return nil

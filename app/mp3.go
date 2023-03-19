@@ -1,7 +1,13 @@
 package app
 
 import (
+	"strings"
+
 	"github.com/bogem/id3v2/v2"
+)
+
+const (
+	NullSeperator = "\u0000"
 )
 
 type MP3 struct {
@@ -26,10 +32,19 @@ func (m *MP3) Init() (*MP3, error) {
 
 	m.BPM = tag.GetTextFrame(tag.CommonID("BPM")).Text
 	m.Title = tag.Title()
-	m.Artist = tag.Artist()
+	m.Artist = m.transformNullSeperator(tag.Artist())
 	m.Album = tag.Album()
 
 	return m, nil
+}
+
+func (m *MP3) transformNullSeperator(input string) string {
+	if strings.Contains(input, NullSeperator) {
+		// split := strings.Split(input, NullSeperator)
+		// input = strings.Join(split, "|")
+		input = strings.ReplaceAll(input, NullSeperator, "|")
+	}
+	return input
 }
 
 type MP3Collection []*MP3
