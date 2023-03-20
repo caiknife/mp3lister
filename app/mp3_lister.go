@@ -127,7 +127,7 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 	if err != nil {
 		return nil
 	}
-
+	
 	dal.SetDefault(db)
 
 	// 清空表
