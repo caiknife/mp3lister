@@ -28,7 +28,19 @@ type MP3Lister struct {
 	all         MP3Collection
 }
 
+type OptionApply interface {
+	Apply(l *MP3Lister)
+}
+
+var (
+	_ OptionApply = (*Option)(nil)
+)
+
 type Option func(lister *MP3Lister)
+
+func (o Option) Apply(l *MP3Lister) {
+	o(l)
+}
 
 func WithInputPath(input string) Option {
 	return func(lister *MP3Lister) {
@@ -56,7 +68,7 @@ func NewMP3Lister(ops ...Option) *MP3Lister {
 	}
 
 	for _, op := range ops {
-		op(lister)
+		op.Apply(lister)
 	}
 	lister.all = make(MP3Collection, 0)
 	lister.finalOutput = lister.OutputName + "." + lister.OutputExt
