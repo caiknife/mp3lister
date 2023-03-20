@@ -74,7 +74,7 @@ func getInputPath(path string) (result string, err error) {
 	}
 	result, err = filepath.Abs(path)
 	if err != nil {
-		return "", err
+		return path, err
 	}
 	return result, nil
 }

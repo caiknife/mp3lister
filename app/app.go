@@ -42,14 +42,14 @@ func New() *cli.App {
 				Usage:   "all mp3 files info will be save to a mysql database, please fill a dsn",
 			},
 			&cli.StringFlag{
-				Name:    "input",
-				Value:   "",
+				Name: "input",
+				// Value:   "",
 				Aliases: []string{"i"},
 				Usage:   "input path for mp3 lister, default value is current dir",
 			},
 			&cli.StringFlag{
-				Name:    "output",
-				Value:   "",
+				Name: "output",
+				// Value:   "",
 				Aliases: []string{"o"},
 				Usage:   "output file name for mp3 lister, just the name without extension. By default output file is mp3lister_yyyy_mm_dd_hh_ii_ss.csv",
 			},
