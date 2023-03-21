@@ -128,6 +128,13 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 		return nil
 	}
 
+	if !db.Migrator().HasTable(&model.Song{}) {
+		err := db.AutoMigrate(&model.Song{})
+		if err != nil {
+			return err
+		}
+	}
+
 	dal.SetDefault(db)
 
 	// 清空表
