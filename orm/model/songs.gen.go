@@ -18,11 +18,11 @@ type Song struct {
 	CreatedAt  time.Time      `gorm:"column:created_at" json:"created_at"`
 	UpdatedAt  time.Time      `gorm:"column:updated_at" json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	Title      string         `gorm:"column:title;not null" json:"title"`             // 歌曲名称
-	Artist     string         `gorm:"column:artist;not null" json:"artist"`           // 艺术家
-	Album      string         `gorm:"column:album;not null" json:"album"`             // 专辑
-	Bpm        string         `gorm:"column:bpm;not null" json:"bpm"`                 // BPM
-	OriginFile string         `gorm:"column:origin_file;not null" json:"origin_file"` // 源文件路径
+	Title      string         `gorm:"type:varchar(200);column:title;not null" json:"title"`             // 歌曲名称
+	Artist     string         `gorm:"type:varchar(200);column:artist;not null" json:"artist"`           // 艺术家
+	Album      string         `gorm:"type:varchar(200);column:album;not null" json:"album"`             // 专辑
+	Bpm        string         `gorm:"type:varchar(5);column:bpm;not null" json:"bpm"`                 // BPM
+	OriginFile string         `gorm:"type:varchar(200);column:origin_file;not null" json:"origin_file"` // 源文件路径
 }
 
 // TableName Song's table name
