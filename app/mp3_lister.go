@@ -15,8 +15,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"gitea.caiknife.live/caiknife/mp3lister/orm/dal"
-	"gitea.caiknife.live/caiknife/mp3lister/orm/model"
+	"github.com/caiknife/mp3lister/orm/dal"
+	"github.com/caiknife/mp3lister/orm/model"
 )
 
 type MP3Lister struct {

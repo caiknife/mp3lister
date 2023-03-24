@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"gitea.caiknife.live/caiknife/mp3lister/orm/model"
+	"github.com/caiknife/mp3lister/orm/model"
 )
 
 func newSong(db *gorm.DB, opts ...gen.DOOption) song {

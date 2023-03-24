@@ -6,7 +6,7 @@ import (
 
 	"github.com/fatih/color"
 
-	"gitea.caiknife.live/caiknife/mp3lister/app"
+	"github.com/caiknife/mp3lister/app"
 )
 
 func main() {
