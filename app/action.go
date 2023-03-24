@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/duke-git/lancet/v2/fileutil"
+	"github.com/fatih/color"
 	"github.com/golang-module/carbon/v2"
 	"github.com/urfave/cli/v2"
 )
@@ -30,7 +31,7 @@ func action(ctx *cli.Context) error {
 	}
 	inputPath = result
 
-	fmt.Printf("working in %s\n", inputPath)
+	ColorPrintf("working in %s\n", color.CyanString("%s", inputPath))
 
 	if !fileutil.IsDir(inputPath) {
 		return ErrInputIsNotDir
@@ -42,7 +43,7 @@ func action(ctx *cli.Context) error {
 		return err
 	}
 	outputName = name
-	fmt.Printf("output name is %s\n", outputName)
+	ColorPrintf("output name is %s\n", color.YellowString("%s", outputName))
 
 	lister := NewMP3Lister(
 		WithInputPath(inputPath),
