@@ -1,4 +1,4 @@
-module gitea.caiknife.live/caiknife/mp3lister
+module github.com/caiknife/mp3lister
 
 go 1.20
 
