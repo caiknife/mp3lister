@@ -88,6 +88,9 @@ func (m *MP3Lister) Do() error {
 
 	err := filepath.WalkDir(m.InputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
+			if errors.Is(err, os.ErrPermission) {
+				return nil
+			}
 			return err
 		}
 		// 忽略目录
