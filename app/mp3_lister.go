@@ -221,7 +221,7 @@ func (m *MP3Lister) Print() {
 func colorPrintf(format string, args ...interface{}) {
 	results := make([]any, len(args))
 	for i := 0; i < len(args); i++ {
-		results[i] = colorString[i%len(colorString)]("%v", args[i])
+		results[i] = colorString[i%len(colorString)]("%+v", args[i])
 	}
 	fmt.Printf(format, results...)
 }
