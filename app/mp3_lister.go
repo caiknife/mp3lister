@@ -205,9 +205,9 @@ func (m *MP3Lister) writeToCSV() error {
 }
 
 func (m *MP3Lister) Print() {
-	colorPrint("%s\t%s\t%s\t%s\t%s\t%s\n", "No.", "Artist", "Album", "Title", "BPM", "OriginFile")
+	colorPrintf("%s\t%s\t%s\t%s\t%s\t%s\n", "No.", "Artist", "Album", "Title", "BPM", "OriginFile")
 	for i, mp3 := range m.all {
-		colorPrint("%s\t%s\t%s\t%s\t%s\t%s\n",
+		colorPrintf("%s\t%s\t%s\t%s\t%s\t%s\n",
 			cast.ToString(i+1),
 			mp3.Artist,
 			mp3.Album,
@@ -218,7 +218,7 @@ func (m *MP3Lister) Print() {
 	}
 }
 
-func colorPrint(format string, args ...interface{}) {
+func colorPrintf(format string, args ...interface{}) {
 	results := make([]any, len(args))
 	for i := 0; i < len(args); i++ {
 		results[i] = colorString[i%len(colorString)]("%v", args[i])
