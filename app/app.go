@@ -36,6 +36,11 @@ func New() *cli.App {
 				Aliases: []string{"d"},
 				Usage:   "debug mode",
 			},
+			&cli.BoolFlag{
+				Name:    "verbose",
+				Aliases: []string{"V"},
+				Usage:   "verbose mode",
+			},
 			&cli.StringFlag{
 				Name:    "savetodb",
 				Aliases: []string{"s"},

@@ -11,6 +11,7 @@ import (
 
 	"github.com/bogem/id3v2/v2"
 	"github.com/duke-git/lancet/v2/slice"
+	"github.com/fatih/color"
 	"github.com/spf13/cast"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -115,7 +116,7 @@ func (m *MP3Lister) Do() error {
 
 	sort.Sort(m.all)
 
-	return m.writeToFile()
+	return m.WriteToFile()
 }
 
 func (m *MP3Lister) SaveToDB(dsn string) error {
@@ -162,7 +163,7 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 	return nil
 }
 
-func (m *MP3Lister) writeToFile() error {
+func (m *MP3Lister) WriteToFile() error {
 	switch m.OutputExt {
 	case "csv":
 		return m.writeToCSV()
@@ -200,4 +201,18 @@ func (m *MP3Lister) writeToCSV() error {
 	}
 	writer.Flush()
 	return nil
+}
+
+func (m *MP3Lister) Print() {
+	color.Yellow("%s\t%s\t%s\t%s\t%s\t%s", "No.", "Artist", "Album", "Title", "BPM", "OriginFile")
+	for i, mp3 := range m.all {
+		color.Cyan("%s\t%s\t%s\t%s\t%s\t%s",
+			cast.ToString(i+1),
+			mp3.Artist,
+			mp3.Album,
+			mp3.Title,
+			mp3.BPM,
+			mp3.OriginFile,
+		)
+	}
 }

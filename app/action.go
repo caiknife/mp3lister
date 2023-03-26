@@ -54,6 +54,10 @@ func action(ctx *cli.Context) error {
 		return err
 	}
 
+	if ctx.Bool("verbose") {
+		lister.Print()
+	}
+
 	if ctx.String("savetodb") != "" {
 		err := lister.SaveToDB(ctx.String("savetodb"))
 		if err != nil {
