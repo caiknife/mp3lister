@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/csv"
 	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -204,9 +205,9 @@ func (m *MP3Lister) writeToCSV() error {
 }
 
 func (m *MP3Lister) Print() {
-	color.Yellow("%s\t%s\t%s\t%s\t%s\t%s", "No.", "Artist", "Album", "Title", "BPM", "OriginFile")
+	colorPrint("%s\t%s\t%s\t%s\t%s\t%s\n", "No.", "Artist", "Album", "Title", "BPM", "OriginFile")
 	for i, mp3 := range m.all {
-		color.Cyan("%s\t%s\t%s\t%s\t%s\t%s",
+		colorPrint("%s\t%s\t%s\t%s\t%s\t%s\n",
 			cast.ToString(i+1),
 			mp3.Artist,
 			mp3.Album,
@@ -216,3 +217,18 @@ func (m *MP3Lister) Print() {
 		)
 	}
 }
+
+func colorPrint(format string, args ...interface{}) {
+	results := make([]any, len(args))
+	for i := 0; i < len(args); i++ {
+		results[i] = colorString[i%len(colorString)]("%v", args[i])
+	}
+	fmt.Printf(format, results...)
+}
+
+var (
+	colorString = []func(format string, a ...interface{}) string{
+		color.HiRedString, color.HiGreenString, color.HiYellowString, color.HiBlueString, color.HiMagentaString, color.HiCyanString,
+		color.RedString, color.GreenString, color.YellowString, color.BlueString, color.MagentaString, color.CyanString,
+	}
+)
