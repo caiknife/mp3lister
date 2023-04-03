@@ -7,7 +7,7 @@ import (
 	"gorm.io/gen"
 	"gorm.io/gorm"
 
-	"gitea.caiknife.live/caiknife/mp3lister/config"
+	"github.com/caiknife/mp3lister/config"
 )
 
 func main() {

@@ -17,8 +17,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"gitea.caiknife.live/caiknife/mp3lister/orm/dal"
-	"gitea.caiknife.live/caiknife/mp3lister/orm/model"
+	"github.com/caiknife/mp3lister/orm/dal"
+	"github.com/caiknife/mp3lister/orm/model"
 )
 
 type MP3Lister struct {
@@ -90,6 +90,9 @@ func (m *MP3Lister) Do() error {
 
 	err := filepath.WalkDir(m.InputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
+			if errors.Is(err, os.ErrPermission) {
+				return nil
+			}
 			return err
 		}
 		// 忽略目录
