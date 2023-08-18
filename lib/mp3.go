@@ -40,7 +40,15 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Artist = m.transformNullSeperator(tag.Artist())
 	m.Album = tag.Album()
 
-	fmt.Println(tag.GetFrames("staffing"))
+	frames := tag.GetFrames("TXXX")
+	for i, frame := range frames {
+		fmt.Println(i)
+		udtf, ok := frame.(id3v2.UserDefinedTextFrame)
+		if ok {
+			fmt.Println(udtf.Description)
+			fmt.Println(udtf.Value)
+		}
+	}
 
 	return m, nil
 }
