@@ -18,8 +18,13 @@ func main() {
 	}
 
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "./orm/dal",
-		Mode:    gen.WithDefaultQuery | gen.WithoutContext,
+		OutPath:           "./orm/dal",
+		FieldNullable:     true,
+		FieldCoverable:    true,
+		FieldSignable:     true,
+		FieldWithIndexTag: true,
+		FieldWithTypeTag:  true,
+		Mode:              gen.WithDefaultQuery | gen.WithoutContext,
 	})
 
 	g.UseDB(db)

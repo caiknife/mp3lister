@@ -9,6 +9,8 @@ import (
 	"github.com/fatih/color"
 	"github.com/golang-module/carbon/v2"
 	"github.com/urfave/cli/v2"
+
+	"github.com/caiknife/mp3lister/lib"
 )
 
 var (
@@ -25,16 +27,16 @@ func action(ctx *cli.Context) error {
 		cli.VersionPrinter(ctx)
 	}
 	// 输入路径
-	result, err := getInputPath(ctx.String("input"))
+	result, err := lib.GetInputPath(ctx.String("input"))
 	if err != nil {
 		return err
 	}
 	inputPath = result
 
-	ColorPrintf("working in %s\n", color.CyanString("%s", inputPath))
+	lib.ColorPrintf("working in %s\n", color.CyanString("%s", inputPath))
 
 	if !fileutil.IsDir(inputPath) {
-		return ErrInputIsNotDir
+		return lib.ErrInputIsNotDir
 	}
 
 	// 输出名称
@@ -43,12 +45,12 @@ func action(ctx *cli.Context) error {
 		return err
 	}
 	outputName = name
-	ColorPrintf("output name is %s\n", color.YellowString("%s", outputName))
+	lib.ColorPrintf("output name is %s\n", color.YellowString("%s", outputName))
 
-	lister := NewMP3Lister(
-		WithInputPath(inputPath),
-		WithOutputName(outputName),
-		WithOutputExt("csv"),
+	lister := lib.NewMP3Lister(
+		lib.WithInputPath(inputPath),
+		lib.WithOutputName(outputName),
+		lib.WithOutputExt("csv"),
 	)
 	err = lister.Do()
 	if err != nil {

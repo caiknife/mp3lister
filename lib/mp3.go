@@ -1,4 +1,4 @@
-package app
+package lib
 
 import (
 	"strings"
@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	NullSeperator   = "\u0000"
-	NBSPSeperator   = "\u00A0"
-	ZWNBSPSeperator = "\uFEFF"
+	NullSeparator   = "\u0000"
+	NBSPSeparator   = "\u00A0"
+	ZWNBSPSeparator = "\uFEFF"
 )
 
 type MP3 struct {
@@ -41,20 +41,20 @@ func (m *MP3) Init() (*MP3, error) {
 }
 
 func (m *MP3) transformNullSeperator(input string) string {
-	if strings.Contains(input, NullSeperator) {
+	if strings.Contains(input, NullSeparator) {
 		// split := strings.Split(input, NullSeperator)
 		// input = strings.Join(split, "|")
-		input = strings.ReplaceAll(input, NullSeperator, ",")
+		input = strings.ReplaceAll(input, NullSeparator, ",")
 	}
-	if strings.Contains(input, NBSPSeperator) {
+	if strings.Contains(input, NBSPSeparator) {
 		// split := strings.Split(input, NullSeperator)
 		// input = strings.Join(split, "|")
-		input = strings.ReplaceAll(input, NBSPSeperator, " ")
+		input = strings.ReplaceAll(input, NBSPSeparator, " ")
 	}
-	if strings.Contains(input, ZWNBSPSeperator) {
+	if strings.Contains(input, ZWNBSPSeparator) {
 		// split := strings.Split(input, NullSeperator)
 		// input = strings.Join(split, "|")
-		input = strings.ReplaceAll(input, ZWNBSPSeperator, "")
+		input = strings.ReplaceAll(input, ZWNBSPSeparator, "")
 	}
 
 	return input

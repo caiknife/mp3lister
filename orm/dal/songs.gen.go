@@ -27,7 +27,7 @@ func newSong(db *gorm.DB, opts ...gen.DOOption) song {
 
 	tableName := _song.songDo.TableName()
 	_song.ALL = field.NewAsterisk(tableName)
-	_song.ID = field.NewInt64(tableName, "id")
+	_song.ID = field.NewUint64(tableName, "id")
 	_song.CreatedAt = field.NewTime(tableName, "created_at")
 	_song.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_song.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -46,15 +46,15 @@ type song struct {
 	songDo
 
 	ALL        field.Asterisk
-	ID         field.Int64
+	ID         field.Uint64
 	CreatedAt  field.Time
 	UpdatedAt  field.Time
 	DeletedAt  field.Field
-	Title      field.String // 歌曲名称
-	Artist     field.String // 艺术家
-	Album      field.String // 专辑
-	Bpm        field.String // BPM
-	OriginFile field.String // 源文件路径
+	Title      field.String
+	Artist     field.String
+	Album      field.String
+	Bpm        field.String
+	OriginFile field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -71,7 +71,7 @@ func (s song) As(alias string) *song {
 
 func (s *song) updateTableName(table string) *song {
 	s.ALL = field.NewAsterisk(table)
-	s.ID = field.NewInt64(table, "id")
+	s.ID = field.NewUint64(table, "id")
 	s.CreatedAt = field.NewTime(table, "created_at")
 	s.UpdatedAt = field.NewTime(table, "updated_at")
 	s.DeletedAt = field.NewField(table, "deleted_at")

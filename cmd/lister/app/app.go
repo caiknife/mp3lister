@@ -25,10 +25,6 @@ func init() {
 	}
 }
 
-func ColorPrintf(format string, a ...any) {
-	fmt.Fprintf(color.Output, format, a...)
-}
-
 func New() *cli.App {
 	app := &cli.App{
 		Name:    Name,
