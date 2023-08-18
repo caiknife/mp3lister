@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/bogem/id3v2/v2"
@@ -18,6 +19,8 @@ type MP3 struct {
 	Title      string
 	Artist     string
 	Album      string
+	Staffing   string
+	Memo       string
 }
 
 func NewMP3(name string) (*MP3, error) {
@@ -36,6 +39,8 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Title = tag.Title()
 	m.Artist = m.transformNullSeperator(tag.Artist())
 	m.Album = tag.Album()
+
+	fmt.Println(tag.GetFrames("staffing"))
 
 	return m, nil
 }

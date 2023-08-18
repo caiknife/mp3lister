@@ -7,6 +7,7 @@ import (
 
 var (
 	testsMP3Files = []string{
+		"/Users/caiknife/Music/网易云音乐/Joe Eckert/UNITED STATES AIR FORCE AIRMEN OF NOTE： Let's Dance/United States Air Force Band - Airmen of Note - Rockin' in Rhythm.mp3",
 		"/Users/caiknife/Music/虾米音乐/Rasmus Faber-銀河鉄道999 ~はじめてのチュウ.mp3",
 		"/Users/caiknife/Music/虾米音乐/Joseph Williams,Jason Weaver,Ernie Sabella - Hakuna Matata.mp3",
 	}
@@ -19,7 +20,7 @@ func TestNewMP3(t *testing.T) {
 			if err != nil {
 				t.Error(err)
 			}
-			t.Log(mp3)
+			t.Log(mp3.Staffing, len(mp3.Staffing))
 		})
 	}
 }
