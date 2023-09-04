@@ -4,17 +4,17 @@ go 1.20
 
 require (
 	github.com/bogem/id3v2/v2 v2.1.4
-	github.com/duke-git/lancet/v2 v2.2.4
+	github.com/duke-git/lancet/v2 v2.2.5
 	github.com/fatih/color v1.15.0
-	github.com/golang-module/carbon/v2 v2.2.3
+	github.com/golang-module/carbon/v2 v2.2.5
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
 	github.com/urfave/cli/v2 v2.25.7
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gen v0.3.23
-	gorm.io/gorm v1.25.3
-	gorm.io/plugin/dbresolver v1.4.6
+	gorm.io/gorm v1.25.4
+	gorm.io/plugin/dbresolver v1.4.7
 )
 
 require (
