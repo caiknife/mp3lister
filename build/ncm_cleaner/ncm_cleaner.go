@@ -10,7 +10,13 @@ import (
 )
 
 func main() {
-	err := filepath.WalkDir(".", func(path string, d fs.DirEntry, err error) error {
+	abs, err := filepath.Abs(".")
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	
+	err = filepath.WalkDir(abs, func(path string, d fs.DirEntry, err error) error {
 		if d.IsDir() {
 			return nil
 		}
