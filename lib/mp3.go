@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/bogem/id3v2/v2"
@@ -40,15 +39,15 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Artist = m.transformNullSeperator(tag.Artist())
 	m.Album = tag.Album()
 
-	frames := tag.GetFrames("TXXX")
-	for i, frame := range frames {
-		fmt.Println(i)
-		udtf, ok := frame.(id3v2.UserDefinedTextFrame)
-		if ok {
-			fmt.Println(udtf.Description)
-			fmt.Println(udtf.Value)
-		}
-	}
+	// frames := tag.GetFrames("TXXX")
+	// for i, frame := range frames {
+	// 	fmt.Println(i)
+	// 	udtf, ok := frame.(id3v2.UserDefinedTextFrame)
+	// 	if ok {
+	// 		fmt.Println(udtf.Description)
+	// 		fmt.Println(udtf.Value)
+	// 	}
+	// }
 
 	return m, nil
 }
