@@ -13,6 +13,16 @@ var (
 	}
 )
 
+func TestBPM(t *testing.T) {
+	testFile := "/Users/caiknife/Music/网易云音乐/Stockholm Swing All Stars/In the Spirit of/Stockholm Swing All Stars - Isfahan.mp3"
+	mp3, err := NewMP3(testFile)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(mp3.BPM)
+}
+
 func TestNewMP3(t *testing.T) {
 	for i, file := range testsMP3Files {
 		t.Run(fmt.Sprintf("mp3 test %d", i+1), func(t *testing.T) {
