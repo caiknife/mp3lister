@@ -72,7 +72,7 @@ func writeFiles(mp3files lib.MP3Collection, outputPath string) error {
 	defer create.Close()
 
 	writer := csv.NewWriter(create)
-	err = writer.Write([]string{"No.", "BPM", "Title", "Artist", "Album"})
+	err = writer.Write([]string{"No.", "BPM", "Title", "Artist", "Album", "OriginFile"})
 	if err != nil {
 		return err
 	}
@@ -83,6 +83,7 @@ func writeFiles(mp3files lib.MP3Collection, outputPath string) error {
 			file.Title,
 			file.Artist,
 			file.Album,
+			file.OriginFile,
 		})
 		if err != nil {
 			return err
