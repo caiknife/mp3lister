@@ -11,6 +11,10 @@ var (
 	ConsoleLogger *logrus.Logger
 )
 
+func init() {
+	ConsoleLogger = NewConsoleLogger()
+}
+
 func NewConsoleLogger() *logrus.Logger {
 	l := logrus.New()
 	l.SetFormatter(&logrus.TextFormatter{
