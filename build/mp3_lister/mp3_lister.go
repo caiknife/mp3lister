@@ -1,13 +1,14 @@
 package main
 
 import (
-	"log"
 	"os"
+
+	"github.com/caiknife/mp3lister/lib"
 )
 
 func main() {
 	if err := newApp().Run(os.Args); err != nil {
-		log.Fatalln(err)
+		lib.ConsoleLogger.Fatalln(err)
 		return
 	}
 }

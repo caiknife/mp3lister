@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/csv"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -42,7 +41,7 @@ func action() cli.ActionFunc {
 			return errors.New("该路径不存在！")
 		}
 
-		log.Println("查询路径：", inputPath)
+		lib.ConsoleLogger.Infoln("查询路径：", inputPath)
 
 		files, err := collectFiles(inputPath)
 		if err != nil {
@@ -58,7 +57,7 @@ func action() cli.ActionFunc {
 			return err
 		}
 
-		log.Println("输出文件：", outputPath)
+		lib.ConsoleLogger.Infoln("输出文件：", outputPath)
 
 		return nil
 	}
