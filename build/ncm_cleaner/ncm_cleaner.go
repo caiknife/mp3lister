@@ -10,6 +10,7 @@ import (
 	"github.com/caiknife/mp3lister/lib"
 )
 
+// 清除当前目录下的ncm文件
 func main() {
 	abs, err := filepath.Abs(".")
 	if err != nil {
@@ -18,6 +19,9 @@ func main() {
 	}
 
 	err = filepath.WalkDir(abs, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
 		if d.IsDir() {
 			return nil
 		}

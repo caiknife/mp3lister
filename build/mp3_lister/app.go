@@ -97,6 +97,9 @@ func collectFiles(inputPath string) (lib.MP3Collection, error) {
 	mp3files := lib.MP3Collection{}
 
 	err := filepath.WalkDir(inputPath, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
 		if d.IsDir() {
 			return nil
 		}
