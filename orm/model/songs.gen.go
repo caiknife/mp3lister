@@ -15,14 +15,14 @@ const TableNameSong = "songs"
 // Song mapped from table <songs>
 type Song struct {
 	ID         uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	CreatedAt  *time.Time     `gorm:"column:created_at;type:datetime(3)" json:"created_at"`
-	UpdatedAt  *time.Time     `gorm:"column:updated_at;type:datetime(3)" json:"updated_at"`
-	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3)" json:"deleted_at"`
-	Title      string         `gorm:"column:title;type:varchar(200);not null;index:title,priority:1" json:"title"`
-	Artist     string         `gorm:"column:artist;type:varchar(200);not null" json:"artist"`
-	Album      string         `gorm:"column:album;type:varchar(200);not null" json:"album"`
-	Bpm        string         `gorm:"column:bpm;type:varchar(5);not null;index:bpm,priority:1" json:"bpm"`
-	OriginFile string         `gorm:"column:origin_file;type:varchar(200);not null" json:"origin_file"`
+	CreatedAt  *time.Time     `gorm:"column:created_at;type:datetime" json:"created_at"`
+	UpdatedAt  *time.Time     `gorm:"column:updated_at;type:datetime" json:"updated_at"`
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:idx_songs_deleted_at,priority:1" json:"deleted_at"`
+	Title      string         `gorm:"column:title;type:varchar(200);not null;comment:歌曲名称" json:"title"`              // 歌曲名称
+	Artist     string         `gorm:"column:artist;type:varchar(200);not null;comment:艺术家" json:"artist"`             // 艺术家
+	Album      string         `gorm:"column:album;type:varchar(200);not null;comment:专辑" json:"album"`                // 专辑
+	Bpm        string         `gorm:"column:bpm;type:varchar(5);not null;comment:BPM" json:"bpm"`                     // BPM
+	OriginFile string         `gorm:"column:origin_file;type:varchar(200);not null;comment:源文件路径" json:"origin_file"` // 源文件路径
 }
 
 // TableName Song's table name

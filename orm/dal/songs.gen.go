@@ -50,11 +50,11 @@ type song struct {
 	CreatedAt  field.Time
 	UpdatedAt  field.Time
 	DeletedAt  field.Field
-	Title      field.String
-	Artist     field.String
-	Album      field.String
-	Bpm        field.String
-	OriginFile field.String
+	Title      field.String // 歌曲名称
+	Artist     field.String // 艺术家
+	Album      field.String // 专辑
+	Bpm        field.String // BPM
+	OriginFile field.String // 源文件路径
 
 	fieldMap map[string]field.Expr
 }
@@ -162,10 +162,6 @@ func (s songDo) Select(conds ...field.Expr) *songDo {
 
 func (s songDo) Where(conds ...gen.Condition) *songDo {
 	return s.withDO(s.DO.Where(conds...))
-}
-
-func (s songDo) Exists(subquery interface{ UnderlyingDB() *gorm.DB }) *songDo {
-	return s.Where(field.CompareSubQuery(field.ExistsOp, nil, subquery.UnderlyingDB()))
 }
 
 func (s songDo) Order(conds ...field.Expr) *songDo {
