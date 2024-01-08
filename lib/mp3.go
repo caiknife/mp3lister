@@ -36,7 +36,7 @@ func (m *MP3) Init() (*MP3, error) {
 
 	m.BPM = tag.GetTextFrame(tag.CommonID("BPM")).Text
 	m.Title = tag.Title()
-	m.Artist = m.transformNullSeperator(tag.Artist())
+	m.Artist = m.transformNullSeparator(tag.Artist())
 	m.Album = tag.Album()
 
 	// frames := tag.GetFrames("TXXX")
@@ -52,9 +52,9 @@ func (m *MP3) Init() (*MP3, error) {
 	return m, nil
 }
 
-func (m *MP3) transformNullSeperator(input string) string {
+func (m *MP3) transformNullSeparator(input string) string {
 	if strings.Contains(input, NullSeparator) {
-		// split := strings.Split(input, NullSeperator)
+		// split := strings.Split(input, NullSeparator)
 		// input = strings.Join(split, "|")
 		input = strings.ReplaceAll(input, NullSeparator, ",")
 	}
