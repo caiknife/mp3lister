@@ -19,6 +19,7 @@ func main() {
 
 	g := gen.NewGenerator(gen.Config{
 		OutPath:           "./orm/dal",
+		WithUnitTest:      true,
 		FieldNullable:     true,
 		FieldCoverable:    true,
 		FieldSignable:     true,

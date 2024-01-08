@@ -13,6 +13,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/urfave/cli/v2 v2.27.1
 	gorm.io/driver/mysql v1.5.2
+	gorm.io/driver/sqlite v1.5.4
 	gorm.io/gen v0.3.24
 	gorm.io/gorm v1.25.5
 	gorm.io/plugin/dbresolver v1.5.0
@@ -28,6 +29,7 @@ require (
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
