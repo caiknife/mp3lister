@@ -13,6 +13,14 @@ type Map[V any] map[string]V
 
 type H = Map[any]
 
+func (m Map[V]) UnmarshalBinary(data []byte) error {
+	return fjson.Unmarshal(data, &m)
+}
+
+func (m Map[V]) MarshalBinary() (data []byte, err error) {
+	return fjson.Marshal(m)
+}
+
 func (m Map[V]) String() string {
 	toString, err := fjson.MarshalToString(m)
 	if err != nil {

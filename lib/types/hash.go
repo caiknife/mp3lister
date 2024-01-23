@@ -3,11 +3,29 @@ package types
 import (
 	"github.com/duke-git/lancet/v2/maputil"
 	"github.com/samber/lo"
+
+	"github.com/caiknife/mp3lister/lib/fjson"
 )
 
 var _ IMap[string, int] = Hash[string, int](nil)
 
 type Hash[K comparable, V any] map[K]V
+
+func (h Hash[K, V]) UnmarshalBinary(data []byte) error {
+	return fjson.Unmarshal(data, &h)
+}
+
+func (h Hash[K, V]) MarshalBinary() (data []byte, err error) {
+	return fjson.Marshal(h)
+}
+
+func (h Hash[K, V]) String() string {
+	toString, err := fjson.MarshalToString(h)
+	if err != nil {
+		return ""
+	}
+	return toString
+}
 
 func (h Hash[K, V]) Len() int {
 	return len(h)
