@@ -33,10 +33,11 @@ func parallelForEach[K comparable, V any](m map[K]V, f func(K, V)) {
 	wg.Add(len(m))
 
 	for s, t := range m {
-		go func(_s K, _t V) {
+		go func(_s K, _t V, wg *sync.WaitGroup) {
 			f(_s, _t)
 			wg.Done()
-		}(s, t)
+		}(s, t, &wg)
 	}
+
 	wg.Wait()
 }
