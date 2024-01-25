@@ -15,8 +15,8 @@ const TableNameSong = "songs"
 // Song mapped from table <songs>
 type Song struct {
 	ID         uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	CreatedAt  *time.Time     `gorm:"column:created_at;type:datetime" json:"created_at"`
-	UpdatedAt  *time.Time     `gorm:"column:updated_at;type:datetime" json:"updated_at"`
+	CreatedAt  time.Time      `gorm:"column:created_at;type:datetime" json:"created_at"`
+	UpdatedAt  time.Time      `gorm:"column:updated_at;type:datetime" json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:idx_songs_deleted_at,priority:1" json:"deleted_at"`
 	Title      string         `gorm:"column:title;type:varchar(200);not null;comment:歌曲名称" json:"title"`              // 歌曲名称
 	Artist     string         `gorm:"column:artist;type:varchar(200);not null;comment:艺术家" json:"artist"`             // 艺术家
