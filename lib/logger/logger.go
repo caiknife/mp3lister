@@ -7,15 +7,17 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var ConsoleLogger *logrus.Logger
+var (
+	ConsoleLogger *logrus.Logger
+)
 
 func init() {
 	ConsoleLogger = NewConsoleLogger()
 }
 
 func NewConsoleLogger() *logrus.Logger {
-	logger := logrus.New()
-	logger.SetFormatter(&logrus.TextFormatter{
+	l := logrus.New()
+	l.SetFormatter(&logrus.TextFormatter{
 		ForceColors:               true,
 		DisableColors:             false,
 		ForceQuote:                false,
@@ -32,7 +34,7 @@ func NewConsoleLogger() *logrus.Logger {
 		FieldMap:                  nil,
 		CallerPrettyfier:          nil,
 	})
-	logger.SetOutput(os.Stdout)
-	logger.SetLevel(logrus.TraceLevel)
-	return logger
+	l.SetOutput(os.Stdout)
+	l.SetLevel(logrus.TraceLevel)
+	return l
 }

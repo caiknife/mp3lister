@@ -16,6 +16,7 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/caiknife/mp3lister/lib"
+	"github.com/caiknife/mp3lister/lib/logger"
 )
 
 func action() cli.ActionFunc {
@@ -41,7 +42,7 @@ func action() cli.ActionFunc {
 			return errors.New("该路径不存在！")
 		}
 
-		lib.ConsoleLogger.Infoln("查询路径：", inputPath)
+		logger.ConsoleLogger.Infoln("查询路径：", inputPath)
 
 		files, err := collectFiles(inputPath)
 		if err != nil {
@@ -57,7 +58,7 @@ func action() cli.ActionFunc {
 			return err
 		}
 
-		lib.ConsoleLogger.Infoln("输出文件：", outputPath)
+		logger.ConsoleLogger.Infoln("输出文件：", outputPath)
 
 		return nil
 	}

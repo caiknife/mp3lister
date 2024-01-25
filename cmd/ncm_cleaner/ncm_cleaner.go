@@ -7,14 +7,14 @@ import (
 
 	"github.com/duke-git/lancet/v2/fileutil"
 
-	"github.com/caiknife/mp3lister/lib"
+	"github.com/caiknife/mp3lister/lib/logger"
 )
 
 // 清除当前目录下的ncm文件
 func main() {
 	abs, err := filepath.Abs(".")
 	if err != nil {
-		lib.ConsoleLogger.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
@@ -33,11 +33,11 @@ func main() {
 		fileName := strings.TrimSuffix(path, suffix) + ".mp3"
 
 		if fileutil.IsExist(fileName) {
-			lib.ConsoleLogger.Warnln(fileName, "ncm转换后的mp3文件已经存在，原ncm文件要被删除")
-			lib.ConsoleLogger.Warnln("删除原ncm文件", path)
+			logger.ConsoleLogger.Warnln(fileName, "ncm转换后的mp3文件已经存在，原ncm文件要被删除")
+			logger.ConsoleLogger.Warnln("删除原ncm文件", path)
 			err := fileutil.RemoveFile(path)
 			if err != nil {
-				lib.ConsoleLogger.Fatalln(err)
+				logger.ConsoleLogger.Fatalln(err)
 				return err
 			}
 		}
@@ -46,7 +46,7 @@ func main() {
 	})
 
 	if err != nil {
-		lib.ConsoleLogger.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 }
