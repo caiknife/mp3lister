@@ -17,8 +17,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"github.com/caiknife/mp3lister/orm/dal"
-	"github.com/caiknife/mp3lister/orm/model"
+	"github.com/caiknife/mp3lister/orm/music"
+	"github.com/caiknife/mp3lister/orm/music/model"
 )
 
 type MP3Lister struct {
@@ -140,10 +140,10 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 		}
 	}
 
-	dal.SetDefault(db)
+	music.SetDefault(db)
 
 	// 清空表
-	_, err = dal.Song.Unscoped().Where(dal.Song.ID).Delete()
+	_, err = music.Song.Unscoped().Where(music.Song.ID).Delete()
 	if err != nil {
 		return nil
 	}
@@ -159,7 +159,7 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 		return song
 	})
 
-	err = dal.Song.CreateInBatches(songs, 100)
+	err = music.Song.CreateInBatches(songs, 100)
 	if err != nil {
 		return err
 	}
