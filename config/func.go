@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log"
 	"os"
 	"path/filepath"
 
@@ -10,6 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/caiknife/mp3lister/lib/fjson"
+	"github.com/caiknife/mp3lister/lib/logger"
 )
 
 var (
@@ -38,19 +38,19 @@ func SearchConfigFile(fileName string) (string, error) {
 func initYAMLConfig(receiver any, fileName string) {
 	file, err := SearchConfigFile(fileName)
 	if err != nil {
-		log.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
 	readFile, err := os.ReadFile(file)
 	if err != nil {
-		log.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
 	err = yaml.Unmarshal(readFile, receiver)
 	if err != nil {
-		log.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 }
@@ -58,19 +58,19 @@ func initYAMLConfig(receiver any, fileName string) {
 func initJSONConfig(receiver any, fileName string) {
 	file, err := SearchConfigFile(fileName)
 	if err != nil {
-		log.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
 	readFile, err := os.ReadFile(file)
 	if err != nil {
-		log.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
 	err = fjson.Unmarshal(readFile, receiver)
 	if err != nil {
-		log.Fatalln(err)
+		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 }
