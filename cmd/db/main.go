@@ -1,19 +1,24 @@
 package main
 
 import (
-	"fmt"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
 	"gorm.io/gorm"
 
 	"github.com/caiknife/mp3lister/config"
+	"github.com/caiknife/mp3lister/lib/logger"
 )
 
 func main() {
-	db, err := gorm.Open(mysql.Open(config.Config.GetString("mysql.dsn")))
+	dsn, b := config.Config.MySQL.Get("music")
+	if !b {
+		logger.ConsoleLogger.Fatalln("数据库连接不存在！")
+		return
+	}
+
+	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
-		fmt.Println(err)
+		logger.ConsoleLogger.Errorln(err)
 		return
 	}
 
