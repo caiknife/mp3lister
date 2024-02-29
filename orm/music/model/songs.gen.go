@@ -22,7 +22,7 @@ type Song struct {
 	Artist     string         `gorm:"column:artist;type:varchar(200);not null;comment:艺术家" json:"artist"`             // 艺术家
 	Album      string         `gorm:"column:album;type:varchar(200);not null;comment:专辑" json:"album"`                // 专辑
 	Bpm        string         `gorm:"column:bpm;type:varchar(5);not null;comment:BPM" json:"bpm"`                     // BPM
-	OriginFile string         `gorm:"column:origin_file;type:varchar(200);not null;comment:源文件路径" json:"origin_file"` // 源文件路径
+	OriginFile string         `gorm:"column:origin_file;type:varchar(500);not null;comment:源文件路径" json:"origin_file"` // 源文件路径
 }
 
 // TableName Song's table name
