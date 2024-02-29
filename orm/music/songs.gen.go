@@ -34,7 +34,7 @@ func newSong(db *gorm.DB, opts ...gen.DOOption) song {
 	_song.Title = field.NewString(tableName, "title")
 	_song.Artist = field.NewString(tableName, "artist")
 	_song.Album = field.NewString(tableName, "album")
-	_song.Bpm = field.NewString(tableName, "bpm")
+	_song.Bpm = field.NewInt32(tableName, "bpm")
 	_song.OriginFile = field.NewString(tableName, "origin_file")
 
 	_song.fillFieldMap()
@@ -53,7 +53,7 @@ type song struct {
 	Title      field.String // 歌曲名称
 	Artist     field.String // 艺术家
 	Album      field.String // 专辑
-	Bpm        field.String // BPM
+	Bpm        field.Int32  // BPM
 	OriginFile field.String // 源文件路径
 
 	fieldMap map[string]field.Expr
@@ -78,7 +78,7 @@ func (s *song) updateTableName(table string) *song {
 	s.Title = field.NewString(table, "title")
 	s.Artist = field.NewString(table, "artist")
 	s.Album = field.NewString(table, "album")
-	s.Bpm = field.NewString(table, "bpm")
+	s.Bpm = field.NewInt32(table, "bpm")
 	s.OriginFile = field.NewString(table, "origin_file")
 
 	s.fillFieldMap()

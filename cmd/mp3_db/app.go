@@ -9,6 +9,7 @@ import (
 	"github.com/duke-git/lancet/v2/fileutil"
 	"github.com/duke-git/lancet/v2/slice"
 	"github.com/pkg/errors"
+	"github.com/spf13/cast"
 	"github.com/urfave/cli/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -73,7 +74,7 @@ func saveToDB(dsn string, mp3Files types.Slice[*lib.MP3]) error {
 			Title:      item.Title,
 			Artist:     item.Artist,
 			Album:      item.Album,
-			Bpm:        item.BPM,
+			Bpm:        cast.ToInt32(item.BPM),
 			OriginFile: item.OriginFile,
 		}
 		return song

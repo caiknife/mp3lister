@@ -153,7 +153,7 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 			Title:      item.Title,
 			Artist:     item.Artist,
 			Album:      item.Album,
-			Bpm:        item.BPM,
+			Bpm:        cast.ToInt32(item.BPM),
 			OriginFile: item.OriginFile,
 		}
 		return song

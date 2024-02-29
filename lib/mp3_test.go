@@ -3,6 +3,8 @@ package lib
 import (
 	"fmt"
 	"testing"
+
+	"github.com/spf13/cast"
 )
 
 var (
@@ -12,6 +14,11 @@ var (
 		"/Users/caiknife/Music/虾米音乐/Joseph Williams,Jason Weaver,Ernie Sabella - Hakuna Matata.mp3",
 	}
 )
+
+func TestFromStringToInt(t *testing.T) {
+	toInt := cast.ToInt("")
+	t.Log(toInt)
+}
 
 func TestBPM(t *testing.T) {
 	testFile := "/Users/caiknife/Music/网易云音乐/Stockholm Swing All Stars/In the Spirit of/Stockholm Swing All Stars - Isfahan.mp3"
