@@ -24,21 +24,29 @@ import (
 
 func action() cli.ActionFunc {
 	return func(ctx *cli.Context) error {
-		inputPath := ctx.String("input")
+		inputPath := ctx.StringSlice("input")
 		dsn := ctx.String("dsn")
 
-		logger.ConsoleLogger.Infoln("input path:", inputPath)
 		logger.ConsoleLogger.Infoln("dsn:", dsn, config.Config.MySQL[dsn])
+		mp3Files := types.Slice[*lib.MP3]{}
+		for _, s := range inputPath {
+			logger.ConsoleLogger.Infoln("input path:", s)
+			if !fileutil.IsExist(s) {
+				return errors.New(s + " input path does not exist")
+			}
 
-		if !fileutil.IsExist(inputPath) {
-			return errors.New("input path does not exist")
+			files := collectFiles(s)
+			if files.IsEmpty() {
+				continue
+			}
+			logger.ConsoleLogger.Infoln("mp3 files total", files.Len())
+			mp3Files = append(mp3Files, files...)
 		}
 
-		mp3Files := collectFiles(inputPath)
 		if mp3Files.IsEmpty() {
-			return errors.New("no mp3 files")
+			logger.ConsoleLogger.Warnln("no mp3 files")
+			return nil
 		}
-		logger.ConsoleLogger.Infoln("mp3 files total", mp3Files.Len())
 
 		err := saveToDB(config.Config.MySQL[dsn], mp3Files)
 		if err != nil {
@@ -118,11 +126,11 @@ func newApp() *cli.App {
 		Name:  "MP3文件列表展示",
 		Usage: "将路径下的MP3文件导出为CSV文件",
 		Flags: []cli.Flag{
-			&cli.StringFlag{
+			&cli.StringSliceFlag{
 				Name:    "input",
 				Aliases: []string{"i"},
 				Usage:   "输入路径，搜索该路径下的所有MP3文件",
-				Value:   ".",
+				Value:   cli.NewStringSlice("."),
 			},
 			&cli.StringFlag{
 				Name:    "dsn",
