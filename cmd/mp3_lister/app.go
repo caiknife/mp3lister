@@ -6,54 +6,50 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/bogem/id3v2/v2"
 	"github.com/duke-git/lancet/v2/fileutil"
-	"github.com/golang-module/carbon/v2"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 	"github.com/urfave/cli/v2"
 
 	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
+	"github.com/caiknife/mp3lister/lib/types"
 )
 
 func action() cli.ActionFunc {
 	return func(ctx *cli.Context) error {
-		var inputPath, outputPath string
-		if ctx.String("input") != "" {
-			inputPath = ctx.String("input")
-		} else {
-			inputPath = "."
+		inputPath := ctx.StringSlice("input")
+		outputPath := ctx.String("output")
+
+		if !strings.HasSuffix(outputPath, ".csv") {
+			outputPath += ".csv"
 		}
-		inputPath, err := filepath.Abs(inputPath)
-		if err != nil {
+
+		mp3Files := types.Slice[*lib.MP3]{}
+		for _, s := range inputPath {
+			logger.ConsoleLogger.Infoln("查询路径：", s)
+			if !fileutil.IsExist(s) {
+				return errors.New("该路径不存在！")
+			}
+			files, err := collectFiles(s)
+			if err != nil {
+				return err
+			}
+			if files.IsEmpty() {
+				continue
+			}
+			logger.ConsoleLogger.Infoln("找到MP3文件数量：", files.Len())
+			mp3Files = append(mp3Files, files...)
+		}
+
+		if mp3Files.IsEmpty() {
+			logger.ConsoleLogger.Warnln("没有找到MP3文件")
 			return nil
 		}
 
-		if ctx.String("output") != "" {
-			outputPath = ctx.String("output") + ".csv"
-		} else {
-			outputPath = time.Now().Format(carbon.ShortDateTimeLayout) + ".csv"
-		}
-
-		if !fileutil.IsExist(inputPath) {
-			return errors.New("该路径不存在！")
-		}
-
-		logger.ConsoleLogger.Infoln("查询路径：", inputPath)
-
-		files, err := collectFiles(inputPath)
-		if err != nil {
-			return err
-		}
-
-		if files.Len() == 0 {
-			return errors.New("该路径下没有MP3文件！")
-		}
-
-		err = writeFiles(files, outputPath)
+		err := writeFiles(mp3Files, outputPath)
 		if err != nil {
 			return err
 		}
@@ -64,7 +60,7 @@ func action() cli.ActionFunc {
 	}
 }
 
-func writeFiles(mp3files lib.MP3Collection, outputPath string) error {
+func writeFiles(mp3files types.Slice[*lib.MP3], outputPath string) error {
 	create, err := os.Create(outputPath)
 	if err != nil {
 		return err
@@ -94,8 +90,8 @@ func writeFiles(mp3files lib.MP3Collection, outputPath string) error {
 	return nil
 }
 
-func collectFiles(inputPath string) (lib.MP3Collection, error) {
-	mp3files := lib.MP3Collection{}
+func collectFiles(inputPath string) (types.Slice[*lib.MP3], error) {
+	mp3files := types.Slice[*lib.MP3]{}
 
 	err := filepath.WalkDir(inputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
@@ -131,15 +127,17 @@ func newApp() *cli.App {
 		Name:  "MP3文件列表展示",
 		Usage: "将路径下的MP3文件导出为CSV文件",
 		Flags: []cli.Flag{
-			&cli.StringFlag{
+			&cli.StringSliceFlag{
 				Name:    "input",
 				Aliases: []string{"i"},
 				Usage:   "输入路径，搜索该路径下的所有MP3文件",
+				Value:   cli.NewStringSlice("."),
 			},
 			&cli.StringFlag{
 				Name:    "output",
 				Aliases: []string{"o"},
 				Usage:   "输出文件名，输出CSV统计文件到该文件，不需要带.csv扩展名",
+				Value:   "output",
 			},
 		},
 		Action: action(),
