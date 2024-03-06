@@ -49,8 +49,8 @@ type book struct {
 	UpdatedAt field.Time
 	DeletedAt field.Field
 	Title     field.String // 书籍名称
-	Author    field.String // 专辑
-	Genre     field.String // 专辑
+	Author    field.String // 作者
+	Genre     field.String // 分类
 
 	fieldMap map[string]field.Expr
 }

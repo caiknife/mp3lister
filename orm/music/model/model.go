@@ -19,3 +19,11 @@ func (s *Song) String() string {
 	}
 	return toString
 }
+
+func (m *Movie) String() string {
+	toString, err := fjson.MarshalToString(m)
+	if err != nil {
+		return ""
+	}
+	return toString
+}
