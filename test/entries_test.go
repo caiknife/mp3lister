@@ -2,6 +2,9 @@ package test
 
 import (
 	"testing"
+	"time"
+
+	"github.com/brianvoe/gofakeit/v6"
 
 	_ "github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/orm/music"
@@ -13,7 +16,15 @@ var (
 )
 
 func TestEntries_Create(t *testing.T) {
-	e := &model.Entry{}
+	e := &model.Entry{
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
+		Title:      gofakeit.BookTitle(),
+		Artist:     gofakeit.Name(),
+		Album:      gofakeit.MonthString(),
+		Bpm:        int32(gofakeit.IntRange(40, 300)),
+		OriginFile: "",
+	}
 	err := entry.Create(e)
 	if err != nil {
 		t.Error(err)
@@ -58,6 +69,17 @@ func TestEntries_Get(t *testing.T) {
 		return
 	}
 	t.Log(find)
+}
+
+func TestEntries_GetAll(t *testing.T) {
+	find, err := entry.Order(entry.ID.Desc()).Find()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	for _, m := range find {
+		t.Log(m)
+	}
 }
 
 func TestEntries_Delete(t *testing.T) {
