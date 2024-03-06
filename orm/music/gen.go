@@ -16,34 +16,39 @@ import (
 )
 
 var (
-	Q    = new(Query)
-	Song *song
+	Q     = new(Query)
+	Entry *entry
+	Song  *song
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
+	Entry = &Q.Entry
 	Song = &Q.Song
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:   db,
-		Song: newSong(db, opts...),
+		db:    db,
+		Entry: newEntry(db, opts...),
+		Song:  newSong(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Song song
+	Entry entry
+	Song  song
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:   db,
-		Song: q.Song.clone(db),
+		db:    db,
+		Entry: q.Entry.clone(db),
+		Song:  q.Song.clone(db),
 	}
 }
 
@@ -57,18 +62,21 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:   db,
-		Song: q.Song.replaceDB(db),
+		db:    db,
+		Entry: q.Entry.replaceDB(db),
+		Song:  q.Song.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Song *songDo
+	Entry *entryDo
+	Song  *songDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Song: q.Song.WithContext(ctx),
+		Entry: q.Entry.WithContext(ctx),
+		Song:  q.Song.WithContext(ctx),
 	}
 }
 

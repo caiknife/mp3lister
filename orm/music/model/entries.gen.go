@@ -10,10 +10,10 @@ import (
 	"gorm.io/gorm"
 )
 
-const TableNameSong = "songs"
+const TableNameEntry = "entries"
 
-// Song mapped from table <songs>
-type Song struct {
+// Entry mapped from table <entries>
+type Entry struct {
 	ID         uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true" json:"id"`
 	CreatedAt  time.Time      `gorm:"column:created_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt  time.Time      `gorm:"column:updated_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
@@ -25,7 +25,7 @@ type Song struct {
 	OriginFile string         `gorm:"column:origin_file;type:varchar(500);not null;comment:源文件路径" json:"origin_file"` // 源文件路径
 }
 
-// TableName Song's table name
-func (*Song) TableName() string {
-	return TableNameSong
+// TableName Entry's table name
+func (*Entry) TableName() string {
+	return TableNameEntry
 }

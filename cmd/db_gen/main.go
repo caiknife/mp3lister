@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	dsn, b := config.Config.MySQL.Get("music")
+	dsn, b := config.Config.MySQL.Get(config.DB_Music)
 	if !b {
 		logger.ConsoleLogger.Fatalln("数据库连接不存在！")
 		return
