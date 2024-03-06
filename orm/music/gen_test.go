@@ -78,6 +78,7 @@ func Test_WithContext(t *testing.T) {
 
 	for _, ctx := range []context.Context{
 		qCtx.Book.UnderlyingDB().Statement.Context,
+		qCtx.Car.UnderlyingDB().Statement.Context,
 		qCtx.Movie.UnderlyingDB().Statement.Context,
 		qCtx.Song.UnderlyingDB().Statement.Context,
 	} {

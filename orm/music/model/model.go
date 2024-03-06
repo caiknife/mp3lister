@@ -27,3 +27,11 @@ func (m *Movie) String() string {
 	}
 	return toString
 }
+
+func (c *Car) String() string {
+	toString, err := fjson.MarshalToString(c)
+	if err != nil {
+		return ""
+	}
+	return toString
+}

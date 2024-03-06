@@ -18,6 +18,7 @@ import (
 var (
 	Q     = new(Query)
 	Book  *book
+	Car   *car
 	Movie *movie
 	Song  *song
 )
@@ -25,6 +26,7 @@ var (
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Book = &Q.Book
+	Car = &Q.Car
 	Movie = &Q.Movie
 	Song = &Q.Song
 }
@@ -33,6 +35,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:    db,
 		Book:  newBook(db, opts...),
+		Car:   newCar(db, opts...),
 		Movie: newMovie(db, opts...),
 		Song:  newSong(db, opts...),
 	}
@@ -42,6 +45,7 @@ type Query struct {
 	db *gorm.DB
 
 	Book  book
+	Car   car
 	Movie movie
 	Song  song
 }
@@ -52,6 +56,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:    db,
 		Book:  q.Book.clone(db),
+		Car:   q.Car.clone(db),
 		Movie: q.Movie.clone(db),
 		Song:  q.Song.clone(db),
 	}
@@ -69,6 +74,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:    db,
 		Book:  q.Book.replaceDB(db),
+		Car:   q.Car.replaceDB(db),
 		Movie: q.Movie.replaceDB(db),
 		Song:  q.Song.replaceDB(db),
 	}
@@ -76,6 +82,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 
 type queryCtx struct {
 	Book  *bookDo
+	Car   *carDo
 	Movie *movieDo
 	Song  *songDo
 }
@@ -83,6 +90,7 @@ type queryCtx struct {
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		Book:  q.Book.WithContext(ctx),
+		Car:   q.Car.WithContext(ctx),
 		Movie: q.Movie.WithContext(ctx),
 		Song:  q.Song.WithContext(ctx),
 	}

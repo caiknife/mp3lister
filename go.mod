@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/bogem/id3v2/v2 v2.1.4
+	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/duke-git/lancet/v2 v2.3.0
 	github.com/fatih/color v1.16.0
 	github.com/golang-module/carbon/v2 v2.3.10
@@ -12,14 +13,14 @@ require (
 	github.com/samber/lo v1.39.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cast v1.6.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/urfave/cli/v2 v2.27.1
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225
 	gopkg.in/yaml.v3 v3.0.1
-	gorm.io/driver/mysql v1.5.2
-	gorm.io/driver/sqlite v1.4.3
+	gorm.io/driver/mysql v1.5.4
+	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gen v0.3.25
-	gorm.io/gorm v1.25.2
+	gorm.io/gorm v1.25.7
 	gorm.io/plugin/dbresolver v1.5.1
 )
 
