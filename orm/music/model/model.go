@@ -4,8 +4,8 @@ import (
 	"github.com/caiknife/mp3lister/lib/fjson"
 )
 
-func (e *Entry) String() string {
-	toString, err := fjson.MarshalToString(e)
+func (b *Book) String() string {
+	toString, err := fjson.MarshalToString(b)
 	if err != nil {
 		return ""
 	}

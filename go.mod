@@ -1,6 +1,6 @@
 module github.com/caiknife/mp3lister
 
-go 1.21
+go 1.22
 
 require (
 	github.com/bogem/id3v2/v2 v2.1.4
