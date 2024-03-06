@@ -22,6 +22,17 @@ func TestEntries_Create(t *testing.T) {
 	t.Log(e)
 }
 
+func TestEntries_Restore(t *testing.T) {
+	simple, err := entry.Unscoped().Where(entry.ID).UpdateSimple(
+		entry.DeletedAt.Value(nil),
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(simple)
+}
+
 func TestEntries_Update(t *testing.T) {
 	simple, err := entry.Where(
 		entry.ID.Eq(3),
