@@ -18,7 +18,7 @@ var (
 
 func TestBooks_Create(t *testing.T) {
 	entries := types.Slice[*model.Book]{}
-	for range 10 {
+	for range 100 {
 		b := gofakeit.Book()
 		e := &model.Book{
 			CreatedAt: time.Now(),
