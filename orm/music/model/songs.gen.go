@@ -17,12 +17,12 @@ type Song struct {
 	ID         uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true" json:"id"`
 	CreatedAt  time.Time      `gorm:"column:created_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt  time.Time      `gorm:"column:updated_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:idx_songs_deleted_at,priority:1" json:"deleted_at"`
-	Title      string         `gorm:"column:title;type:varchar(200);not null;comment:歌曲名称" json:"title"`              // 歌曲名称
-	Artist     string         `gorm:"column:artist;type:varchar(200);not null;comment:艺术家" json:"artist"`             // 艺术家
-	Album      string         `gorm:"column:album;type:varchar(200);not null;comment:专辑" json:"album"`                // 专辑
-	Bpm        int32          `gorm:"column:bpm;type:int(11);not null;comment:BPM" json:"bpm"`                        // BPM
-	OriginFile string         `gorm:"column:origin_file;type:varchar(500);not null;comment:源文件路径" json:"origin_file"` // 源文件路径
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:deleted_at,priority:1" json:"deleted_at"`
+	Title      string         `gorm:"column:title;type:varchar(200);not null;index:title,priority:1;comment:歌曲名称" json:"title"`                    // 歌曲名称
+	Artist     string         `gorm:"column:artist;type:varchar(200);not null;comment:艺术家" json:"artist"`                                          // 艺术家
+	Album      string         `gorm:"column:album;type:varchar(200);not null;comment:专辑" json:"album"`                                             // 专辑
+	Bpm        int32          `gorm:"column:bpm;type:int(11);not null;comment:BPM" json:"bpm"`                                                     // BPM
+	OriginFile string         `gorm:"column:origin_file;type:varchar(500);not null;index:origin_file,priority:1;comment:源文件路径" json:"origin_file"` // 源文件路径
 }
 
 // TableName Song's table name
