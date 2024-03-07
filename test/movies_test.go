@@ -140,7 +140,8 @@ func updateMovie(id uint64) error {
 	find.Genre = m.Genre
 
 	simple, err := movie.Where(
-		movie.ID.Eq(id), movie.Version.Eq(find.Version),
+		movie.ID.Eq(id),
+		movie.Version.Eq(find.Version),
 	).UpdateSimple(
 		movie.Name.Value(find.Name),
 		movie.Genre.Value(find.Genre),
