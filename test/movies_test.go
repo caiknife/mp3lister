@@ -118,6 +118,7 @@ func TestMovies_GoRoutine(t *testing.T) {
 			err := updateMovie(4)
 			if err != nil {
 				t.Error(err)
+				return
 			}
 			t.Log(err)
 		}(wg)
