@@ -1,10 +1,12 @@
 package test
 
 import (
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/brianvoe/gofakeit/v6"
+	"github.com/pkg/errors"
 
 	_ "github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/types"
@@ -105,4 +107,49 @@ func TestMovies_Delete(t *testing.T) {
 		return
 	}
 	t.Log(info)
+}
+
+func TestMovies_GoRoutine(t *testing.T) {
+	wg := &sync.WaitGroup{}
+	for range 10 {
+		wg.Add(1)
+		go func(wg *sync.WaitGroup) {
+			defer wg.Done()
+			err := updateMovie(4)
+			if err != nil {
+				t.Error(err)
+			}
+			t.Log(err)
+		}(wg)
+	}
+
+	wg.Wait()
+}
+
+func updateMovie(id uint64) error {
+	find, err := movie.Where(
+		movie.ID.Eq(id),
+	).First()
+	if err != nil {
+		return err
+	}
+
+	m := gofakeit.Movie()
+	find.Name = m.Name
+	find.Genre = m.Genre
+
+	simple, err := movie.Where(
+		movie.ID.Eq(id), movie.Version.Eq(find.Version),
+	).UpdateSimple(
+		movie.Name.Value(find.Name),
+		movie.Genre.Value(find.Genre),
+		movie.Version.Add(1),
+	)
+	if err != nil {
+		return err
+	}
+	if simple.RowsAffected > 0 {
+		return nil
+	}
+	return errors.New("update failed")
 }
