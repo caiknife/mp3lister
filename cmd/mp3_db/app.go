@@ -15,7 +15,6 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/caiknife/mp3lister/config"
-	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/lib/types"
 	"github.com/caiknife/mp3lister/orm/music"
@@ -28,7 +27,7 @@ func action() cli.ActionFunc {
 		dsn := ctx.String("dsn")
 
 		logger.ConsoleLogger.Infoln("dsn:", dsn, config.Config.MySQL[dsn])
-		mp3Files := types.Slice[*lib.MP3]{}
+		mp3Files := types.Slice[*types.MP3]{}
 		for _, s := range inputPath {
 			logger.ConsoleLogger.Infoln("input path:", s)
 			if !fileutil.IsExist(s) {
@@ -56,7 +55,7 @@ func action() cli.ActionFunc {
 	}
 }
 
-func saveToDB(dsn string, mp3Files types.Slice[*lib.MP3]) error {
+func saveToDB(dsn string, mp3Files types.Slice[*types.MP3]) error {
 	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
 		return err
@@ -77,7 +76,7 @@ func saveToDB(dsn string, mp3Files types.Slice[*lib.MP3]) error {
 	}
 
 	// 插入数据
-	songs := slice.Map[*lib.MP3, *model.Song](mp3Files, func(index int, item *lib.MP3) *model.Song {
+	songs := slice.Map[*types.MP3, *model.Song](mp3Files, func(index int, item *types.MP3) *model.Song {
 		song := &model.Song{
 			Title:      item.Title,
 			Artist:     item.Artist,
@@ -95,8 +94,8 @@ func saveToDB(dsn string, mp3Files types.Slice[*lib.MP3]) error {
 	return nil
 }
 
-func collectFiles(inputPath string) types.Slice[*lib.MP3] {
-	var mp3files = types.Slice[*lib.MP3]{}
+func collectFiles(inputPath string) types.Slice[*types.MP3] {
+	var mp3files = types.Slice[*types.MP3]{}
 	_ = filepath.WalkDir(inputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -107,7 +106,7 @@ func collectFiles(inputPath string) types.Slice[*lib.MP3] {
 		if !strings.HasSuffix(d.Name(), ".mp3") {
 			return nil
 		}
-		mp3, err := lib.NewMP3(path)
+		mp3, err := types.NewMP3(path)
 		if err != nil {
 			if errors.Is(err, id3v2.ErrUnsupportedVersion) {
 				return nil

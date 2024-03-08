@@ -13,7 +13,6 @@ import (
 	"github.com/spf13/cast"
 	"github.com/urfave/cli/v2"
 
-	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/lib/types"
 )
@@ -27,7 +26,7 @@ func action() cli.ActionFunc {
 			outputPath += ".csv"
 		}
 
-		mp3Files := types.Slice[*lib.MP3]{}
+		mp3Files := types.Slice[*types.MP3]{}
 		for _, s := range inputPath {
 			logger.ConsoleLogger.Infoln("查询路径：", s)
 			if !fileutil.IsExist(s) {
@@ -60,7 +59,7 @@ func action() cli.ActionFunc {
 	}
 }
 
-func writeFiles(mp3files types.Slice[*lib.MP3], outputPath string) error {
+func writeFiles(mp3files types.Slice[*types.MP3], outputPath string) error {
 	create, err := os.Create(outputPath)
 	if err != nil {
 		return err
@@ -90,8 +89,8 @@ func writeFiles(mp3files types.Slice[*lib.MP3], outputPath string) error {
 	return nil
 }
 
-func collectFiles(inputPath string) (types.Slice[*lib.MP3], error) {
-	mp3files := types.Slice[*lib.MP3]{}
+func collectFiles(inputPath string) (types.Slice[*types.MP3], error) {
+	mp3files := types.Slice[*types.MP3]{}
 
 	err := filepath.WalkDir(inputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
@@ -103,7 +102,7 @@ func collectFiles(inputPath string) (types.Slice[*lib.MP3], error) {
 		if !strings.HasSuffix(d.Name(), ".mp3") {
 			return nil
 		}
-		mp3, err := lib.NewMP3(path)
+		mp3, err := types.NewMP3(path)
 		if err != nil {
 			if errors.Is(err, id3v2.ErrUnsupportedVersion) {
 				return nil

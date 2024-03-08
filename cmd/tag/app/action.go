@@ -13,6 +13,7 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/caiknife/mp3lister/lib"
+	"github.com/caiknife/mp3lister/lib/types"
 )
 
 func action(ctx *cli.Context) error {
@@ -43,7 +44,7 @@ func action(ctx *cli.Context) error {
 			return nil
 		}
 
-		mp3, err := lib.NewMP3(path)
+		mp3, err := types.NewMP3(path)
 		if err != nil {
 			if errors.Is(err, id3v2.ErrUnsupportedVersion) {
 				return nil

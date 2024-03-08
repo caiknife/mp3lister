@@ -17,6 +17,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
+	"github.com/caiknife/mp3lister/lib/types"
 	"github.com/caiknife/mp3lister/orm/music"
 	"github.com/caiknife/mp3lister/orm/music/model"
 )
@@ -27,7 +28,7 @@ type MP3Lister struct {
 	OutputExt  string
 
 	finalOutput string
-	all         MP3Collection
+	all         types.MP3Collection
 }
 
 type OptionApply interface {
@@ -72,7 +73,7 @@ func NewMP3Lister(ops ...Option) *MP3Lister {
 	for _, op := range ops {
 		op.Apply(lister)
 	}
-	lister.all = make(MP3Collection, 0)
+	lister.all = make(types.MP3Collection, 0)
 	lister.finalOutput = lister.OutputName + "." + lister.OutputExt
 	return lister
 }
@@ -103,7 +104,7 @@ func (m *MP3Lister) Do() error {
 		if !strings.HasSuffix(d.Name(), ".mp3") {
 			return nil
 		}
-		mp3, err := NewMP3(path)
+		mp3, err := types.NewMP3(path)
 		if err != nil {
 			if errors.Is(err, id3v2.ErrUnsupportedVersion) {
 				return nil
@@ -148,7 +149,7 @@ func (m *MP3Lister) SaveToDB(dsn string) error {
 		return err
 	}
 	// 插入数据
-	songs := slice.Map[*MP3, *model.Song](m.all, func(index int, item *MP3) *model.Song {
+	songs := slice.Map[*types.MP3, *model.Song](m.all, func(index int, item *types.MP3) *model.Song {
 		song := &model.Song{
 			Title:      item.Title,
 			Artist:     item.Artist,
