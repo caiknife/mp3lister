@@ -35,7 +35,7 @@ func SearchConfigFile(fileName string) (string, error) {
 	return "", ErrConfigFileMissing
 }
 
-func initYAMLConfig(receiver any, fileName string) {
+func InitYAMLConfig(receiver any, fileName string) {
 	file, err := SearchConfigFile(fileName)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
@@ -55,7 +55,7 @@ func initYAMLConfig(receiver any, fileName string) {
 	}
 }
 
-func initJSONConfig(receiver any, fileName string) {
+func InitJSONConfig(receiver any, fileName string) {
 	file, err := SearchConfigFile(fileName)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)

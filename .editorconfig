@@ -21,6 +21,9 @@ indent_style = tab
 ij_csv_keep_indents_on_empty_lines = true
 ij_csv_wrap_long_lines = false
 
+[*.json]
+indent_size = 2
+
 [*.sh]
 # indent_size = 2
 # tab_width = 2

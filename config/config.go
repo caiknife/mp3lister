@@ -20,7 +20,7 @@ func init() {
 
 func initConfig() {
 	Config = &AppConfig{}
-	initYAMLConfig(Config, "config.yml")
+	InitYAMLConfig(Config, "config.yml")
 }
 
 func initORM() {
