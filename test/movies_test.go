@@ -98,6 +98,15 @@ func TestMovies_Truncate(t *testing.T) {
 	t.Log(info)
 }
 
+func TestMovies_DeleteAll(t *testing.T) {
+	info, err := movie.Where(movie.ID).Delete()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(info)
+}
+
 func TestMovies_Delete(t *testing.T) {
 	info, err := movie.Where(
 		movie.ID.Eq(3),

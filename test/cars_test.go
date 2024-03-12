@@ -113,3 +113,12 @@ func TestCars_Delete(t *testing.T) {
 	}
 	t.Log(info)
 }
+
+func TestCars_DeleteAll(t *testing.T) {
+	info, err := car.Where(car.ID).Delete()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(info)
+}
