@@ -16,11 +16,12 @@ import (
 )
 
 var (
-	Q     = new(Query)
-	Book  *book
-	Car   *car
-	Movie *movie
-	Song  *song
+	Q      = new(Query)
+	Book   *book
+	Car    *car
+	Movie  *movie
+	Player *player
+	Song   *song
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
@@ -28,37 +29,41 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	Book = &Q.Book
 	Car = &Q.Car
 	Movie = &Q.Movie
+	Player = &Q.Player
 	Song = &Q.Song
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:    db,
-		Book:  newBook(db, opts...),
-		Car:   newCar(db, opts...),
-		Movie: newMovie(db, opts...),
-		Song:  newSong(db, opts...),
+		db:     db,
+		Book:   newBook(db, opts...),
+		Car:    newCar(db, opts...),
+		Movie:  newMovie(db, opts...),
+		Player: newPlayer(db, opts...),
+		Song:   newSong(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Book  book
-	Car   car
-	Movie movie
-	Song  song
+	Book   book
+	Car    car
+	Movie  movie
+	Player player
+	Song   song
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:    db,
-		Book:  q.Book.clone(db),
-		Car:   q.Car.clone(db),
-		Movie: q.Movie.clone(db),
-		Song:  q.Song.clone(db),
+		db:     db,
+		Book:   q.Book.clone(db),
+		Car:    q.Car.clone(db),
+		Movie:  q.Movie.clone(db),
+		Player: q.Player.clone(db),
+		Song:   q.Song.clone(db),
 	}
 }
 
@@ -72,27 +77,30 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:    db,
-		Book:  q.Book.replaceDB(db),
-		Car:   q.Car.replaceDB(db),
-		Movie: q.Movie.replaceDB(db),
-		Song:  q.Song.replaceDB(db),
+		db:     db,
+		Book:   q.Book.replaceDB(db),
+		Car:    q.Car.replaceDB(db),
+		Movie:  q.Movie.replaceDB(db),
+		Player: q.Player.replaceDB(db),
+		Song:   q.Song.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Book  *bookDo
-	Car   *carDo
-	Movie *movieDo
-	Song  *songDo
+	Book   *bookDo
+	Car    *carDo
+	Movie  *movieDo
+	Player *playerDo
+	Song   *songDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Book:  q.Book.WithContext(ctx),
-		Car:   q.Car.WithContext(ctx),
-		Movie: q.Movie.WithContext(ctx),
-		Song:  q.Song.WithContext(ctx),
+		Book:   q.Book.WithContext(ctx),
+		Car:    q.Car.WithContext(ctx),
+		Movie:  q.Movie.WithContext(ctx),
+		Player: q.Player.WithContext(ctx),
+		Song:   q.Song.WithContext(ctx),
 	}
 }
 

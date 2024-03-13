@@ -20,7 +20,7 @@ var (
 
 func TestMovies_Create(t *testing.T) {
 	entries := types.Slice[*model.Movie]{}
-	for range 100 {
+	for range 500 {
 		b := gofakeit.Movie()
 		e := &model.Movie{
 			CreatedAt: time.Now(),

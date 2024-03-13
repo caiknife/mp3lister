@@ -80,6 +80,7 @@ func Test_WithContext(t *testing.T) {
 		qCtx.Book.UnderlyingDB().Statement.Context,
 		qCtx.Car.UnderlyingDB().Statement.Context,
 		qCtx.Movie.UnderlyingDB().Statement.Context,
+		qCtx.Player.UnderlyingDB().Statement.Context,
 		qCtx.Song.UnderlyingDB().Statement.Context,
 	} {
 		if v := ctx.Value(key); v != value {

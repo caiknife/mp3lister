@@ -17,7 +17,7 @@ var (
 
 func TestCars_Create(t *testing.T) {
 	entries := types.Slice[*model.Car]{}
-	for range 1000 {
+	for range 500 {
 		b := gofakeit.Car()
 		e := &model.Car{
 			CreatedAt:    time.Now(),
@@ -32,7 +32,7 @@ func TestCars_Create(t *testing.T) {
 		entries = append(entries, e)
 	}
 
-	err := car.CreateInBatches(entries, 1000)
+	err := car.CreateInBatches(entries, 100)
 	if err != nil {
 		t.Error(err)
 		return
