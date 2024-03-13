@@ -6,6 +6,7 @@ import (
 
 	"github.com/brianvoe/gofakeit/v6"
 
+	"github.com/caiknife/mp3lister/lib/entity"
 	"github.com/caiknife/mp3lister/lib/types"
 	"github.com/caiknife/mp3lister/orm/music"
 	"github.com/caiknife/mp3lister/orm/music/model"
@@ -25,10 +26,11 @@ func TestPlayers_Create(t *testing.T) {
 			Name:      b.FirstName + " " + b.LastName,
 			Phone:     b.Contact.Phone,
 			Email:     b.Contact.Email,
-			Gold:      0,
-			Extra:     nil,
 		}
-		entries = append(entries, e)
+		p := entity.NewPlayer(e)
+		p.Extra.Address = *b.Address
+		p.Extra.CreditCard = *b.CreditCard
+		entries = append(entries, p.Value())
 	}
 
 	err := player.CreateInBatches(entries, 100)
@@ -61,6 +63,8 @@ func TestPlayer_Get(t *testing.T) {
 		return
 	}
 	t.Log(find)
+	p := entity.NewPlayer(find)
+	t.Log(p)
 }
 
 func TestPlayers_GetAll(t *testing.T) {

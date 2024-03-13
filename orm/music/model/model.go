@@ -35,3 +35,11 @@ func (c *Car) String() string {
 	}
 	return toString
 }
+
+func (p *Player) String() string {
+	toString, err := fjson.MarshalToString(p)
+	if err != nil {
+		return ""
+	}
+	return toString
+}
