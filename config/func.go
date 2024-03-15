@@ -14,14 +14,17 @@ import (
 
 var (
 	ErrConfigFileMissing = errors.New("config file missing")
-)
-
-func SearchConfigFile(fileName string) (string, error) {
-	searchPaths := []string{
+	defaultSearchPaths   = []string{
 		"./", "./config/", // 当前路径和config
 		"../", "../config/", // 上层路径和config
 		"../../", "../../config/", // 上两层路径和config
-		"../../../", "../../../config/", // 上两层路径和config
+		"../../../", "../../../config/", // 上三层路径和config
+	}
+)
+
+func SearchConfigFile(fileName string, searchPaths ...string) (string, error) {
+	if len(searchPaths) == 0 {
+		searchPaths = defaultSearchPaths
 	}
 
 	for _, path := range searchPaths {
