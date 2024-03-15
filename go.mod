@@ -17,6 +17,7 @@ require (
 	github.com/urfave/cli/v2 v2.27.1
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225
 	gopkg.in/yaml.v3 v3.0.1
+	gorm.io/datatypes v1.2.0
 	gorm.io/driver/mysql v1.5.4
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gen v0.3.25
@@ -45,6 +46,5 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.18.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
-	gorm.io/datatypes v1.2.0 // indirect
 	gorm.io/hints v1.1.0 // indirect
 )
