@@ -24,7 +24,8 @@ func initConfig() {
 }
 
 func initORM() {
-	DB, err := gorm.Open(mysql.Open(Config.MySQL[DB_Music]))
+	var err error
+	DB, err = gorm.Open(mysql.Open(Config.MySQL[DB_Music]))
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
