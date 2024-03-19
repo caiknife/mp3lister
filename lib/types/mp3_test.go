@@ -2,6 +2,9 @@ package types
 
 import (
 	"fmt"
+	"io/fs"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/bogem/id3v2/v2"
@@ -38,6 +41,34 @@ func TestUserTag(t *testing.T) {
 func TestFromStringToInt(t *testing.T) {
 	toInt := cast.ToInt("")
 	t.Log(toInt)
+}
+
+func TestMP3Length(t *testing.T) {
+	dir := "/Users/caiknife/Music/网易云音乐"
+	err := filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			return nil
+		}
+		if !strings.HasSuffix(d.Name(), ".mp3") {
+			return nil
+		}
+
+		m := &MP3{OriginFile: path}
+		err = m.LoadLength()
+		if err != nil {
+			t.Error(m)
+			return err
+		}
+		t.Log(m)
+		return nil
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
 }
 
 func TestBPM(t *testing.T) {

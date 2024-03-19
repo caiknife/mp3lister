@@ -41,7 +41,7 @@ func NewMP3(name string) (*MP3, error) {
 	return m.Init()
 }
 
-func (m *MP3) loadLength() error {
+func (m *MP3) LoadLength() error {
 	open, err := os.Open(m.OriginFile)
 	if err != nil {
 		return errors.WithMessage(err, "mp3 file open error")
@@ -81,7 +81,7 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Artist = m.transformNullSeparator(tag.Artist())
 	m.Album = tag.Album()
 
-	// _ = m.loadLength()
+	// _ = m.LoadLength()
 
 	return m, nil
 }
