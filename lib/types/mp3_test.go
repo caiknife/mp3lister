@@ -4,16 +4,36 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/bogem/id3v2/v2"
 	"github.com/spf13/cast"
 )
 
 var (
-	testsMP3Files = []string{
+	testsMP3Files = Slice[string]{
 		"/Users/caiknife/Music/网易云音乐/Joe Eckert/UNITED STATES AIR FORCE AIRMEN OF NOTE： Let's Dance/United States Air Force Band - Airmen of Note - Rockin' in Rhythm.mp3",
 		"/Users/caiknife/Music/虾米音乐/Rasmus Faber-銀河鉄道999 ~はじめてのチュウ.mp3",
 		"/Users/caiknife/Music/虾米音乐/Joseph Williams,Jason Weaver,Ernie Sabella - Hakuna Matata.mp3",
 	}
 )
+
+func TestUserTag(t *testing.T) {
+	testFile := "/Users/caiknife/Music/网易云音乐/Cats and Dinosaurs/Kapitalismen är en dröm/Cats and Dinosaurs - Ojämlikheten skördar människoliv.mp3"
+	tag, err := id3v2.Open(testFile, id3v2.Options{Parse: true})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	defer tag.Close()
+	frames := tag.GetFrames("TXXX")
+	for i, frame := range frames {
+		fmt.Println(i)
+		udtf, ok := frame.(id3v2.UserDefinedTextFrame)
+		if ok {
+			t.Log(udtf.Description)
+			t.Log(udtf.Value)
+		}
+	}
+}
 
 func TestFromStringToInt(t *testing.T) {
 	toInt := cast.ToInt("")
@@ -27,17 +47,17 @@ func TestBPM(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	t.Log(mp3.BPM)
+	t.Log(mp3)
 }
 
 func TestNewMP3(t *testing.T) {
-	for i, file := range testsMP3Files {
+	testsMP3Files.ForEach(func(file string, i int) {
 		t.Run(fmt.Sprintf("mp3 test %d", i+1), func(t *testing.T) {
 			mp3, err := NewMP3(file)
 			if err != nil {
 				t.Error(err)
 			}
-			t.Log(mp3.Staffing, len(mp3.Staffing))
+			t.Log(mp3)
 		})
-	}
+	})
 }

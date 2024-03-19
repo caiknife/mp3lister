@@ -1,9 +1,15 @@
 package types
 
 import (
+	"io"
+	"os"
 	"strings"
 
 	"github.com/bogem/id3v2/v2"
+	"github.com/pkg/errors"
+	"github.com/tcolgate/mp3"
+
+	"github.com/caiknife/mp3lister/lib/fjson"
 )
 
 const (
@@ -13,18 +19,26 @@ const (
 )
 
 type MP3 struct {
-	OriginFile string
-	BPM        string
-	Title      string
-	Artist     string
-	Album      string
-	Staffing   string
-	Memo       string
+	OriginFile string  `json:"origin_file"`
+	BPM        string  `json:"bpm"`
+	Title      string  `json:"title"`
+	Artist     string  `json:"artist"`
+	Album      string  `json:"album"`
+	Memo       string  `json:"memo"`
+	Length     float64 `json:"length"`
+}
+
+func (m *MP3) String() string {
+	toString, err := fjson.MarshalToString(m)
+	if err != nil {
+		return ""
+	}
+	return toString
 }
 
 func NewMP3(name string) (*MP3, error) {
-	mp3 := &MP3{OriginFile: name}
-	return mp3.Init()
+	m := &MP3{OriginFile: name}
+	return m.Init()
 }
 
 func (m *MP3) Init() (*MP3, error) {
@@ -39,15 +53,29 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Artist = m.transformNullSeparator(tag.Artist())
 	m.Album = tag.Album()
 
-	// frames := tag.GetFrames("TXXX")
-	// for i, frame := range frames {
-	// 	fmt.Println(i)
-	// 	udtf, ok := frame.(id3v2.UserDefinedTextFrame)
-	// 	if ok {
-	// 		fmt.Println(udtf.Description)
-	// 		fmt.Println(udtf.Value)
-	// 	}
-	// }
+	open, err := os.Open(m.OriginFile)
+	if err != nil {
+		return nil, err
+	}
+	defer open.Close()
+
+	v := 0.0
+	d := mp3.NewDecoder(open)
+	var f mp3.Frame
+	skipped := 0
+
+	for {
+		if err := d.Decode(&f, &skipped); err != nil {
+			if errors.Is(err, io.EOF) {
+				break
+			}
+			return nil, err
+		}
+
+		v += f.Duration().Seconds()
+	}
+
+	m.Length = v
 
 	return m, nil
 }
