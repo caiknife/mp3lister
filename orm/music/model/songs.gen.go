@@ -23,6 +23,7 @@ type Song struct {
 	Album      string         `gorm:"column:album;type:varchar(200);not null;comment:专辑" json:"album"`                                             // 专辑
 	Bpm        int32          `gorm:"column:bpm;type:int(11);not null;comment:BPM" json:"bpm"`                                                     // BPM
 	OriginFile string         `gorm:"column:origin_file;type:varchar(500);not null;index:origin_file,priority:1;comment:源文件路径" json:"origin_file"` // 源文件路径
+	Length     float64        `gorm:"column:length;type:double;comment:歌曲长度" json:"length"`                                                        // 歌曲长度
 }
 
 // TableName Song's table name
