@@ -83,6 +83,7 @@ func saveToDB(dsn string, mp3Files types.Slice[*types.MP3]) error {
 			Album:      item.Album,
 			Bpm:        cast.ToInt32(item.BPM),
 			OriginFile: item.OriginFile,
+			Length:     item.Length,
 		}
 		return song
 	})
@@ -96,7 +97,7 @@ func saveToDB(dsn string, mp3Files types.Slice[*types.MP3]) error {
 
 func collectFiles(inputPath string) types.Slice[*types.MP3] {
 	var mp3files = types.Slice[*types.MP3]{}
-	_ = filepath.WalkDir(inputPath, func(path string, d fs.DirEntry, err error) error {
+	err := filepath.WalkDir(inputPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -117,6 +118,9 @@ func collectFiles(inputPath string) types.Slice[*types.MP3] {
 		mp3files = append(mp3files, mp3)
 		return nil
 	})
+	if err != nil {
+		logger.ConsoleLogger.Errorln(err)
+	}
 	return mp3files
 }
 

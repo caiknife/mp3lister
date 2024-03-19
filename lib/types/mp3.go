@@ -41,21 +41,10 @@ func NewMP3(name string) (*MP3, error) {
 	return m.Init()
 }
 
-func (m *MP3) Init() (*MP3, error) {
-	tag, err := id3v2.Open(m.OriginFile, id3v2.Options{Parse: true})
-	if err != nil {
-		return nil, err
-	}
-	defer tag.Close()
-
-	m.BPM = tag.GetTextFrame(tag.CommonID("BPM")).Text
-	m.Title = tag.Title()
-	m.Artist = m.transformNullSeparator(tag.Artist())
-	m.Album = tag.Album()
-
+func (m *MP3) loadLength() error {
 	open, err := os.Open(m.OriginFile)
 	if err != nil {
-		return nil, err
+		return errors.WithMessage(err, "mp3 file open error")
 	}
 	defer open.Close()
 
@@ -69,13 +58,30 @@ func (m *MP3) Init() (*MP3, error) {
 			if errors.Is(err, io.EOF) {
 				break
 			}
-			return nil, err
+			return errors.WithMessage(err, "mp3 decode error")
 		}
 
 		v += f.Duration().Seconds()
 	}
 
 	m.Length = v
+
+	return nil
+}
+
+func (m *MP3) Init() (*MP3, error) {
+	tag, err := id3v2.Open(m.OriginFile, id3v2.Options{Parse: true})
+	if err != nil {
+		return nil, errors.WithMessage(err, "id3v2 open error")
+	}
+	defer tag.Close()
+
+	m.BPM = tag.GetTextFrame(tag.CommonID("BPM")).Text
+	m.Title = tag.Title()
+	m.Artist = m.transformNullSeparator(tag.Artist())
+	m.Album = tag.Album()
+
+	// _ = m.loadLength()
 
 	return m, nil
 }
@@ -98,20 +104,4 @@ func (m *MP3) transformNullSeparator(input string) string {
 	}
 
 	return input
-}
-
-type MP3Collection []*MP3
-
-func (m MP3Collection) Len() int {
-	return len(m)
-}
-
-func (m MP3Collection) Less(i, j int) bool {
-	return m[i].Artist < m[j].Artist &&
-		m[i].Album < m[j].Album &&
-		m[i].Title < m[j].Title
-}
-
-func (m MP3Collection) Swap(i, j int) {
-	m[i], m[j] = m[j], m[i]
 }

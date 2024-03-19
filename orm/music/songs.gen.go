@@ -36,6 +36,7 @@ func newSong(db *gorm.DB, opts ...gen.DOOption) song {
 	_song.Album = field.NewString(tableName, "album")
 	_song.Bpm = field.NewInt32(tableName, "bpm")
 	_song.OriginFile = field.NewString(tableName, "origin_file")
+	_song.Length = field.NewFloat64(tableName, "length")
 
 	_song.fillFieldMap()
 
@@ -50,11 +51,12 @@ type song struct {
 	CreatedAt  field.Time
 	UpdatedAt  field.Time
 	DeletedAt  field.Field
-	Title      field.String // 歌曲名称
-	Artist     field.String // 艺术家
-	Album      field.String // 专辑
-	Bpm        field.Int32  // BPM
-	OriginFile field.String // 源文件路径
+	Title      field.String  // 歌曲名称
+	Artist     field.String  // 艺术家
+	Album      field.String  // 专辑
+	Bpm        field.Int32   // BPM
+	OriginFile field.String  // 源文件路径
+	Length     field.Float64 // 歌曲长度
 
 	fieldMap map[string]field.Expr
 }
@@ -80,6 +82,7 @@ func (s *song) updateTableName(table string) *song {
 	s.Album = field.NewString(table, "album")
 	s.Bpm = field.NewInt32(table, "bpm")
 	s.OriginFile = field.NewString(table, "origin_file")
+	s.Length = field.NewFloat64(table, "length")
 
 	s.fillFieldMap()
 
@@ -96,7 +99,7 @@ func (s *song) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *song) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 9)
+	s.fieldMap = make(map[string]field.Expr, 10)
 	s.fieldMap["id"] = s.ID
 	s.fieldMap["created_at"] = s.CreatedAt
 	s.fieldMap["updated_at"] = s.UpdatedAt
@@ -106,6 +109,7 @@ func (s *song) fillFieldMap() {
 	s.fieldMap["album"] = s.Album
 	s.fieldMap["bpm"] = s.Bpm
 	s.fieldMap["origin_file"] = s.OriginFile
+	s.fieldMap["length"] = s.Length
 }
 
 func (s song) clone(db *gorm.DB) song {
