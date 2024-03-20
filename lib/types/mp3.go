@@ -3,19 +3,13 @@ package types
 import (
 	"io"
 	"os"
-	"strings"
 
 	"github.com/bogem/id3v2/v2"
 	"github.com/pkg/errors"
 	"github.com/tcolgate/mp3"
 
+	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/fjson"
-)
-
-const (
-	NullSeparator   = "\u0000"
-	NBSPSeparator   = "\u00A0"
-	ZWNBSPSeparator = "\uFEFF"
 )
 
 type MP3 struct {
@@ -78,7 +72,7 @@ func (m *MP3) Init() (*MP3, error) {
 
 	m.BPM = tag.GetTextFrame(tag.CommonID("BPM")).Text
 	m.Title = tag.Title()
-	m.Artist = m.transformNullSeparator(tag.Artist())
+	m.Artist = m.transform(tag.Artist())
 	m.Album = tag.Album()
 
 	// _ = m.LoadLength()
@@ -86,22 +80,6 @@ func (m *MP3) Init() (*MP3, error) {
 	return m, nil
 }
 
-func (m *MP3) transformNullSeparator(input string) string {
-	if strings.Contains(input, NullSeparator) {
-		// split := strings.Split(input, NullSeparator)
-		// input = strings.Join(split, "|")
-		input = strings.ReplaceAll(input, NullSeparator, ",")
-	}
-	if strings.Contains(input, NBSPSeparator) {
-		// split := strings.Split(input, NullSeperator)
-		// input = strings.Join(split, "|")
-		input = strings.ReplaceAll(input, NBSPSeparator, " ")
-	}
-	if strings.Contains(input, ZWNBSPSeparator) {
-		// split := strings.Split(input, NullSeperator)
-		// input = strings.Join(split, "|")
-		input = strings.ReplaceAll(input, ZWNBSPSeparator, "")
-	}
-
-	return input
+func (m *MP3) transform(input string) string {
+	return lib.CutInvisibleSeparator(input)
 }

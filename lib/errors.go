@@ -1,6 +1,8 @@
 package lib
 
-import "errors"
+import (
+	"github.com/pkg/errors"
+)
 
 var (
 	ErrInputIsNotDir = errors.New("input is not a dir")

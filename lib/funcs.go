@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/fatih/color"
 )
@@ -26,4 +27,30 @@ func GetInputPath(path string) (string, error) {
 
 func ColorPrintf(format string, a ...any) {
 	fmt.Fprintf(color.Output, format, a...)
+}
+
+const (
+	NullSeparator   = "\u0000"
+	NBSPSeparator   = "\u00A0"
+	ZWNBSPSeparator = "\uFEFF"
+)
+
+func CutInvisibleSeparator(input string) string {
+	if strings.Contains(input, NullSeparator) {
+		// split := strings.Split(input, NullSeparator)
+		// input = strings.Join(split, "|")
+		input = strings.ReplaceAll(input, NullSeparator, ",")
+	}
+	if strings.Contains(input, NBSPSeparator) {
+		// split := strings.Split(input, NullSeperator)
+		// input = strings.Join(split, "|")
+		input = strings.ReplaceAll(input, NBSPSeparator, " ")
+	}
+	if strings.Contains(input, ZWNBSPSeparator) {
+		// split := strings.Split(input, NullSeperator)
+		// input = strings.Join(split, "|")
+		input = strings.ReplaceAll(input, ZWNBSPSeparator, "")
+	}
+
+	return input
 }

@@ -73,14 +73,16 @@ func TestCars_Update(t *testing.T) {
 }
 
 func TestCars_Get(t *testing.T) {
-	find, err := car.Where(
-		car.ID.Eq(3),
-	).First()
-	if err != nil {
-		t.Error(err)
-		return
+	for i := range 10 {
+		find, err := car.Where(
+			car.ID.Eq(uint64(i + 1)),
+		).First()
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		t.Log(find)
 	}
-	t.Log(find)
 }
 
 func TestCars_GetAll(t *testing.T) {

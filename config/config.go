@@ -1,8 +1,14 @@
 package config
 
 import (
+	"log"
+	"os"
+	"time"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	gLogger "gorm.io/gorm/logger"
+	"gorm.io/plugin/dbresolver"
 
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/orm/music"
@@ -24,8 +30,37 @@ func initConfig() {
 }
 
 func initORM() {
+	newLogger := gLogger.New(
+		log.New(os.Stdout, "", log.LstdFlags), // io writer
+		gLogger.Config{
+			SlowThreshold:             time.Millisecond * 100, // Slow SQL threshold
+			LogLevel:                  gLogger.Info,           // Log level
+			IgnoreRecordNotFoundError: true,                   // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      true,                   // Don't include params in the SQL log
+			Colorful:                  true,                   // Disable color
+		},
+	)
+
 	var err error
-	DB, err = gorm.Open(mysql.Open(Config.MySQL[DB_Music]))
+	DB, err = gorm.Open(mysql.Open(Config.MySQL[DB_Music]), &gorm.Config{
+		Logger: newLogger,
+	})
+	if err != nil {
+		logger.ConsoleLogger.Fatalln(err)
+		return
+	}
+	// 读写分离
+	err = DB.Use(dbresolver.Register(dbresolver.Config{
+		Sources: []gorm.Dialector{
+			mysql.Open(Config.MySQL[DB_Music]),
+		},
+		Replicas: []gorm.Dialector{
+			mysql.Open(Config.MySQL[DB_Music]),
+			mysql.Open(Config.MySQL[DB_Music]),
+		},
+		Policy:            &RoundRobinPolicy{},
+		TraceResolverMode: true,
+	}))
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
@@ -36,3 +71,16 @@ func initORM() {
 const (
 	DB_Music = "music"
 )
+
+type RoundRobinPolicy struct {
+	index int
+}
+
+func (r *RoundRobinPolicy) Resolve(connPools []gorm.ConnPool) gorm.ConnPool {
+	if r.index >= len(connPools) {
+		r.index = 0
+	}
+	result := connPools[r.index]
+	r.index++
+	return result
+}
