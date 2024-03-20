@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	gLogger "gorm.io/gorm/logger"
+	"gorm.io/plugin/dbresolver"
 
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/orm/music"
@@ -44,6 +45,17 @@ func initORM() {
 	DB, err = gorm.Open(mysql.Open(Config.MySQL[DB_Music]), &gorm.Config{
 		Logger: newLogger,
 	})
+	if err != nil {
+		logger.ConsoleLogger.Fatalln(err)
+		return
+	}
+	// 读写分离
+	err = DB.Use(dbresolver.Register(dbresolver.Config{
+		Sources:           []gorm.Dialector{mysql.Open(Config.MySQL[DB_Music])},
+		Replicas:          []gorm.Dialector{mysql.Open(Config.MySQL[DB_Music]), mysql.Open(Config.MySQL[DB_Music])},
+		Policy:            dbresolver.RandomPolicy{},
+		TraceResolverMode: true,
+	}))
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
