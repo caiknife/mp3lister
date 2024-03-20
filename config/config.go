@@ -51,9 +51,14 @@ func initORM() {
 	}
 	// 读写分离
 	err = DB.Use(dbresolver.Register(dbresolver.Config{
-		Sources:           []gorm.Dialector{mysql.Open(Config.MySQL[DB_Music])},
-		Replicas:          []gorm.Dialector{mysql.Open(Config.MySQL[DB_Music]), mysql.Open(Config.MySQL[DB_Music])},
-		Policy:            dbresolver.RandomPolicy{},
+		Sources: []gorm.Dialector{
+			mysql.Open(Config.MySQL[DB_Music]),
+		},
+		Replicas: []gorm.Dialector{
+			mysql.Open(Config.MySQL[DB_Music]),
+			mysql.Open(Config.MySQL[DB_Music]),
+		},
+		Policy:            &RoundRobinPolicy{},
 		TraceResolverMode: true,
 	}))
 	if err != nil {
@@ -66,3 +71,16 @@ func initORM() {
 const (
 	DB_Music = "music"
 )
+
+type RoundRobinPolicy struct {
+	index int
+}
+
+func (r *RoundRobinPolicy) Resolve(connPools []gorm.ConnPool) gorm.ConnPool {
+	if r.index >= len(connPools) {
+		r.index = 0
+	}
+	result := connPools[r.index]
+	r.index++
+	return result
+}
