@@ -55,8 +55,8 @@ func initORM() {
 			mysql.Open(Config.MySQL[DB_Music]),
 		},
 		Replicas: []gorm.Dialector{
-			mysql.Open(Config.MySQL[DB_Music]),
-			mysql.Open(Config.MySQL[DB_Music]),
+			mysql.Open(Config.MySQL[DB_Music_Read_1]),
+			mysql.Open(Config.MySQL[DB_Music_Read_2]),
 		},
 		Policy:            &RoundRobinPolicy{},
 		TraceResolverMode: true,
@@ -69,7 +69,9 @@ func initORM() {
 }
 
 const (
-	DB_Music = "music"
+	DB_Music        = "music"
+	DB_Music_Read_1 = "music_read_1"
+	DB_Music_Read_2 = "music_read_2"
 )
 
 type RoundRobinPolicy struct {
