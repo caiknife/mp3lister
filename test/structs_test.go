@@ -21,7 +21,7 @@ func (p *person) String() string {
 }
 
 type driver struct {
-	*person
+	person
 	DriveLicence string `json:"drive_licence"`
 }
 
@@ -40,9 +40,11 @@ func TestPerson(t *testing.T) {
 		Email: "3",
 	}
 	t.Log(p)
+	t.Log((*p).String())
 	d := &driver{
-		person:       p,
+		person:       *p,
 		DriveLicence: "4",
 	}
 	t.Log(d)
+	t.Log((*d).String())
 }
