@@ -5,6 +5,7 @@ go 1.22
 require (
 	github.com/bogem/id3v2/v2 v2.1.4
 	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/duke-git/lancet/v2 v2.3.0
 	github.com/fatih/color v1.16.0
 	github.com/golang-module/carbon/v2 v2.3.10
@@ -12,6 +13,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
 	github.com/sirupsen/logrus v1.9.3
+	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.6.0
 	github.com/stretchr/testify v1.9.0
 	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300
