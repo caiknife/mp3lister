@@ -2,10 +2,12 @@ package lib
 
 import (
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/duke-git/lancet/v2/netutil"
 	"github.com/fatih/color"
 )
 
@@ -37,20 +39,21 @@ const (
 
 func CutInvisibleSeparator(input string) string {
 	if strings.Contains(input, NullSeparator) {
-		// split := strings.Split(input, NullSeparator)
-		// input = strings.Join(split, "|")
 		input = strings.ReplaceAll(input, NullSeparator, ",")
 	}
 	if strings.Contains(input, NBSPSeparator) {
-		// split := strings.Split(input, NullSeperator)
-		// input = strings.Join(split, "|")
 		input = strings.ReplaceAll(input, NBSPSeparator, " ")
 	}
 	if strings.Contains(input, ZWNBSPSeparator) {
-		// split := strings.Split(input, NullSeperator)
-		// input = strings.Join(split, "|")
 		input = strings.ReplaceAll(input, ZWNBSPSeparator, "")
 	}
 
 	return input
+}
+
+func SnowflakeMachineID() uint16 {
+	ip := netutil.GetInternalIp()
+	parseIP := net.ParseIP(ip).To4()
+	seed := uint16(parseIP[2])<<8 + uint16(parseIP[3])
+	return seed
 }
