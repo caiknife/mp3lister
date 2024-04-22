@@ -1,0 +1,11 @@
+
+.vscode/
+.DS_Store
+.golangci.yaml
+.golangci.yml
+options.json
+optionsComments.json
+optionsPayments.json
+optionsPublishing.json
+optionsPaymentsTest.json
+optionsPublishing.json
