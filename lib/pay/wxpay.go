@@ -49,7 +49,10 @@ func (w *Wxpay) TransactionApp(description string, orderID string, amount float6
 			b.Set("total", int64(amount*100)).Set("currency", "CNY")
 		})
 
-	app, err := w.client.V3TransactionApp(context.Background(), bm)
+	timeout, cancelFunc := context.WithTimeout(context.Background(), defaultTimeOut)
+	defer cancelFunc()
+
+	app, err := w.client.V3TransactionApp(timeout, bm)
 	if err != nil {
 		return nil, errors.WithMessage(err, "wxpay transaction app error")
 	}
@@ -65,7 +68,10 @@ func (w *Wxpay) TransactionApp(description string, orderID string, amount float6
 }
 
 func (w *Wxpay) Query(orderID string) (*wechat.QueryOrderRsp, error) {
-	order, err := w.client.V3TransactionQueryOrder(context.Background(), wechat.OutTradeNo, orderID)
+	timeout, cancelFunc := context.WithTimeout(context.Background(), defaultTimeOut)
+	defer cancelFunc()
+
+	order, err := w.client.V3TransactionQueryOrder(timeout, wechat.OutTradeNo, orderID)
 	if err != nil {
 		return nil, errors.WithMessage(err, "wxpay query error")
 	}

@@ -2,7 +2,6 @@ package pay
 
 import (
 	"context"
-	"time"
 
 	"github.com/pkg/errors"
 
@@ -37,7 +36,7 @@ func (r *RuStore) GetPurchaseInfo(purchaseToken string) (p payments.GetTokenPaym
 	if err != nil {
 		return p, errors.WithMessage(err, "rustore auth error")
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), client.TimeOutSeconds*10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeOut)
 	defer cancel()
 	p, err = r.payment.GetPaymentInfo(ctx, purchaseToken)
 	if err != nil {

@@ -52,7 +52,9 @@ func (a *Alipay) TransactionApp(description, orderID string, amount float64) (st
 func (a *Alipay) Query(orderID string) (q *alipay.TradeQueryResponse, err error) {
 	bm := make(gopay.BodyMap)
 	bm.Set("out_trade_no", orderID)
-	q, err = a.client.TradeQuery(context.Background(), bm)
+	timeout, cancelFunc := context.WithTimeout(context.Background(), defaultTimeOut)
+	defer cancelFunc()
+	q, err = a.client.TradeQuery(timeout, bm)
 	if err != nil {
 		return nil, errors.WithMessage(err, "alipay query error")
 	}
