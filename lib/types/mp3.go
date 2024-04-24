@@ -8,7 +8,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/tcolgate/mp3"
 
-	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/fjson"
 )
 
@@ -81,5 +80,5 @@ func (m *MP3) Init() (*MP3, error) {
 }
 
 func (m *MP3) transform(input string) string {
-	return lib.CutInvisibleSeparator(input)
+	return CutInvisibleSeparator(input)
 }

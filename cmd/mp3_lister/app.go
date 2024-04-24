@@ -1,18 +1,16 @@
 package main
 
 import (
-	"encoding/csv"
 	"io/fs"
-	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/bogem/id3v2/v2"
 	"github.com/duke-git/lancet/v2/fileutil"
 	"github.com/pkg/errors"
-	"github.com/spf13/cast"
 	"github.com/urfave/cli/v2"
 
+	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/lib/types"
 )
@@ -48,7 +46,7 @@ func action() cli.ActionFunc {
 			return nil
 		}
 
-		err := writeFiles(mp3Files, outputPath)
+		err := lib.WriteCSV(mp3Files, outputPath)
 		if err != nil {
 			return err
 		}
@@ -57,36 +55,6 @@ func action() cli.ActionFunc {
 
 		return nil
 	}
-}
-
-func writeFiles(mp3files types.Slice[*types.MP3], outputPath string) error {
-	create, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer create.Close()
-
-	writer := csv.NewWriter(create)
-	err = writer.Write([]string{"No.", "BPM", "Title", "Artist", "Album", "OriginFile"})
-	if err != nil {
-		return err
-	}
-	for i, file := range mp3files {
-		err := writer.Write([]string{
-			cast.ToString(i + 1),
-			file.BPM,
-			file.Title,
-			file.Artist,
-			file.Album,
-			file.OriginFile,
-		})
-		if err != nil {
-			return err
-		}
-	}
-	writer.Flush()
-
-	return nil
 }
 
 func collectFiles(inputPath string) (types.Slice[*types.MP3], error) {
