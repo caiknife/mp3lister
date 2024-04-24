@@ -66,10 +66,10 @@ func cleanNCM(inputPath string) error {
 
 		if fileutil.IsExist(fileName) {
 			logger.ConsoleLogger.Warnln(fileName, "ncm转换后的mp3文件已经存在，原ncm文件要被删除")
-			logger.ConsoleLogger.Warnln("删除原ncm文件", path)
+			logger.ConsoleLogger.Infoln("删除原ncm文件", path)
 			err := fileutil.RemoveFile(path)
 			if err != nil {
-				logger.ConsoleLogger.Errorln(err)
+				logger.ConsoleLogger.Errorln("删除文件失败", err)
 				return errors.WithMessage(err, "remove ncm file error")
 			}
 		}
