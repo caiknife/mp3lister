@@ -6,7 +6,6 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/pay/rustore/client"
 	"github.com/caiknife/mp3lister/lib/pay/rustore/payments"
 )
@@ -40,7 +39,7 @@ func (r *RuStore) GetPurchaseInfo(purchaseToken string) (p payments.GetTokenPaym
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), client.TimeOutSeconds*10*time.Second)
 	defer cancel()
-	p, err = r.payment.GetPaymentInfo(ctx, config.Pay.RuStore.PurchaseToken)
+	p, err = r.payment.GetPaymentInfo(ctx, purchaseToken)
 	if err != nil {
 		return p, errors.WithMessage(err, "rustore get purchase info error")
 	}
