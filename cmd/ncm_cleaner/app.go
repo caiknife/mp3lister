@@ -69,8 +69,8 @@ func cleanNCM(inputPath string) error {
 			logger.ConsoleLogger.Warnln("删除原ncm文件", path)
 			err := fileutil.RemoveFile(path)
 			if err != nil {
-				logger.ConsoleLogger.Fatalln(err)
-				return err
+				logger.ConsoleLogger.Errorln(err)
+				return errors.WithMessage(err, "remove ncm file error")
 			}
 		}
 		return nil
