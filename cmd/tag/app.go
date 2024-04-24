@@ -1,4 +1,4 @@
-package app
+package main
 
 import (
 	"fmt"
@@ -25,7 +25,7 @@ func init() {
 	}
 }
 
-func New() *cli.App {
+func newApp() *cli.App {
 	app := &cli.App{
 		Name:    Name,
 		Usage:   "Just a mp3 files lister.",
@@ -48,7 +48,7 @@ func New() *cli.App {
 				Usage:   "input path for mp3 lister, default value is current dir",
 			},
 		},
-		Action: action,
+		Action: action(),
 	}
 
 	return app
