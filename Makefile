@@ -1,6 +1,11 @@
-.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter
+.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion
 
-build: ncm_cleaner mp3_lister mp3_db list_exporter
+build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion
+
+list_emotion:
+	go mod tidy
+	go build -ldflags="-s -w" -tags=jsoniter -o ./out/list_emotion ./cmd/list_emotion
+	go install -ldflags="-s -w" -tags=jsoniter ./cmd/list_emotion
 
 list_exporter:
 	go mod tidy
