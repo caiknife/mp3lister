@@ -6,6 +6,7 @@ require (
 	github.com/bogem/id3v2/v2 v2.1.4
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/bwmarrin/snowflake v0.3.0
+	github.com/dhowden/tag v0.0.0-20240417053706-3d75831295e8
 	github.com/duke-git/lancet/v2 v2.3.0
 	github.com/fatih/color v1.16.0
 	github.com/go-pay/gopay v1.5.100

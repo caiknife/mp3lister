@@ -3,10 +3,12 @@ package types
 import (
 	"fmt"
 	"io/fs"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/dhowden/tag"
 	"github.com/spf13/cast"
 )
 
@@ -26,6 +28,32 @@ func TestUserTag(t *testing.T) {
 		return
 	}
 	t.Log(mp3)
+}
+
+func TestM4aFile(t *testing.T) {
+	testFile := "/Users/caiknife/Music/虾米音乐/Jonathan Stout and his Campus Five - Moppin' and Boppin' - 18 I Can't Believe You're in Love with Me.m4a"
+	mp3, err := NewMP3(testFile)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(mp3)
+
+	// testFile = "/Users/caiknife/Music/网易云音乐/Cats and Dinosaurs/Kapitalismen är en dröm/Cats and Dinosaurs - Ojämlikheten skördar människoliv.mp3"
+	open, err := os.Open(testFile)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	from, err := tag.ReadFrom(open)
+	if err != nil {
+		t.Error()
+		return
+	}
+	t.Log(from.Format())
+	for key, val := range from.Raw() {
+		t.Log(key, val)
+	}
 }
 
 func TestFromStringToInt(t *testing.T) {
