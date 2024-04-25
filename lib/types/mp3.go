@@ -62,6 +62,21 @@ func (m *MP3) LoadLength() error {
 	return nil
 }
 
+func (m *MP3) loadMemo(tag *id3v2.Tag) error {
+	frames := tag.GetFrames("TXXX")
+	for _, frame := range frames {
+		switch frame := frame.(type) {
+		case id3v2.UserDefinedTextFrame:
+			if frame.Description == "QuodLibet::memo" {
+				m.Memo = CutInvisibleSeparator(frame.Value)
+			}
+		default:
+			m.Memo = ""
+		}
+	}
+	return nil
+}
+
 func (m *MP3) Init() (*MP3, error) {
 	tag, err := id3v2.Open(m.OriginFile, id3v2.Options{Parse: true})
 	if err != nil {
@@ -73,7 +88,7 @@ func (m *MP3) Init() (*MP3, error) {
 	m.Title = tag.Title()
 	m.Artist = m.transform(tag.Artist())
 	m.Album = tag.Album()
-
+	_ = m.loadMemo(tag)
 	// _ = m.LoadLength()
 
 	return m, nil

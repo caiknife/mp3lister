@@ -7,7 +7,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/bogem/id3v2/v2"
 	"github.com/spf13/cast"
 )
 
@@ -21,21 +20,12 @@ var (
 
 func TestUserTag(t *testing.T) {
 	testFile := "/Users/caiknife/Music/网易云音乐/Cats and Dinosaurs/Kapitalismen är en dröm/Cats and Dinosaurs - Ojämlikheten skördar människoliv.mp3"
-	tag, err := id3v2.Open(testFile, id3v2.Options{Parse: true})
+	mp3, err := NewMP3(testFile)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	defer tag.Close()
-	frames := tag.GetFrames("TXXX")
-	for i, frame := range frames {
-		fmt.Println(i)
-		udtf, ok := frame.(id3v2.UserDefinedTextFrame)
-		if ok {
-			t.Log(udtf.Description)
-			t.Log(udtf.Value)
-		}
-	}
+	t.Log(mp3)
 }
 
 func TestFromStringToInt(t *testing.T) {

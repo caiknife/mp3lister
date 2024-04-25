@@ -76,7 +76,7 @@ func WriteCSV(s types.Slice[*types.MP3], outputFile string) error {
 	writer := csv.NewWriter(create)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"No.", "BPM", "Title", "Artist", "Album", "OriginFile"})
+	err = writer.Write([]string{"No.", "BPM", "Title", "Artist", "Album", "Memo", "OriginFile"})
 	if err != nil {
 		return errors.WithMessage(err, "write csv header error")
 	}
@@ -87,6 +87,7 @@ func WriteCSV(s types.Slice[*types.MP3], outputFile string) error {
 			file.Title,
 			file.Artist,
 			file.Album,
+			file.Memo,
 			file.OriginFile,
 		})
 		if err != nil {
