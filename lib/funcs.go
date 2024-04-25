@@ -11,14 +11,19 @@ import (
 	"github.com/duke-git/lancet/v2/slice"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
+	"github.com/vicanso/go-charts/v2"
 
 	"github.com/caiknife/mp3lister/lib/types"
 )
 
-func GetOutputFile(originFile, ext string) string {
+func GetOutputFileNoExt(originFile string) string {
 	base := filepath.Base(originFile)
 	s := filepath.Ext(originFile)
-	return base[0:len(base)-len(s)] + "." + ext
+	return base[0 : len(base)-len(s)]
+}
+
+func GetOutputFileWithExt(originFile, ext string) string {
+	return GetOutputFileNoExt(originFile) + "." + ext
 }
 
 func ReadM3U(file string) (s types.Slice[*types.MP3], err error) {
@@ -27,7 +32,10 @@ func ReadM3U(file string) (s types.Slice[*types.MP3], err error) {
 		return nil, errors.WithMessage(err, "file abs path error")
 	}
 	if !fileutil.IsExist(abs) {
-		return nil, errors.WithMessage(err, "file not exist")
+		return nil, errors.WithMessage(err, "file does not exist")
+	}
+	if strings.ToLower(filepath.Ext(abs)) != ".m3u" {
+		return nil, errors.WithMessage(err, "file is not m3u")
 	}
 
 	u, err := readM3U(abs)
@@ -64,6 +72,39 @@ func readM3U(file string) (s types.Slice[string], err error) {
 		s = append(s, line)
 	}
 	return s, nil
+}
+
+func WriteChart(s types.Slice[*types.MP3], outputFile string) error {
+	values := [][]float64{
+		slice.Map[*types.MP3, float64](s, func(_ int, item *types.MP3) float64 {
+			return cast.ToFloat64(item.BPM)
+		}),
+	}
+	xValues := slice.Map[*types.MP3, string](s, func(index int, _ *types.MP3) string {
+		return cast.ToString(index + 1)
+	})
+	render, err := charts.LineRender(
+		values,
+		charts.TitleTextOptionFunc(GetOutputFileNoExt(outputFile)),
+		charts.XAxisDataOptionFunc(xValues),
+		func(opt *charts.ChartOption) {
+			opt.Width = 600 * 2
+			opt.Height = 400 * 2
+			opt.FillArea = true
+		},
+	)
+	if err != nil {
+		return errors.WithMessage(err, "charts render error")
+	}
+	bytes, err := render.Bytes()
+	if err != nil {
+		return errors.WithMessage(err, "render bytes error")
+	}
+	err = fileutil.WriteBytesToFile(outputFile, bytes)
+	if err != nil {
+		return errors.WithMessage(err, "write output file error")
+	}
+	return nil
 }
 
 func WriteCSV(s types.Slice[*types.MP3], outputFile string) error {

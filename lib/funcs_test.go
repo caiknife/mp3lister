@@ -9,7 +9,21 @@ const (
 )
 
 func TestGetOutputFile(t *testing.T) {
-	t.Log(GetOutputFile(m3uFile, "csv"))
+	t.Log(GetOutputFileNoExt(m3uFile))
+	t.Log(GetOutputFileWithExt(m3uFile, "csv"))
+}
+
+func TestWriteChart(t *testing.T) {
+	u, err := ReadM3U(m3uFile)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = WriteChart(u, GetOutputFileWithExt(m3uFile, "png"))
+	if err != nil {
+		t.Error(err)
+		return
+	}
 }
 
 func TestWriteCSV(t *testing.T) {
@@ -18,7 +32,7 @@ func TestWriteCSV(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	err = WriteCSV(u, GetOutputFile(m3uFile, "csv"))
+	err = WriteCSV(u, GetOutputFileWithExt(m3uFile, "csv"))
 	if err != nil {
 		t.Error(err)
 		return

@@ -21,8 +21,8 @@ func action() cli.ActionFunc {
 			if err != nil {
 				return errors.WithMessage(err, "read input file")
 			}
-			outputFile := lib.GetOutputFileWithExt(inputFile, "csv")
-			err = lib.WriteCSV(u, outputFile)
+			outputFile := lib.GetOutputFileWithExt(inputFile, "png")
+			err = lib.WriteChart(u, outputFile)
 			if err != nil {
 				return errors.WithMessage(err, "write output file")
 			}
@@ -34,13 +34,13 @@ func action() cli.ActionFunc {
 
 func newApp() *cli.App {
 	app := &cli.App{
-		Name:  "将m3u歌单文件内容导出成csv文件",
-		Usage: "将m3u歌单文件内容导出成csv文件",
+		Name:  "将m3u歌单文件内容导出成歌曲速度分布图",
+		Usage: "将m3u歌单文件内容导出成歌曲速度分布图",
 		Flags: []cli.Flag{
 			&cli.StringSliceFlag{
 				Name:    "input",
 				Aliases: []string{"i"},
-				Usage:   "需要导出的m3u歌单文件",
+				Usage:   "需要导出的歌单曲速分布图",
 				Value:   cli.NewStringSlice(),
 			}},
 		Action: action(),
