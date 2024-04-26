@@ -14,6 +14,22 @@ import (
 	"github.com/caiknife/mp3lister/lib/pay/rustore/client"
 )
 
+type InvoiceStatus string
+
+func (i InvoiceStatus) Success() bool {
+	return i == Confirmed || i == Paid
+}
+
+const (
+	Created   InvoiceStatus = "created"
+	Executed                = "executed"
+	Cancelled               = "cancelled"
+	Paid                    = "paid"
+	Confirmed               = "confirmed"
+	Reversed                = "reversed"
+	Refunded                = "refunded"
+)
+
 const (
 	PublicAPIURL             = "https://public-api.rustore.ru/public/"
 	GetSandboxPaymentInfoURL = PublicAPIURL + "sandbox/purchase/%s"
@@ -55,7 +71,7 @@ func (t GetTokenPaymentResponse) String() string {
 type TokenPayment struct {
 	InvoiceID       string          `json:"invoice_id"`
 	InvoiceDate     string          `json:"invoice_date"`
-	InvoiceStatus   string          `json:"invoice_status"`
+	InvoiceStatus   InvoiceStatus   `json:"invoice_status"`
 	ApplicationCode string          `json:"application_code"`
 	ApplicationName string          `json:"application_name"`
 	OwnerCode       string          `json:"owner_code"`

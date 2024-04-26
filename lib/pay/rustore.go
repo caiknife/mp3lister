@@ -44,3 +44,7 @@ func (r *RuStore) GetPurchaseInfo(purchaseToken string) (p payments.GetTokenPaym
 	}
 	return p, nil
 }
+
+func (r *RuStore) CheckStatus(p payments.GetTokenPaymentResponse) bool {
+	return p.Body.InvoiceStatus.Success()
+}

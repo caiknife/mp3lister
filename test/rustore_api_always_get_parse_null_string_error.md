@@ -4,7 +4,7 @@ _## RuStore API always get "parse null string" error
 
 repo https://gitflic.ru/project/rustore/rustoreapi
 
-The official Go SDK uses keyId but not companyId but we want to use companyId, 
+The official Go SDK uses keyId but not companyId but we want to use companyId,
 so I did a little hack in source code.
 
 ```go
@@ -24,6 +24,7 @@ resultMap,
 
 return string(ResultJSON), err
 ```
+
 Here below is my test code
 
 ```go

@@ -14,4 +14,5 @@ func TestRuStoreAPI(t *testing.T) {
 		return
 	}
 	t.Log(info)
+	t.Log(store.CheckStatus(info))
 }
