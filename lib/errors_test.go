@@ -22,3 +22,11 @@ func TestErrors(t *testing.T) {
 		return
 	}
 }
+
+func TestLogErrors(t *testing.T) {
+	t.Log(ErrInputIsNotDir)
+	t.Log(ErrInputPathIsEmpty)
+	t.Log(ErrOutputExtIsEmpty)
+	t.Log(ErrOutputNameIsEmpty)
+	t.Log(ErrDataIsEmpty)
+}
