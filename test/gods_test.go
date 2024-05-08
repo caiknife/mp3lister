@@ -4,6 +4,8 @@ import (
 	"testing"
 
 	"github.com/emirpasic/gods/v2/lists/arraylist"
+	"github.com/emirpasic/gods/v2/maps/hashmap"
+	"github.com/emirpasic/gods/v2/maps/linkedhashmap"
 	"github.com/emirpasic/gods/v2/sets/hashset"
 )
 
@@ -14,6 +16,14 @@ func TestGODS_ArrayList(t *testing.T) {
 		return x - y
 	})
 	t.Log(l.Values())
+
+	iterator := l.Iterator()
+	for iterator.End(); iterator.Prev(); {
+		t.Log(iterator.Value())
+	}
+	l.Each(func(_ int, value int) {
+		t.Log(value)
+	})
 }
 
 func TestGODS_HashSet(t *testing.T) {
@@ -24,4 +34,20 @@ func TestGODS_HashSet(t *testing.T) {
 	s2 := hashset.New(4, 5, 6, 7, 8)
 	s = s.Union(s2)
 	t.Log(s)
+}
+
+func TestGODS_HashMap(t *testing.T) {
+	m := hashmap.New[string, int]()
+	m.Put("name", 1)
+	m.Put("age", 2)
+	m.Put("email", 3)
+	t.Log(m.Values(), m.Keys())
+}
+
+func TestGODS_LinkedHashMap(t *testing.T) {
+	m := linkedhashmap.New[string, int]()
+	m.Put("name", 1)
+	m.Put("age", 2)
+	m.Put("email", 3)
+	t.Log(m.Values(), m.Keys())
 }
