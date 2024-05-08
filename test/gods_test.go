@@ -6,7 +6,11 @@ import (
 	"github.com/emirpasic/gods/v2/lists/arraylist"
 	"github.com/emirpasic/gods/v2/maps/hashmap"
 	"github.com/emirpasic/gods/v2/maps/linkedhashmap"
+	"github.com/emirpasic/gods/v2/queues/arrayqueue"
 	"github.com/emirpasic/gods/v2/sets/hashset"
+	"github.com/emirpasic/gods/v2/sets/linkedhashset"
+	"github.com/emirpasic/gods/v2/sets/treeset"
+	"github.com/emirpasic/gods/v2/stacks/arraystack"
 )
 
 func TestGODS_ArrayList(t *testing.T) {
@@ -50,4 +54,63 @@ func TestGODS_LinkedHashMap(t *testing.T) {
 	m.Put("age", 2)
 	m.Put("email", 3)
 	t.Log(m.Values(), m.Keys())
+	m.Each(func(key string, value int) {
+		t.Log(key, value)
+		m.Put(key, value*2)
+	})
+	t.Log(m)
+}
+
+func TestGODS_LinkedHashSet(t *testing.T) {
+	s := linkedhashset.New(1, 2, 3, 4, 5, 1, 2, 3, 4, 5)
+	t.Log(s.Values())
+	iterator := s.Iterator()
+	for iterator.Next() {
+		t.Log(iterator.Value())
+	}
+}
+
+func TestGODS_TreeSet(t *testing.T) {
+	s := treeset.New(1, 2, 3, 4, 5, 1, 2, 3, 4, 5)
+	t.Log(s.Values())
+	iterator := s.Iterator()
+	for iterator.Next() {
+		t.Log(iterator.Value())
+	}
+}
+
+func TestGODS_Stack(t *testing.T) {
+	s := arraystack.New[int]()
+	s.Push(1)
+	s.Push(2)
+	s.Push(3)
+	s.Push(4)
+	s.Push(5)
+	t.Log(s)
+
+	for {
+		value, ok := s.Pop()
+		if !ok {
+			break
+		}
+		t.Log(value)
+	}
+}
+
+func TestGODS_Queue(t *testing.T) {
+	q := arrayqueue.New[int]()
+	q.Enqueue(1)
+	q.Enqueue(2)
+	q.Enqueue(3)
+	q.Enqueue(4)
+	q.Enqueue(5)
+	t.Log(q)
+
+	for {
+		value, ok := q.Dequeue()
+		if !ok {
+			break
+		}
+		t.Log(value)
+	}
 }
