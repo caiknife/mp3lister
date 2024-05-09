@@ -35,7 +35,7 @@ func NewClient(privateKey, keyID, issuerID, appID string) *Client {
 }
 
 func (c *Client) GetToken(body any) (s string, err error) {
-	c.token.Header["kid"] = "this"
+	c.token.Header["kid"] = c.KeyID
 	now := time.Now().Unix()
 	hash, err := c.Hash(body)
 	if err != nil {

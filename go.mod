@@ -11,7 +11,7 @@ require (
 	github.com/emirpasic/gods/v2 v2.0.0-alpha
 	github.com/fatih/color v1.16.0
 	github.com/go-pay/gopay v1.5.100
-	github.com/go-resty/resty/v2 v2.12.0
+	github.com/go-resty/resty/v2 v2.13.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/json-iterator/go v1.1.12
