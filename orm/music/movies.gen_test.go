@@ -17,14 +17,14 @@ import (
 
 func init() {
 	InitializeDB()
-	err := db.AutoMigrate(&model.Movie{})
+	err := _gen_test_db.AutoMigrate(&model.Movie{})
 	if err != nil {
 		fmt.Printf("Error: AutoMigrate(&model.Movie{}) fail: %s", err)
 	}
 }
 
 func Test_movieQuery(t *testing.T) {
-	movie := newMovie(db)
+	movie := newMovie(_gen_test_db)
 	movie = *movie.As(movie.TableName())
 	_do := movie.WithContext(context.Background()).Debug()
 

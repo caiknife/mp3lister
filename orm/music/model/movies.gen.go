@@ -15,8 +15,8 @@ const TableNameMovie = "movies"
 // Movie mapped from table <movies>
 type Movie struct {
 	ID        uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	CreatedAt time.Time      `gorm:"column:created_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt time.Time      `gorm:"column:updated_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	CreatedAt time.Time      `gorm:"column:created_at;type:datetime;not null;default:current_timestamp()" json:"created_at"`
+	UpdatedAt time.Time      `gorm:"column:updated_at;type:datetime;not null;default:current_timestamp()" json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:deleted_at,priority:1" json:"deleted_at"`
 	Name      string         `gorm:"column:name;type:varchar(200);not null;index:name,priority:1;comment:电影名称" json:"name"` // 电影名称
 	Genre     string         `gorm:"column:genre;type:varchar(200);not null;comment:分类" json:"genre"`                       // 分类

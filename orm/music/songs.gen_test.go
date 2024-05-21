@@ -17,14 +17,14 @@ import (
 
 func init() {
 	InitializeDB()
-	err := db.AutoMigrate(&model.Song{})
+	err := _gen_test_db.AutoMigrate(&model.Song{})
 	if err != nil {
 		fmt.Printf("Error: AutoMigrate(&model.Song{}) fail: %s", err)
 	}
 }
 
 func Test_songQuery(t *testing.T) {
-	song := newSong(db)
+	song := newSong(_gen_test_db)
 	song = *song.As(song.TableName())
 	_do := song.WithContext(context.Background()).Debug()
 

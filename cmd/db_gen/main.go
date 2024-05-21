@@ -24,6 +24,9 @@ var (
 		"json": func(columnType gorm.ColumnType) (dataType string) {
 			return "datatypes.JSON"
 		},
+		"longtext": func(columnType gorm.ColumnType) (dataType string) {
+			return "datatypes.JSON"
+		},
 		"tinyint": func(columnType gorm.ColumnType) (dataType string) {
 			return "bool"
 		},
