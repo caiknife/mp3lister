@@ -27,3 +27,6 @@ mp3_db:
 	go build -ldflags="-s -w" -tags=jsoniter -o ./out/mp3_db ./cmd/mp3_db
 	go install -ldflags="-s -w" -tags=jsoniter ./cmd/mp3_db
 
+install: build
+	cp ./out/* "$$GOBIN"
+
