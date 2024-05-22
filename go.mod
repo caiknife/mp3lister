@@ -7,9 +7,9 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dhowden/tag v0.0.0-20240417053706-3d75831295e8
-	github.com/duke-git/lancet/v2 v2.3.0
+	github.com/duke-git/lancet/v2 v2.3.1
 	github.com/emirpasic/gods/v2 v2.0.0-alpha
-	github.com/fatih/color v1.16.0
+	github.com/fatih/color v1.17.0
 	github.com/go-pay/gopay v1.5.100
 	github.com/go-resty/resty/v2 v2.13.1
 	github.com/golang-jwt/jwt/v5 v5.2.1
