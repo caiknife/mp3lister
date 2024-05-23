@@ -1,4 +1,4 @@
-.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion
+.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion install
 
 build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion
 
