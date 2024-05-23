@@ -86,6 +86,10 @@ func (c *Client) Verify(token string) (err error) {
 		return errors.WithMessage(err, "get header failed")
 	}
 
+	if len(header.X5C) != 3 {
+		return errors.New("invalid x5c header")
+	}
+
 	// 证书链验证
 	leafCert, err := LoadCertificate(header.X5C[0])
 	if err != nil {
