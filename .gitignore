@@ -26,3 +26,4 @@ go.work
 out/
 
 test.json
+*.p8
