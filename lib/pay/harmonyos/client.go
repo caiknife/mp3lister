@@ -26,6 +26,9 @@ type Client struct {
 	IssuerID   string `json:"issuer_id"`
 	AppID      string `json:"app_id"`
 
+	Header  *Header
+	Payload *Payload
+
 	token *jwt.Token
 }
 
@@ -85,6 +88,7 @@ func (c *Client) Verify(token string) (err error) {
 	if err != nil {
 		return errors.WithMessage(err, "get header failed")
 	}
+	c.Header = header
 
 	if len(header.X5C) != 3 {
 		return errors.New("invalid x5c header")
@@ -133,6 +137,12 @@ func (c *Client) Verify(token string) (err error) {
 	if err != nil {
 		return errors.WithMessage(err, "parse order failed")
 	}
+
+	payload, err := GetPayload(split[1])
+	if err != nil {
+		return errors.WithMessage(err, "get payload failed")
+	}
+	c.Payload = payload
 	return nil
 }
 

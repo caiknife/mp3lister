@@ -151,6 +151,8 @@ func TestClient(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	t.Log(client.Header)
+	t.Log(client.Payload)
 }
 
 func TestJWSPurchaseOrder(t *testing.T) {
