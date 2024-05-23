@@ -4,8 +4,6 @@ import (
 	"context"
 	"crypto/x509"
 	"crypto/x509/pkix"
-	"encoding/base64"
-	"encoding/pem"
 	"fmt"
 	"strings"
 	"time"
@@ -58,11 +56,11 @@ func (c *Client) GetToken(body any) (s string, err error) {
 		"aid":    c.AppID,
 		"digest": hash,
 	}
-	pem, err := jwt.ParseECPrivateKeyFromPEM([]byte(c.PrivateKey))
+	privateKey, err := jwt.ParseECPrivateKeyFromPEM([]byte(c.PrivateKey))
 	if err != nil {
 		return "", errors.WithMessage(err, "parse private key failed")
 	}
-	s, err = c.token.SignedString(pem)
+	s, err = c.token.SignedString(privateKey)
 	if err != nil {
 		return "", errors.WithMessage(err, "sign token failed")
 	}
@@ -190,50 +188,4 @@ func (c *Client) Check(purchaseToken, purchaseOrderID string) (err error) {
 	}
 
 	return c.Verify(order.JWSPurchaseOrder)
-}
-
-func GetHeader(s string) (*Header, error) {
-	s = Base64RawStdDecode(s)
-	h := &Header{}
-	err := fjson.UnmarshalFromString(s, h)
-	if err != nil {
-		return nil, errors.WithMessage(err, "json unmarshal failed")
-	}
-	return h, nil
-}
-
-func GetPayload(s string) (*Payload, error) {
-	s = Base64RawStdDecode(s)
-	h := &Payload{}
-	err := fjson.UnmarshalFromString(s, h)
-	if err != nil {
-		return nil, errors.WithMessage(err, "json unmarshal failed")
-	}
-	return h, nil
-}
-
-func Base64RawStdDecode(s string) string {
-	decodeString, _ := base64.RawStdEncoding.DecodeString(s)
-	return string(decodeString)
-}
-
-func Base64RawStdEncode(s string) string {
-	return base64.RawStdEncoding.EncodeToString([]byte(s))
-}
-
-func LoadCertificate(key string) (*x509.Certificate, error) {
-	if !strings.HasPrefix(key, "-----BEGIN") {
-		key = fmt.Sprintf(`-----BEGIN CERTIFICATE-----
-%s
------END CERTIFICATE-----`, key)
-	}
-	pemBlock, _ := pem.Decode([]byte(key))
-	if pemBlock == nil {
-		return nil, errors.New("pem decode failed")
-	}
-	cert, err := x509.ParseCertificate(pemBlock.Bytes)
-	if err != nil {
-		return nil, errors.New("failed to parse certificate")
-	}
-	return cert, nil
 }

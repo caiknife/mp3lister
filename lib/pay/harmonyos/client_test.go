@@ -1,7 +1,6 @@
 package harmonyos
 
 import (
-	"crypto/ecdsa"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
@@ -184,15 +183,10 @@ func TestPrivateKey(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	p, rest := pem.Decode([]byte(toString))
-	t.Log(p)
-	t.Log(rest)
-
-	key, err := x509.ParsePKCS8PrivateKey(p.Bytes)
+	privateKey, err := jwt.ParseECPrivateKeyFromPEM([]byte(toString))
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	privateKey, ok := key.(*ecdsa.PrivateKey)
-	t.Log(privateKey, ok)
+	t.Log(privateKey)
 }
