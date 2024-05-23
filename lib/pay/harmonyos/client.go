@@ -83,16 +83,22 @@ func (c *Client) Verify(token string) (err error) {
 	if len(split) != 3 {
 		return errors.New("invalid purchase order token")
 	}
-
+	// 解析header
 	header, err := GetHeader(split[0])
 	if err != nil {
 		return errors.WithMessage(err, "get header failed")
 	}
 	c.Header = header
-
 	if len(header.X5C) != 3 {
 		return errors.New("invalid x5c header")
 	}
+	
+	// 解析payload
+	payload, err := GetPayload(split[1])
+	if err != nil {
+		return errors.WithMessage(err, "get payload failed")
+	}
+	c.Payload = payload
 
 	// 证书链验证
 	leafCert, err := LoadCertificate(header.X5C[0])
@@ -137,12 +143,6 @@ func (c *Client) Verify(token string) (err error) {
 	if err != nil {
 		return errors.WithMessage(err, "parse order failed")
 	}
-
-	payload, err := GetPayload(split[1])
-	if err != nil {
-		return errors.WithMessage(err, "get payload failed")
-	}
-	c.Payload = payload
 	return nil
 }
 
