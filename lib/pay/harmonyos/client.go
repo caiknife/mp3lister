@@ -78,6 +78,20 @@ func (c *Client) Hash(body any) (s string, err error) {
 	return s, nil
 }
 
+func (c *Client) checkOID(leafCert *x509.Certificate) error {
+	extensions := types.Slice[*pkix.Extension](slice.Map[pkix.Extension, *pkix.Extension](leafCert.Extensions, func(index int, item pkix.Extension) *pkix.Extension {
+		return &item
+	}))
+
+	_, find := extensions.Find(func(extension *pkix.Extension) bool {
+		return extension.Id.String() == oID
+	})
+	if !find {
+		return errors.New("leaf certificate oid not found in extensions")
+	}
+	return nil
+}
+
 func (c *Client) Verify(token string) (err error) {
 	split := strings.Split(token, ".")
 	if len(split) != 3 {
@@ -92,7 +106,7 @@ func (c *Client) Verify(token string) (err error) {
 	if len(header.X5C) != 3 {
 		return errors.New("invalid x5c header")
 	}
-	
+
 	// 解析payload
 	payload, err := GetPayload(split[1])
 	if err != nil {
@@ -125,15 +139,9 @@ func (c *Client) Verify(token string) (err error) {
 	}
 
 	// 子证书oid验证
-	extensions := types.Slice[*pkix.Extension](slice.Map[pkix.Extension, *pkix.Extension](leafCert.Extensions, func(index int, item pkix.Extension) *pkix.Extension {
-		return &item
-	}))
-
-	_, find := extensions.Find(func(extension *pkix.Extension) bool {
-		return extension.Id.String() == oID
-	})
-	if !find {
-		return errors.New("leaf certificate oid not found in extensions")
+	err = c.checkOID(leafCert)
+	if err != nil {
+		return err
 	}
 
 	// 完整验证
