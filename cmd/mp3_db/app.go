@@ -76,7 +76,7 @@ func saveToDB(dsn string, mp3Files types.Slice[*types.MP3]) error {
 	}
 
 	// 插入数据
-	songs := slice.Map[*types.MP3, *model.Song](mp3Files, func(index int, item *types.MP3) *model.Song {
+	songs := slice.Map[*types.MP3, *model.Song](mp3Files, func(_ int, item *types.MP3) *model.Song {
 		song := &model.Song{
 			Title:      item.Title,
 			Artist:     item.Artist,
