@@ -51,13 +51,13 @@ func (f *FangChenMi) Encrypt(request string) (s string) {
 	return s
 }
 
-func (f *FangChenMi) SignPost(encryptBody string, ts int64) (s string) {
+func (f *FangChenMi) SignAuth(encryptBody string, ts int64) (s string) {
 	s = fmt.Sprintf("%sappId%sbizId%stimestamps%d%s", f.SecretKey, f.AppID, f.BizID, ts, encryptBody)
 	s = cryptor.Sha256(s)
 	return s
 }
 
-func (f *FangChenMi) SignGet(ai string, ts int64) (s string) {
+func (f *FangChenMi) SignQuery(ai string, ts int64) (s string) {
 	s = fmt.Sprintf("%sai%sappId%sbizId%stimestamps%d", f.SecretKey, ai, f.AppID, f.BizID, ts)
 	s = cryptor.Sha256(s)
 	return s
@@ -65,7 +65,7 @@ func (f *FangChenMi) SignGet(ai string, ts int64) (s string) {
 func (f *FangChenMi) Auth(code string, req *Check) error {
 	ts := time.Now().UnixMilli()
 	s := f.Encrypt(req.String())
-	sign := f.SignPost(s, ts)
+	sign := f.SignAuth(s, ts)
 	url := fmt.Sprintf("%s/%s", AuthURL, code)
 	logger.ConsoleLogger.Infoln("请求地址", url)
 
@@ -89,7 +89,7 @@ func (f *FangChenMi) Auth(code string, req *Check) error {
 
 func (f *FangChenMi) Query(code string, req *Query) error {
 	ts := time.Now().UnixMilli()
-	sign := f.SignGet(req.Ai, ts)
+	sign := f.SignQuery(req.Ai, ts)
 	url := fmt.Sprintf("%s/%s?ai=%s", AuthQueryURL, code, req.Ai)
 	logger.ConsoleLogger.Infoln("请求地址", url)
 
@@ -113,7 +113,7 @@ func (f *FangChenMi) Query(code string, req *Query) error {
 func (f *FangChenMi) LoginOrOut(code string, req *Collections) error {
 	ts := time.Now().UnixMilli()
 	s := f.Encrypt(req.String())
-	sign := f.SignPost(s, ts)
+	sign := f.SignAuth(s, ts)
 	url := fmt.Sprintf("%s/%s", ReportURL, code)
 	logger.ConsoleLogger.Infoln("请求地址", url)
 

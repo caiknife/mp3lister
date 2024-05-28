@@ -1,6 +1,9 @@
 package main
 
 import (
+	"time"
+
+	"github.com/duke-git/lancet/v2/random"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 
@@ -115,9 +118,32 @@ func t6(code string) error {
 }
 
 func t7(code string) error {
-	return nil
+	s := &fcm.Behavior{
+		No: 1,
+		Si: random.RandString(32),
+		Bt: 0,
+		Ot: time.Now().Unix(),
+		Ct: 2,
+		Di: random.RandString(32),
+		Pi: "",
+	}
+	return fcm.DefaultFangChenMi.LoginOrOut(code, &fcm.Collections{Collections: []*fcm.Behavior{
+		s,
+	}})
 }
 
 func t8(code string) error {
-	return nil
+	r := Report.Random()
+	s := &fcm.Behavior{
+		No: 100,
+		Si: random.RandString(32),
+		Bt: 1,
+		Ot: time.Now().Unix(),
+		Ct: 0,
+		Di: "",
+		Pi: r.Pi,
+	}
+	return fcm.DefaultFangChenMi.LoginOrOut(code, &fcm.Collections{Collections: []*fcm.Behavior{
+		s,
+	}})
 }
