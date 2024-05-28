@@ -17,16 +17,18 @@ func main() {
 
 func newApp() *cli.App {
 	app := &cli.App{
-		Name:   "防沉迷系统测试接口",
-		Usage:  "防沉迷系统测试接口",
-		Flags:  []cli.Flag{},
-		Action: action(),
+		Name:     "防沉迷系统测试接口",
+		Usage:    "防沉迷系统测试接口",
+		Flags:    []cli.Flag{},
+		Action:   action(),
+		Commands: commands,
 	}
 	return app
 }
 
 func action() cli.ActionFunc {
 	return func(ctx *cli.Context) error {
+		logger.ConsoleLogger.Infoln("请输入help获取更多详细内容")
 		return nil
 	}
 }

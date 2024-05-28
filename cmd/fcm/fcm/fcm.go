@@ -32,6 +32,10 @@ type FangChenMi struct {
 	BizID     string `json:"biz_id"`
 }
 
+var (
+	DefaultFangChenMi = NewFangChenMi(SecretKey, AppID, BizID)
+)
+
 func NewFangChenMi(secretKey, appID, bizID string) *FangChenMi {
 	f := &FangChenMi{
 		SecretKey: secretKey,
@@ -53,7 +57,7 @@ func (f *FangChenMi) Sign(encryptBody string, ts int64) (s string) {
 	return s
 }
 
-func (f *FangChenMi) Auth(code string, req *Check) {
+func (f *FangChenMi) Auth(code string, req *Check) error {
 	ts := time.Now().UnixMilli()
 	s := f.Encrypt(req.String())
 	sign := f.Sign(s, ts)
@@ -71,12 +75,13 @@ func (f *FangChenMi) Auth(code string, req *Check) {
 	if err != nil {
 		err = errors.WithMessage(err, fmt.Sprintf("%s request failed", url))
 		logger.ConsoleLogger.Errorln(err)
-		return
+		return err
 	}
 	logger.ConsoleLogger.Infoln(post.String())
+	return nil
 }
 
-func (f *FangChenMi) Query(code string, req *Query) {
+func (f *FangChenMi) Query(code string, req *Query) error {
 	ts := time.Now().UnixMilli()
 	s := f.Encrypt("")
 	sign := f.Sign(s, ts)
@@ -93,12 +98,13 @@ func (f *FangChenMi) Query(code string, req *Query) {
 	if err != nil {
 		err = errors.WithMessage(err, fmt.Sprintf("%s request failed", url))
 		logger.ConsoleLogger.Errorln(err)
-		return
+		return err
 	}
 	logger.ConsoleLogger.Infoln(get.String())
+	return nil
 }
 
-func (f *FangChenMi) LoginOrOut(code string, req *Collections) {
+func (f *FangChenMi) LoginOrOut(code string, req *Collections) error {
 	ts := time.Now().UnixMilli()
 	s := f.Encrypt(req.String())
 	sign := f.Sign(s, ts)
@@ -116,7 +122,8 @@ func (f *FangChenMi) LoginOrOut(code string, req *Collections) {
 	if err != nil {
 		err = errors.WithMessage(err, fmt.Sprintf("%s request failed", url))
 		logger.ConsoleLogger.Errorln(err)
-		return
+		return err
 	}
 	logger.ConsoleLogger.Infoln(post.String())
+	return nil
 }

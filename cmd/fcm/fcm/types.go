@@ -40,7 +40,7 @@ func (l *Behavior) String() string {
 }
 
 type Collections struct {
-	Collections *[]Behavior `json:"collections"`
+	Collections []*Behavior `json:"collections"`
 }
 
 func (c *Collections) String() string {

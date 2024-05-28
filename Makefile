@@ -1,6 +1,6 @@
-.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion install
+.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion install fcm
 
-build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion
+build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm
 
 list_emotion:
 	go mod tidy
@@ -26,6 +26,11 @@ mp3_db:
 	go mod tidy
 	go build -ldflags="-s -w" -tags=jsoniter -o ./out/mp3_db ./cmd/mp3_db
 	go install -ldflags="-s -w" -tags=jsoniter ./cmd/mp3_db
+
+fcm:
+	go mod tidy
+	go build -ldflags="-s -w" -tags=jsoniter -o ./out/fcm ./cmd/fcm
+	go install -ldflags="-s -w" -tags=jsoniter ./cmd/fcm
 
 install: build
 	cp ./out/* "$$GOBIN"
