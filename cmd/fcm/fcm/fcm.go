@@ -84,8 +84,7 @@ func (f *FangChenMi) Auth(code string, req *Check) error {
 
 func (f *FangChenMi) Query(code string, req *Query) error {
 	ts := time.Now().UnixMilli()
-	s := f.Encrypt("")
-	sign := f.Sign(s, ts)
+	sign := f.Sign("", ts)
 	url := fmt.Sprintf("%s/%s?ai=%s", AuthQueryURL, code, req.Ai)
 	logger.ConsoleLogger.Infoln("请求地址", url)
 
