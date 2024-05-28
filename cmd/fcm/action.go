@@ -103,15 +103,15 @@ func t3(code string) error {
 }
 
 func t4(code string) error {
-	return nil
+	return fcm.DefaultFangChenMi.Query(code, QuerySuccess.Random())
 }
 
 func t5(code string) error {
-	return nil
+	return fcm.DefaultFangChenMi.Query(code, QueryNotYet.Random())
 }
 
 func t6(code string) error {
-	return nil
+	return fcm.DefaultFangChenMi.Query(code, QueryFail.Random())
 }
 
 func t7(code string) error {
