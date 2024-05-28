@@ -21,9 +21,9 @@ const (
 )
 
 const (
-	AuthURL      = "https://api.wlc.nppa.gov.cn/idcard/authentication/check"
-	AuthQueryURL = "http://api2.wlc.nppa.gov.cn/idcard/authentication/query"
-	ReportURL    = "http://api2.wlc.nppa.gov.cn/behavior/collection/loginout"
+	AuthURL      = "https://wlc.nppa.gov.cn/test/authentication/check"
+	AuthQueryURL = "https://wlc.nppa.gov.cn/test/authentication/query"
+	ReportURL    = "https://wlc.nppa.gov.cn/test/collection/loginout"
 )
 
 type FangChenMi struct {
@@ -62,6 +62,7 @@ func (f *FangChenMi) Auth(code string, req *Check) error {
 	s := f.Encrypt(req.String())
 	sign := f.Sign(s, ts)
 	url := fmt.Sprintf("%s/%s", AuthURL, code)
+	logger.ConsoleLogger.Infoln("请求地址", url)
 
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()
@@ -86,6 +87,7 @@ func (f *FangChenMi) Query(code string, req *Query) error {
 	s := f.Encrypt("")
 	sign := f.Sign(s, ts)
 	url := fmt.Sprintf("%s/%s?ai=%s", AuthQueryURL, code, req.Ai)
+	logger.ConsoleLogger.Infoln("请求地址", url)
 
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()
@@ -109,6 +111,7 @@ func (f *FangChenMi) LoginOrOut(code string, req *Collections) error {
 	s := f.Encrypt(req.String())
 	sign := f.Sign(s, ts)
 	url := fmt.Sprintf("%s/%s", ReportURL, code)
+	logger.ConsoleLogger.Infoln("请求地址", url)
 
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()
