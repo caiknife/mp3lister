@@ -5,7 +5,6 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/caiknife/mp3lister/cmd/fcm/fcm"
-	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/logger"
 )
 
@@ -92,15 +91,15 @@ func testcase() cli.ActionFunc {
 }
 
 func t1(code string) error {
-	return fcm.DefaultFangChenMi.Auth(code, config.AuthSuccess.Random())
+	return fcm.DefaultFangChenMi.Auth(code, AuthSuccess.Random())
 }
 
 func t2(code string) error {
-	return fcm.DefaultFangChenMi.Auth(code, config.AuthNotYet.Random())
+	return fcm.DefaultFangChenMi.Auth(code, AuthNotYet.Random())
 }
 
 func t3(code string) error {
-	return fcm.DefaultFangChenMi.Auth(code, config.AuthFailed.Random())
+	return fcm.DefaultFangChenMi.Auth(code, AuthFailed.Random())
 }
 
 func t4(code string) error {

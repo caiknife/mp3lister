@@ -1,5 +1,9 @@
 package config
 
+import (
+	"github.com/caiknife/mp3lister/lib"
+)
+
 var (
 	Pay *pay
 )
@@ -10,7 +14,7 @@ func init() {
 
 func initPayTest() {
 	Pay = &pay{}
-	InitJSONConfig(Pay, "test.json")
+	lib.InitJSONConfig(Pay, "test.json")
 }
 
 type wxpay struct {

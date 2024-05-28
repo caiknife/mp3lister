@@ -7,7 +7,7 @@ import (
 	"github.com/duke-git/lancet/v2/fileutil"
 	"github.com/duke-git/lancet/v2/slice"
 
-	"github.com/caiknife/mp3lister/config"
+	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/fjson"
 	"github.com/caiknife/mp3lister/lib/types"
 )
@@ -18,7 +18,7 @@ type P struct {
 
 func TestNamesJsonToTxt(t *testing.T) {
 	data := types.Slice[P]{}
-	config.InitJSONConfig(&data, "names_en.json")
+	lib.InitJSONConfig(&data, "names_en.json")
 	err := writeToTxt("names_en.txt", data)
 	if err != nil {
 		t.Error(err)

@@ -10,6 +10,7 @@ import (
 	gLogger "gorm.io/gorm/logger"
 	"gorm.io/plugin/dbresolver"
 
+	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/orm/music"
 )
@@ -26,7 +27,7 @@ func init() {
 
 func initConfig() {
 	Config = &AppConfig{}
-	InitYAMLConfig(Config, "config.yml")
+	lib.InitYAMLConfig(Config, "config.yml")
 }
 
 func initORM() {
