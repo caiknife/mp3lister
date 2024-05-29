@@ -38,20 +38,26 @@ func SearchConfigFile(fileName string, searchPaths ...string) (string, error) {
 	return "", ErrConfigFileMissing
 }
 
+func readFile(fileName string) ([]byte, error) {
+	filePath, err := SearchConfigFile(fileName)
+	if err != nil {
+		return nil, err
+	}
+	file, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
+}
+
 func InitYAMLConfig(receiver any, fileName string) {
-	file, err := SearchConfigFile(fileName)
+	file, err := readFile(fileName)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
-	readFile, err := os.ReadFile(file)
-	if err != nil {
-		logger.ConsoleLogger.Fatalln(err)
-		return
-	}
-
-	err = yaml.Unmarshal(readFile, receiver)
+	err = yaml.Unmarshal(file, receiver)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
@@ -59,19 +65,13 @@ func InitYAMLConfig(receiver any, fileName string) {
 }
 
 func InitJSONConfig(receiver any, fileName string) {
-	file, err := SearchConfigFile(fileName)
+	file, err := readFile(fileName)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
 
-	readFile, err := os.ReadFile(file)
-	if err != nil {
-		logger.ConsoleLogger.Fatalln(err)
-		return
-	}
-
-	err = fjson.Unmarshal(readFile, receiver)
+	err = fjson.Unmarshal(file, receiver)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)
 		return
