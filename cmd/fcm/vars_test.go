@@ -7,5 +7,5 @@ import (
 func TestPrint(t *testing.T) {
 	t.Log(AuthSuccess)
 	t.Log(AuthNotYet)
-	t.Log(AuthFailed)
+	t.Log(AuthFail)
 }

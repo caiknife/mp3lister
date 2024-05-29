@@ -102,7 +102,7 @@ func t2(code string) error {
 }
 
 func t3(code string) error {
-	return fcm.DefaultFangChenMi.Auth(code, AuthFailed.Random())
+	return fcm.DefaultFangChenMi.Auth(code, AuthFail.Random())
 }
 
 func t4(code string) error {

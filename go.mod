@@ -25,8 +25,8 @@ require (
 	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
 	github.com/urfave/cli/v2 v2.27.2
-	github.com/vicanso/go-charts/v2 v2.6.5
-	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
+	github.com/vicanso/go-charts/v2 v2.6.7
+	golang.org/x/exp v0.0.0-20240529005216-23cca8864a10
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/datatypes v1.2.0
 	gorm.io/driver/mysql v1.5.6

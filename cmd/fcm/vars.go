@@ -9,7 +9,7 @@ import (
 var (
 	AuthSuccess types.Slice[*fcm.Check]
 	AuthNotYet  types.Slice[*fcm.Check]
-	AuthFailed  types.Slice[*fcm.Check]
+	AuthFail    types.Slice[*fcm.Check]
 )
 
 var (
@@ -25,7 +25,7 @@ var (
 func init() {
 	lib.InitJSONConfig(&AuthSuccess, "auth_success.json")
 	lib.InitJSONConfig(&AuthNotYet, "auth_notyet.json")
-	lib.InitJSONConfig(&AuthFailed, "auth_fail.json")
+	lib.InitJSONConfig(&AuthFail, "auth_fail.json")
 	lib.InitJSONConfig(&QuerySuccess, "query_success.json")
 	lib.InitJSONConfig(&QueryNotYet, "query_notyet.json")
 	lib.InitJSONConfig(&QueryFail, "query_fail.json")
