@@ -4,12 +4,10 @@ import (
 	"testing"
 
 	"github.com/duke-git/lancet/v2/random"
-
-	"github.com/caiknife/mp3lister/config"
 )
 
 func TestAliPay(t *testing.T) {
-	alipay, err := NewAlipay(config.Pay.Alipay.AppID, config.Pay.Alipay.PrivateKey, true)
+	alipay, err := NewAlipay(Pay.Alipay.AppID, Pay.Alipay.PrivateKey, true)
 	if err != nil {
 		t.Error(err)
 		return
@@ -25,13 +23,13 @@ func TestAliPay(t *testing.T) {
 }
 
 func TestAlipay_Query(t *testing.T) {
-	alipay, err := NewAlipay(config.Pay.Alipay.AppID, config.Pay.Alipay.PrivateKey, true)
+	alipay, err := NewAlipay(Pay.Alipay.AppID, Pay.Alipay.PrivateKey, true)
 	if err != nil {
 		t.Error(err)
 		return
 	}
 
-	query, err := alipay.Query(config.Pay.Alipay.OrderID)
+	query, err := alipay.Query(Pay.Alipay.OrderID)
 	if err != nil {
 		t.Error(err)
 		return

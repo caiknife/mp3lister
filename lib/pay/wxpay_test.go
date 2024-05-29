@@ -6,19 +6,17 @@ import (
 	"github.com/duke-git/lancet/v2/random"
 	"github.com/go-pay/gopay/wechat/v3"
 	"github.com/stretchr/testify/assert"
-
-	"github.com/caiknife/mp3lister/config"
 )
 
 func TestPay(t *testing.T) {
-	t.Log(config.Pay.Wxpay.PrivateKey)
-	t.Log(config.Pay.Wxpay.PublicKey)
-	t.Log(config.Pay.RuStore)
+	t.Log(Pay.Wxpay.PrivateKey)
+	t.Log(Pay.Wxpay.PublicKey)
+	t.Log(Pay.RuStore)
 }
 
 func TestWxPay(t *testing.T) {
-	wxpay, err := NewWxpay(config.Pay.Wxpay.AppID, config.Pay.Wxpay.MchID, config.Pay.Wxpay.SerialNo,
-		config.Pay.Wxpay.APIKey, config.Pay.Wxpay.PrivateKey)
+	wxpay, err := NewWxpay(Pay.Wxpay.AppID, Pay.Wxpay.MchID, Pay.Wxpay.SerialNo,
+		Pay.Wxpay.APIKey, Pay.Wxpay.PrivateKey)
 	if err != nil {
 		t.Error(err)
 		return
@@ -33,13 +31,13 @@ func TestWxPay(t *testing.T) {
 }
 
 func TestWxpay_Query(t *testing.T) {
-	wxpay, err := NewWxpay(config.Pay.Wxpay.AppID, config.Pay.Wxpay.MchID, config.Pay.Wxpay.SerialNo,
-		config.Pay.Wxpay.APIKey, config.Pay.Wxpay.PrivateKey)
+	wxpay, err := NewWxpay(Pay.Wxpay.AppID, Pay.Wxpay.MchID, Pay.Wxpay.SerialNo,
+		Pay.Wxpay.APIKey, Pay.Wxpay.PrivateKey)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	query, err := wxpay.Query(config.Pay.Wxpay.OrderID)
+	query, err := wxpay.Query(Pay.Wxpay.OrderID)
 	if err != nil {
 		t.Error(err)
 		return

@@ -1,4 +1,4 @@
-package config
+package pay
 
 import (
 	"github.com/caiknife/mp3lister/lib"
@@ -17,7 +17,7 @@ func initPayTest() {
 	lib.InitJSONConfig(Pay, "test.json")
 }
 
-type wxpay struct {
+type wxpayConf struct {
 	AppID      string `json:"app_id"`
 	MchID      string `json:"mch_id"`
 	SerialNo   string `json:"serial_no"`
@@ -27,7 +27,7 @@ type wxpay struct {
 	OrderID    string `json:"order_id"`
 }
 
-type rustore struct {
+type rustoreConf struct {
 	KeyID         string `json:"key_id"`
 	CompanyID     string `json:"company_id"`
 	PrivateKey    string `json:"private_key"`
@@ -35,7 +35,7 @@ type rustore struct {
 	PurchaseToken string `json:"purchase_token"`
 }
 
-type alipay struct {
+type alipayConf struct {
 	AppID      string `json:"app_id"`
 	PrivateKey string `json:"private_key"`
 	PublicKey  string `json:"public_key"`
@@ -43,7 +43,7 @@ type alipay struct {
 }
 
 type pay struct {
-	Alipay  alipay  `json:"alipay"`
-	Wxpay   wxpay   `json:"wxpay"`
-	RuStore rustore `json:"rustore"`
+	Alipay  alipayConf  `json:"alipay"`
+	Wxpay   wxpayConf   `json:"wxpay"`
+	RuStore rustoreConf `json:"rustore"`
 }
