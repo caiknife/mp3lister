@@ -20,7 +20,7 @@ type Movie struct {
 	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:deleted_at,priority:1" json:"deleted_at"`
 	Name      string         `gorm:"column:name;type:varchar(200);not null;index:name,priority:1;comment:电影名称" json:"name"` // 电影名称
 	Genre     string         `gorm:"column:genre;type:varchar(200);not null;comment:分类" json:"genre"`                       // 分类
-	Version   int32          `gorm:"column:version;type:int(11);comment:乐观锁版本号" json:"version"`                             // 乐观锁版本号
+	Version   uint64         `gorm:"column:version;type:bigint(20) unsigned;not null;comment:乐观锁版本号" json:"version"`        // 乐观锁版本号
 }
 
 // TableName Movie's table name

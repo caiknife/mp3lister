@@ -33,7 +33,7 @@ func newMovie(db *gorm.DB, opts ...gen.DOOption) movie {
 	_movie.DeletedAt = field.NewField(tableName, "deleted_at")
 	_movie.Name = field.NewString(tableName, "name")
 	_movie.Genre = field.NewString(tableName, "genre")
-	_movie.Version = field.NewInt32(tableName, "version")
+	_movie.Version = field.NewUint64(tableName, "version")
 
 	_movie.fillFieldMap()
 
@@ -50,7 +50,7 @@ type movie struct {
 	DeletedAt field.Field
 	Name      field.String // 电影名称
 	Genre     field.String // 分类
-	Version   field.Int32  // 乐观锁版本号
+	Version   field.Uint64 // 乐观锁版本号
 
 	fieldMap map[string]field.Expr
 }
@@ -73,7 +73,7 @@ func (m *movie) updateTableName(table string) *movie {
 	m.DeletedAt = field.NewField(table, "deleted_at")
 	m.Name = field.NewString(table, "name")
 	m.Genre = field.NewString(table, "genre")
-	m.Version = field.NewInt32(table, "version")
+	m.Version = field.NewUint64(table, "version")
 
 	m.fillFieldMap()
 
