@@ -89,7 +89,7 @@ func saveToDB(dsn string, mp3Files types.Slice[*types.MP3]) error {
 	})
 	err = music.Song.CreateInBatches(songs, 100)
 	if err != nil {
-		return err
+		return errors.WithMessage(err, "create in batches")
 	}
 
 	return nil
