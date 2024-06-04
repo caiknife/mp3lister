@@ -1,5 +1,5 @@
 mysql:
-    music: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local
-    music_read_1: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local
-    music_read_2: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local
-    wartank: caiknife:caiknife@tcp(127.0.0.1:3306)/wartank?charset=utf8mb4&parseTime=True&loc=Local
+  music: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local
+  music_read_1: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local
+  music_read_2: caiknife:caiknife@tcp(127.0.0.1:3306)/music_data?charset=utf8mb4&parseTime=True&loc=Local
+  wartank: caiknife:caiknife@tcp(127.0.0.1:3306)/wartank?charset=utf8mb4&parseTime=True&loc=Local
