@@ -15,6 +15,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/json-iterator/go v1.1.12
+	github.com/oklog/ulid/v2 v2.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/samber/lo v1.39.0
 	github.com/shirou/gopsutil/v3 v3.24.5
