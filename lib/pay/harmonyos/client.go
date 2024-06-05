@@ -3,13 +3,11 @@ package harmonyos
 import (
 	"context"
 	"crypto/x509"
-	"crypto/x509/pkix"
 	"fmt"
 	"strings"
 	"time"
 
 	"github.com/duke-git/lancet/v2/cryptor"
-	"github.com/duke-git/lancet/v2/slice"
 	"github.com/go-resty/resty/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/pkg/errors"
@@ -77,14 +75,14 @@ func (c *Client) Hash(body any) (s string, err error) {
 }
 
 func (c *Client) checkOID(leafCert *x509.Certificate) error {
-	extensions := types.Slice[*pkix.Extension](slice.Map[pkix.Extension, *pkix.Extension](leafCert.Extensions, func(index int, item pkix.Extension) *pkix.Extension {
-		return &item
-	}))
+	ok := false
+	for _, extension := range leafCert.Extensions {
+		if extension.Id.String() == oID {
+			ok = true
+		}
+	}
 
-	_, find := extensions.Find(func(extension *pkix.Extension) bool {
-		return extension.Id.String() == oID
-	})
-	if !find {
+	if !ok {
 		return errors.New("leaf certificate oid not found in extensions")
 	}
 	return nil
@@ -92,7 +90,7 @@ func (c *Client) checkOID(leafCert *x509.Certificate) error {
 
 func (c *Client) Verify(token string) (err error) {
 	split := strings.Split(token, ".")
-	if len(split) != 3 {
+	if len(split) != headerSize {
 		return errors.New("invalid purchase order token")
 	}
 	// 解析header
@@ -101,7 +99,7 @@ func (c *Client) Verify(token string) (err error) {
 		return errors.WithMessage(err, "get header failed")
 	}
 	c.Header = header
-	if len(header.X5C) != 3 {
+	if len(header.X5C) != headerSize {
 		return errors.New("invalid x5c header")
 	}
 
