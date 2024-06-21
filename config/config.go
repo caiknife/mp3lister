@@ -34,11 +34,11 @@ func initORM() {
 	newLogger := gLogger.New(
 		log.New(os.Stdout, "", log.LstdFlags), // io writer
 		gLogger.Config{
-			SlowThreshold:             time.Millisecond * 100, // Slow SQL threshold
-			LogLevel:                  gLogger.Info,           // Log level
-			IgnoreRecordNotFoundError: true,                   // Ignore ErrRecordNotFound error for logger
-			ParameterizedQueries:      true,                   // Don't include params in the SQL log
-			Colorful:                  true,                   // Disable color
+			SlowThreshold:             time.Second * 2, // Slow SQL threshold
+			LogLevel:                  gLogger.Info,    // Log level
+			IgnoreRecordNotFoundError: true,            // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      true,            // Don't include params in the SQL log
+			Colorful:                  true,            // Disable color
 		},
 	)
 
