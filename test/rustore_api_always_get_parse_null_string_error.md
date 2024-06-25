@@ -1,10 +1,10 @@
-_## RuStore API always get "parse null string" error
+## RuStore API always get "parse null string" error
 
 ### Go SDK
 
 repo https://gitflic.ru/project/rustore/rustoreapi
 
-The official Go SDK uses keyId but not companyId but we want to use companyId,
+The official Go SDK uses keyId but not companyId, but we want to use companyId,
 so I did a little hack in source code.
 
 ```go
@@ -18,9 +18,7 @@ resultMap := map[string]string{
     "timestamp": timestamp,
 }
 
-ResultJSON, err := json.Marshal(
-resultMap,
-)
+ResultJSON, err := json.Marshal(resultMap)
 
 return string(ResultJSON), err
 ```
@@ -70,7 +68,7 @@ PASS
 
 Did I use wrong parameters?
 
-I also found a NodeJS sdk on GitHub, https://github.com/piavart/rustore-client, the result is exactly the same as above.
+I also found a Node.js sdk on GitHub, https://github.com/piavart/rustore-client, the result is exactly the same as above.
 
 ``` js
 // source code rustore.js
