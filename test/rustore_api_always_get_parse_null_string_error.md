@@ -112,7 +112,7 @@ module.exports = {
 }
 ```
 
-```js
+```shell
 //test code rustore.test.js
 const {test, describe, expect} = require("@jest/globals")
 const {rustore} = require("./rustore");
@@ -132,7 +132,7 @@ describe("rustore", () => {
 })
 ```
 
-```js
+```shell
 console.error
     Error: Cannot parse null string
         at RuStoreClient.request (/Users/caiknife/WebstormProjects/tank_server/node_modules/@piavart/rustore-client/dist/client.js:45:19)
@@ -163,4 +163,4 @@ console.error
       17 |
 
       at Object.test (pub/utils/pay/rustore.test.js:14:21)
-```_
+```
