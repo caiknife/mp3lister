@@ -36,7 +36,7 @@ func (r *RuStore) GetPurchaseInfo(purchaseToken string) (p payments.GetTokenPaym
 	if err != nil {
 		return p, errors.WithMessage(err, "rustore auth error")
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeOut)
+	ctx, cancel := context.WithTimeout(context.TODO(), defaultTimeOut)
 	defer cancel()
 	p, err = r.payment.GetPaymentInfo(ctx, purchaseToken)
 	if err != nil {

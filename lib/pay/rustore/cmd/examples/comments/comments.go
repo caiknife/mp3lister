@@ -62,7 +62,7 @@ func main() {
 	coms := comments.New(cl, packageName)
 
 	ctx, cancel := context.WithTimeout(
-		context.Background(),
+		context.TODO(),
 		client.TimeOutSeconds*time.Second,
 	)
 

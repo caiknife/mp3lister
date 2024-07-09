@@ -160,7 +160,7 @@ func (c *Client) QueryOrder(purchaseToken, purchaseOrderID string) (r *Response,
 		return nil, errors.WithMessage(err, "get token failed")
 	}
 	client := resty.New()
-	timeout, cancelFunc := context.WithTimeout(context.Background(), time.Second*10)
+	timeout, cancelFunc := context.WithTimeout(context.TODO(), time.Second*10)
 	defer cancelFunc()
 	post, err := client.R().SetBody(body).SetContext(timeout).SetHeaders(types.Map[string]{
 		"Authorization": fmt.Sprintf("Bearer %s", token),

@@ -61,7 +61,7 @@ func main() {
 	}
 
 	pay := payments.New(cl, packageName)
-	ctx, cancel := context.WithTimeout(context.Background(), client.TimeOutSeconds*10*time.Second)
+	ctx, cancel := context.WithTimeout(context.TODO(), client.TimeOutSeconds*10*time.Second)
 
 	defer cancel()
 
