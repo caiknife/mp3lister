@@ -32,10 +32,10 @@ func ReadM3U(file string) (s types.Slice[*types.MP3], err error) {
 		return nil, errors.WithMessage(err, "file abs path error")
 	}
 	if !fileutil.IsExist(abs) {
-		return nil, errors.WithMessage(err, "file does not exist")
+		return nil, errors.New("file does not exist")
 	}
 	if strings.ToLower(filepath.Ext(abs)) != ".m3u" {
-		return nil, errors.WithMessage(err, "file is not m3u")
+		return nil, errors.New("file is not m3u")
 	}
 
 	u, err := readM3U(abs)

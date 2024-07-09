@@ -57,7 +57,7 @@ func (w *Wxpay) TransactionApp(description string, orderID string, amount float6
 		return nil, errors.WithMessage(err, "wxpay transaction app error")
 	}
 	if app.Code != wechat.Success {
-		return nil, errors.WithMessage(err, "wxpay code error")
+		return nil, errors.New("wxpay code error")
 	}
 
 	ofApp, err := w.client.PaySignOfApp(w.AppID, app.Response.PrepayId)
