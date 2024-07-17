@@ -10,13 +10,18 @@ import (
 )
 
 func main() {
-	dsn, b := config.Config.MySQL.Get(config.DB_Music)
+	// genDB(config.DB_Music, "music")
+	genDB(config.DB_Wartank_CN, "wartankcn")
+}
+
+func genDB(dbName, ormName string) {
+	dsn, b := config.Config.MySQL.Get(dbName)
 	if !b {
 		logger.ConsoleLogger.Fatalln("数据库连接不存在！")
 		return
 	}
 
-	genORM(dsn, "music")
+	genORM(dsn, ormName)
 }
 
 var (
@@ -27,9 +32,9 @@ var (
 		"longtext": func(columnType gorm.ColumnType) (dataType string) {
 			return "datatypes.JSON"
 		},
-		"tinyint": func(columnType gorm.ColumnType) (dataType string) {
-			return "bool"
-		},
+		// "tinyint": func(columnType gorm.ColumnType) (dataType string) {
+		// 	return "bool"
+		// },
 	}
 )
 

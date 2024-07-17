@@ -16,8 +16,9 @@ import (
 )
 
 var (
-	Config *AppConfig
-	DB     *gorm.DB
+	Config      *AppConfig
+	DB          *gorm.DB
+	DBWarTankCN *gorm.DB
 )
 
 func init() {
@@ -28,6 +29,29 @@ func init() {
 func initConfig() {
 	Config = &AppConfig{}
 	lib.InitYAMLConfig(Config, "config.yml")
+}
+
+func initDBWarTankCN() {
+	newLogger := gLogger.New(
+		log.New(os.Stdout, "", log.LstdFlags), // io writer
+		gLogger.Config{
+			SlowThreshold:             time.Second * 2, // Slow SQL threshold
+			LogLevel:                  gLogger.Info,    // Log level
+			IgnoreRecordNotFoundError: true,            // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      false,           // Don't include params in the SQL log
+			Colorful:                  true,            // Disable color
+		},
+	)
+
+	var err error
+	DBWarTankCN, err = gorm.Open(mysql.Open(Config.MySQL[DB_Wartank_CN]), &gorm.Config{
+		Logger: newLogger,
+	})
+	if err != nil {
+		logger.ConsoleLogger.Fatalln(err)
+		return
+	}
+
 }
 
 func initORM() {
@@ -73,6 +97,8 @@ const (
 	DB_Music        = "music"
 	DB_Music_Read_1 = "music_read_1"
 	DB_Music_Read_2 = "music_read_2"
+	DB_Wartank      = "wartank"
+	DB_Wartank_CN   = "wartank_cn"
 )
 
 type RoundRobinPolicy struct {
