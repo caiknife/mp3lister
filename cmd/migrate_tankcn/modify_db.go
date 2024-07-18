@@ -56,7 +56,7 @@ func modifyDB() error {
 
 func tbPlayer(tx *wartankcn.Query) (n int64, err error) {
 	tbP := tx.WtPlayer
-	result, err := tbP.Where(tbP.ID).UpdateSimple(
+	result1, err := tbP.Where(tbP.LegionID.Neq(-1)).UpdateSimple(
 		tbP.ID.Add(playerIDIncrement),
 		tbP.LegionID.Add(legionIDIncrement),
 	)
@@ -64,12 +64,19 @@ func tbPlayer(tx *wartankcn.Query) (n int64, err error) {
 		err = errors.WithMessage(err, "update player")
 		return 0, err
 	}
-	return result.RowsAffected, nil
+	result2, err := tbP.Where(tbP.LegionID.Eq(-1)).UpdateSimple(
+		tbP.ID.Add(playerIDIncrement),
+	)
+	if err != nil {
+		err = errors.WithMessage(err, "update player")
+		return 0, err
+	}
+	return result1.RowsAffected + result2.RowsAffected, nil
 }
 
 func tbOrder(tx *wartankcn.Query) (n int64, err error) {
 	tbO := tx.WtOrder
-	result, err := tbO.Where(tbO.ID).UpdateSimple(
+	result, err := tbO.Where(tbO.PlayerID).UpdateSimple(
 		tbO.PlayerID.Add(playerIDIncrement),
 	)
 	if err != nil {
@@ -132,7 +139,7 @@ func tbLegion(tx *wartankcn.Query) (n int64, err error) {
 
 func tbGameCenter(tx *wartankcn.Query) (n int64, err error) {
 	tbGc := tx.WtGamecenter
-	result, err := tbGc.Where(tbGc.ID).UpdateSimple(
+	result, err := tbGc.Where(tbGc.PlayerID).UpdateSimple(
 		tbGc.PlayerID.Add(playerIDIncrement),
 	)
 	if err != nil {

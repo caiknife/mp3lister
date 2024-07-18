@@ -35,6 +35,7 @@ func initTables() {
 	car = music.Car
 	movie = music.Movie
 	player = music.Player
+	song = music.Song
 }
 
 func snowflakeMachineID() uint16 {
