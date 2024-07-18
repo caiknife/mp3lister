@@ -129,6 +129,7 @@ func newApp() *cli.App {
 		Name:  "MP3文件列表展示",
 		Usage: "将路径下的MP3文件导出为CSV文件",
 		Flags: []cli.Flag{
+			config.EnvFlag,
 			&cli.StringSliceFlag{
 				Name:    "input",
 				Aliases: []string{"i"},

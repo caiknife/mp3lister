@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 
+	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/logger"
 )
 
@@ -21,6 +22,7 @@ func newApp() *cli.App {
 		Name:  "tankcn 数据迁移",
 		Usage: "tankcn 数据迁移 ",
 		Flags: []cli.Flag{
+			config.EnvFlag,
 			&cli.BoolFlag{
 				Name:    "db",
 				Aliases: []string{"d"},
