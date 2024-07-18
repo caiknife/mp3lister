@@ -49,16 +49,21 @@ func newApp() *cli.App {
 
 func action() cli.ActionFunc {
 	return func(ctx *cli.Context) error {
+		if err := config.InitCliContext(ctx, config.InitDBWarTankCN); err != nil {
+			err = errors.WithMessage(err, "init cli context")
+			return err
+		}
+
 		if ctx.Bool("db") {
 			if err := modifyDB(); err != nil {
-				err = errors.WithMessage(err, "modify db failed")
+				err = errors.WithMessage(err, "modify db")
 				return err
 			}
 		}
 
 		if ctx.Bool("redis") {
 			if err := modifyRedis(); err != nil {
-				err = errors.WithMessage(err, "modify redis failed")
+				err = errors.WithMessage(err, "modify redis")
 				return err
 			}
 		}

@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
 
-	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
 )
@@ -38,7 +37,6 @@ func newApp() *cli.App {
 		Name:  "将m3u歌单文件内容导出成csv文件",
 		Usage: "将m3u歌单文件内容导出成csv文件",
 		Flags: []cli.Flag{
-			config.EnvFlag,
 			&cli.StringSliceFlag{
 				Name:    "input",
 				Aliases: []string{"i"},

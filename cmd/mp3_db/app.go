@@ -23,6 +23,11 @@ import (
 
 func action() cli.ActionFunc {
 	return func(ctx *cli.Context) error {
+		if err := config.InitCliContext(ctx, config.InitDBMusic); err != nil {
+			err = errors.WithMessage(err, "init cli context")
+			return err
+		}
+
 		inputPath := ctx.StringSlice("input")
 		dsn := ctx.String("dsn")
 
