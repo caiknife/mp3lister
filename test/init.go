@@ -17,7 +17,7 @@ var (
 
 func init() {
 	e := &config.Environment{
-		Env: "lan",
+		Env: "test",
 	}
 	err := config.LoadConfigFile(e,
 		config.InitDBMusic,
