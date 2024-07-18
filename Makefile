@@ -1,11 +1,11 @@
-.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion install fcm migrate_tank_redis
+.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion install fcm migrate_tankcn
 
-build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tank_redis
+build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn
 
-migrate_tank_redis:
+migrate_tankcn:
 	go mod tidy
-	go build -ldflags="-s -w" -tags=jsoniter -o ./out/migrate_tank_redis ./cmd/migrate_tank_redis
-	go install -ldflags="-s -w" -tags=jsoniter ./cmd/migrate_tank_redis
+	go build -ldflags="-s -w" -tags=jsoniter -o ./out/migrate_tankcn ./cmd/migrate_tankcn
+	go install -ldflags="-s -w" -tags=jsoniter ./cmd/migrate_tankcn
 
 list_emotion:
 	go mod tidy

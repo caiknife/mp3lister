@@ -13,6 +13,7 @@ import (
 	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/orm/music"
+	"github.com/caiknife/mp3lister/orm/wartankcn"
 )
 
 var (
@@ -23,7 +24,8 @@ var (
 
 func init() {
 	initConfig()
-	initORM()
+	initDBMusic()
+	initDBWarTankCN()
 }
 
 func initConfig() {
@@ -51,10 +53,10 @@ func initDBWarTankCN() {
 		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
-
+	wartankcn.SetDefault(DBWarTankCN)
 }
 
-func initORM() {
+func initDBMusic() {
 	newLogger := gLogger.New(
 		log.New(os.Stdout, "", log.LstdFlags), // io writer
 		gLogger.Config{

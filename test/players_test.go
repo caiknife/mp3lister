@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/brianvoe/gofakeit/v6"
+	"gorm.io/gen"
 
 	"github.com/caiknife/mp3lister/lib/entity"
 	"github.com/caiknife/mp3lister/lib/types"
@@ -76,6 +77,17 @@ func TestPlayers_GetAll(t *testing.T) {
 	for _, m := range find {
 		t.Log(m)
 	}
+}
+
+func TestPlayers_FindInBatch(t *testing.T) {
+	batch, err := player.FindInBatch(10, func(tx gen.Dao, batch int) error {
+		return nil
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(len(batch))
 }
 
 func TestPlayers_DeleteAll(t *testing.T) {
