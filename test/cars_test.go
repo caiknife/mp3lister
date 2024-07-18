@@ -7,12 +7,7 @@ import (
 	"github.com/brianvoe/gofakeit/v6"
 
 	"github.com/caiknife/mp3lister/lib/types"
-	"github.com/caiknife/mp3lister/orm/music"
 	"github.com/caiknife/mp3lister/orm/music/model"
-)
-
-var (
-	car = music.Car
 )
 
 func TestCars_Create(t *testing.T) {

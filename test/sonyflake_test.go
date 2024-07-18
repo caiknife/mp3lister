@@ -6,7 +6,7 @@ import (
 	"github.com/sony/sonyflake"
 )
 
-func TestSonyflake(t *testing.T) {
+func TestSonyFlake(t *testing.T) {
 	var st sonyflake.Settings
 	st.MachineID = func() (uint16, error) {
 		return snowflakeMachineID(), nil

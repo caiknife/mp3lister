@@ -10,12 +10,7 @@ import (
 
 	_ "github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/types"
-	"github.com/caiknife/mp3lister/orm/music"
 	"github.com/caiknife/mp3lister/orm/music/model"
-)
-
-var (
-	movie = music.Movie
 )
 
 func TestMovies_Create(t *testing.T) {

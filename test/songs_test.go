@@ -4,12 +4,6 @@ import (
 	"testing"
 
 	"github.com/duke-git/lancet/v2/random"
-
-	"github.com/caiknife/mp3lister/orm/music"
-)
-
-var (
-	song = music.Song
 )
 
 func TestUpdateLength(t *testing.T) {

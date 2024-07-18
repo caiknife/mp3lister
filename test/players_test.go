@@ -9,12 +9,7 @@ import (
 
 	"github.com/caiknife/mp3lister/lib/entity"
 	"github.com/caiknife/mp3lister/lib/types"
-	"github.com/caiknife/mp3lister/orm/music"
 	"github.com/caiknife/mp3lister/orm/music/model"
-)
-
-var (
-	player = music.Player
 )
 
 func TestPlayers_Create(t *testing.T) {
