@@ -22,7 +22,13 @@ func ReservedKeys() types.Slice[string] {
 		ChestKey(),
 		SignIn(),
 		SVIP(),
+		CompetitivePlayerAward(),
+		ShopMissionDiamond(),
 	}
+}
+
+func ShopMissionDiamond() string {
+	return "TK:SHOP:MISSION:DIAMOND"
 }
 
 func ChargeDiamondPool() string {
@@ -71,4 +77,8 @@ func SignIn() string {
 
 func SVIP() string {
 	return "TK:SVIP"
+}
+
+func CompetitivePlayerAward() string {
+	return "TK:COMPETITIVE:PLAYER_AWARD"
 }

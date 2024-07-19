@@ -167,6 +167,28 @@ func TestSVIP(t *testing.T) {
 	})
 }
 
+func TestCompetitivePlayerAward(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), CompetitivePlayerAward()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
+
+func TestShopMissionDiamond(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), ShopMissionDiamond()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
+
 func TestRedisKeys(t *testing.T) {
 	result, err := config.RedisDefault.Keys(context.TODO(), "*").Result()
 	if err != nil {
