@@ -97,19 +97,19 @@ func InitDBMusic() {
 
 	var err error
 
-	dbMusic, b := Config.MySQL.Get(DB_Music)
+	dbMusic, b := Config.MySQL.Get(dbMusic)
 	if !b {
-		logger.ConsoleLogger.Fatalln(DB_Music, "mysql config not exist")
+		logger.ConsoleLogger.Fatalln(dbMusic, "mysql config not exist")
 		return
 	}
-	dbMusicRead_1, b := Config.MySQL.Get(DB_Music_Read_1)
+	dbMusicRead_1, b := Config.MySQL.Get(dbMusicRead_1)
 	if !b {
-		logger.ConsoleLogger.Fatalln(DB_Music_Read_1, "mysql config not exist")
+		logger.ConsoleLogger.Fatalln(dbMusicRead_1, "mysql config not exist")
 		return
 	}
-	dbMusicRead_2, b := Config.MySQL.Get(DB_Music_Read_2)
+	dbMusicRead_2, b := Config.MySQL.Get(dbMusicRead_2)
 	if !b {
-		logger.ConsoleLogger.Fatalln(DB_Music_Read_2, "mysql config not exist")
+		logger.ConsoleLogger.Fatalln(dbMusicRead_2, "mysql config not exist")
 		return
 	}
 

@@ -15,11 +15,11 @@ var (
 )
 
 const (
-	DB_Music        = "music"
-	DB_Music_Read_1 = "music_read_1"
-	DB_Music_Read_2 = "music_read_2"
-	DB_Wartank      = "wartank"
-	DB_Wartank_CN   = "wartank_cn"
+	dbMusic       = "music"
+	dbMusicRead_1 = "music_read_1"
+	dbMusicRead_2 = "music_read_2"
+	dbWarTank     = "wartank"
+	DB_Wartank_CN = "wartank_cn"
 )
 
 const (

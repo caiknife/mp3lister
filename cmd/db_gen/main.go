@@ -7,11 +7,13 @@ import (
 
 	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/logger"
+
+	_ "github.com/caiknife/mp3lister/test"
 )
 
 func main() {
-	// genDB(config.DB_Music, "music")
-	genDB(config.DB_Wartank_CN, "wartankcn")
+	// genDB("music", "music")
+	genDB("wartank_cn", "wartankcn")
 }
 
 func genDB(dbName, ormName string) {
