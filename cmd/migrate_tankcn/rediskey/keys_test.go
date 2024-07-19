@@ -75,6 +75,32 @@ func TestSettlePlayerRewards(t *testing.T) {
 	})
 }
 
+func TestSettlePlayerRewards_Using_Scan(t *testing.T) {
+	var cursor uint64 = 0
+	for {
+		var err error
+		var result []string
+		result, cursor, err = config.RedisDefault.Scan(
+			context.TODO(),
+			cursor,
+			keySettlePlayerRewards+"*",
+			defaultLimit,
+		).Result()
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		t.Log(cursor)
+		types.Slice[string](result).ForEach(func(s string, i int) {
+			t.Log(s)
+		})
+
+		if len(result) == 0 {
+			break
+		}
+	}
+}
+
 func TestShopDailyChestPool(t *testing.T) {
 	result, err := config.RedisDefault.HGetAll(context.TODO(), ShopDailyChestPool()).Result()
 	if err != nil {
@@ -83,5 +109,60 @@ func TestShopDailyChestPool(t *testing.T) {
 	}
 	types.Map[string](result).ForEach(func(key string, value string) {
 		t.Log(key, value, len(value))
+	})
+}
+
+func TestVeteranChargePool(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), VeteranChargePool()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
+
+func TestWeeklyChestPlayer(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), WeeklyChestPlayer()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
+
+func TestChestKey(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), ChestKey()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
+
+func TestSignIn(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), SignIn()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
+
+func TestSVIP(t *testing.T) {
+	result, err := config.RedisDefault.SMembers(context.TODO(), SVIP()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Slice[string](result).ForEach(func(s string, i int) {
+		t.Log(s)
 	})
 }
