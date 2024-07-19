@@ -68,9 +68,9 @@ func InitDBWarTankCN() {
 	)
 
 	var err error
-	db, b := Config.MySQL.Get(DB_Wartank_CN)
+	db, b := Config.MySQL.Get(dbWarTankCN)
 	if !b {
-		logger.ConsoleLogger.Fatalln(DB_Wartank_CN, "mysql config not exist")
+		logger.ConsoleLogger.Fatalln(dbWarTankCN, "mysql config not exist")
 		return
 	}
 	DBWarTankCN, err = gorm.Open(mysql.Open(db), &gorm.Config{
@@ -97,23 +97,23 @@ func InitDBMusic() {
 
 	var err error
 
-	dbMusic, b := Config.MySQL.Get(dbMusic)
+	dbM, b := Config.MySQL.Get(dbMusic)
 	if !b {
 		logger.ConsoleLogger.Fatalln(dbMusic, "mysql config not exist")
 		return
 	}
-	dbMusicRead_1, b := Config.MySQL.Get(dbMusicRead_1)
+	dbMR1, b := Config.MySQL.Get(dbMusicRead_1)
 	if !b {
 		logger.ConsoleLogger.Fatalln(dbMusicRead_1, "mysql config not exist")
 		return
 	}
-	dbMusicRead_2, b := Config.MySQL.Get(dbMusicRead_2)
+	dbMR2, b := Config.MySQL.Get(dbMusicRead_2)
 	if !b {
 		logger.ConsoleLogger.Fatalln(dbMusicRead_2, "mysql config not exist")
 		return
 	}
 
-	DBMusic, err = gorm.Open(mysql.Open(dbMusic), &gorm.Config{
+	DBMusic, err = gorm.Open(mysql.Open(dbM), &gorm.Config{
 		Logger: newLogger,
 	})
 	if err != nil {
@@ -123,11 +123,11 @@ func InitDBMusic() {
 	// 读写分离
 	err = DBMusic.Use(dbresolver.Register(dbresolver.Config{
 		Sources: []gorm.Dialector{
-			mysql.Open(dbMusic),
+			mysql.Open(dbM),
 		},
 		Replicas: []gorm.Dialector{
-			mysql.Open(dbMusicRead_1),
-			mysql.Open(dbMusicRead_2),
+			mysql.Open(dbMR1),
+			mysql.Open(dbMR2),
 		},
 		Policy:            &RoundRobinPolicy{},
 		TraceResolverMode: true,

@@ -19,7 +19,7 @@ const (
 	dbMusicRead_1 = "music_read_1"
 	dbMusicRead_2 = "music_read_2"
 	dbWarTank     = "wartank"
-	DB_Wartank_CN = "wartank_cn"
+	dbWarTankCN   = "wartank_cn"
 )
 
 const (
