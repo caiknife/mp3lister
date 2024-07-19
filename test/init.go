@@ -22,6 +22,7 @@ func init() {
 	err := config.LoadConfigFile(e,
 		config.InitDBMusic,
 		config.InitDBWarTankCN,
+		config.InitRedisDefault,
 	)
 	if err != nil {
 		logger.ConsoleLogger.Fatalln(err)

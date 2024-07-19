@@ -1,13 +1,17 @@
 package config
 
 import (
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
 
 var (
-	Config      *AppConfig
+	Config *AppConfig
+
 	DBMusic     *gorm.DB
 	DBWarTankCN *gorm.DB
+
+	RedisDefault *redis.Client
 )
 
 const (
@@ -16,6 +20,10 @@ const (
 	DB_Music_Read_2 = "music_read_2"
 	DB_Wartank      = "wartank"
 	DB_Wartank_CN   = "wartank_cn"
+)
+
+const (
+	Redis_Default = "default"
 )
 
 type RoundRobinPolicy struct {

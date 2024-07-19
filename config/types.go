@@ -10,7 +10,8 @@ import (
 type File = types.Map[*AppConfig]
 
 type AppConfig struct {
-	MySQL types.Map[string] `yaml:"mysql"`
+	MySQL types.Map[string]       `yaml:"mysql"`
+	Redis types.Map[*RedisConfig] `yaml:"redis"`
 }
 
 func (a *AppConfig) String() string {
@@ -26,3 +27,14 @@ var (
 		Value:   "lan",
 	}
 )
+
+type RedisConfig struct {
+	Addr     string `yaml:"addr"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
+}
+
+func (r *RedisConfig) String() string {
+	toString, _ := fjson.MarshalToString(r)
+	return toString
+}

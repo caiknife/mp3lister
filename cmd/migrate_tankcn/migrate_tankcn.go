@@ -49,7 +49,10 @@ func newApp() *cli.App {
 
 func action() cli.ActionFunc {
 	return func(ctx *cli.Context) error {
-		if err := config.InitCliContext(ctx, config.InitDBWarTankCN); err != nil {
+		if err := config.InitCliContext(ctx,
+			config.InitDBWarTankCN,
+			config.InitRedisDefault,
+		); err != nil {
 			err = errors.WithMessage(err, "init cli context")
 			return err
 		}

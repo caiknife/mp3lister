@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/redis/go-redis/v9"
 	"github.com/urfave/cli/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -41,6 +42,19 @@ func LoadConfigFile(e *Environment, callbacks ...func()) error {
 	return nil
 }
 
+func InitRedisDefault() {
+	red, b := Config.Redis.Get(Redis_Default)
+	if !b {
+		logger.ConsoleLogger.Fatalln(RedisDefault, "redis config not exist")
+		return
+	}
+	RedisDefault = redis.NewClient(&redis.Options{
+		Addr:     red.Addr,
+		Password: red.Password, // 没有密码，默认值
+		DB:       red.DB,       // 默认DB 0
+	})
+}
+
 func InitDBWarTankCN() {
 	newLogger := gLogger.New(
 		log.New(os.Stdout, "", log.LstdFlags), // io writer
@@ -54,7 +68,12 @@ func InitDBWarTankCN() {
 	)
 
 	var err error
-	DBWarTankCN, err = gorm.Open(mysql.Open(Config.MySQL[DB_Wartank_CN]), &gorm.Config{
+	db, b := Config.MySQL.Get(DB_Wartank_CN)
+	if !b {
+		logger.ConsoleLogger.Fatalln(DB_Wartank_CN, "mysql config not exist")
+		return
+	}
+	DBWarTankCN, err = gorm.Open(mysql.Open(db), &gorm.Config{
 		Logger: newLogger,
 	})
 	if err != nil {
@@ -77,7 +96,24 @@ func InitDBMusic() {
 	)
 
 	var err error
-	DBMusic, err = gorm.Open(mysql.Open(Config.MySQL[DB_Music]), &gorm.Config{
+
+	dbMusic, b := Config.MySQL.Get(DB_Music)
+	if !b {
+		logger.ConsoleLogger.Fatalln(DB_Music, "mysql config not exist")
+		return
+	}
+	dbMusicRead_1, b := Config.MySQL.Get(DB_Music_Read_1)
+	if !b {
+		logger.ConsoleLogger.Fatalln(DB_Music_Read_1, "mysql config not exist")
+		return
+	}
+	dbMusicRead_2, b := Config.MySQL.Get(DB_Music_Read_2)
+	if !b {
+		logger.ConsoleLogger.Fatalln(DB_Music_Read_2, "mysql config not exist")
+		return
+	}
+
+	DBMusic, err = gorm.Open(mysql.Open(dbMusic), &gorm.Config{
 		Logger: newLogger,
 	})
 	if err != nil {
@@ -87,11 +123,11 @@ func InitDBMusic() {
 	// 读写分离
 	err = DBMusic.Use(dbresolver.Register(dbresolver.Config{
 		Sources: []gorm.Dialector{
-			mysql.Open(Config.MySQL[DB_Music]),
+			mysql.Open(dbMusic),
 		},
 		Replicas: []gorm.Dialector{
-			mysql.Open(Config.MySQL[DB_Music_Read_1]),
-			mysql.Open(Config.MySQL[DB_Music_Read_2]),
+			mysql.Open(dbMusicRead_1),
+			mysql.Open(dbMusicRead_2),
 		},
 		Policy:            &RoundRobinPolicy{},
 		TraceResolverMode: true,
