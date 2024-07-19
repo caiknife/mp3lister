@@ -63,3 +63,25 @@ func TestResetTrophyPool(t *testing.T) {
 		t.Log(i, s, len(s))
 	})
 }
+
+func TestSettlePlayerRewards(t *testing.T) {
+	result, err := config.RedisDefault.Keys(context.TODO(), keySettlePlayerRewards+"*").Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Slice[string](result).ForEach(func(s string, i int) {
+		t.Log(s, splitPlayerIDFromKey(s), SettlePlayerRewards(splitPlayerIDFromKey(s)))
+	})
+}
+
+func TestShopDailyChestPool(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), ShopDailyChestPool()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
+}
