@@ -1,9 +1,29 @@
 package rediskey
 
+import (
+	"github.com/caiknife/mp3lister/lib/types"
+)
+
 const (
 	keySettlePlayerRewards = "TK:SETTLE:PLAYER:REWARDS:"
 	defaultLimit           = 500
 )
+
+func ReservedKeys() types.Slice[string] {
+	return types.Slice[string]{
+		ChargeDiamondPool(),
+		FirstChargePool(),
+		HighestQualityPool(),
+		PlayerProficiencyExp(),
+		ResetTrophyPool(),
+		ShopDailyChestPool(),
+		VeteranChargePool(),
+		WeeklyChestPlayer(),
+		ChestKey(),
+		SignIn(),
+		SVIP(),
+	}
+}
 
 func ChargeDiamondPool() string {
 	return "TK:CHARGE:DIAMOND:POOL"

@@ -166,3 +166,16 @@ func TestSVIP(t *testing.T) {
 		t.Log(s)
 	})
 }
+
+func TestRedisKeys(t *testing.T) {
+	result, err := config.RedisDefault.Keys(context.TODO(), "*").Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Slice[string](result).ForEach(func(s string, i int) {
+		t.Log(s)
+	})
+	t.Log(len(result))
+	t.Log(ReservedKeys())
+}
