@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/spf13/cast"
+
 	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/types"
 	_ "github.com/caiknife/mp3lister/test"
@@ -15,9 +17,14 @@ func TestChargeDiamondPool(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	newResult := types.Map[string]{}
 	types.Map[string](result).ForEach(func(key string, value string) {
 		t.Log(key, value, len(value))
+		newKey := cast.ToString(cast.ToInt(key) + 10000000)
+		newResult[newKey] = value
 	})
+	t.Log(len(result))
+	t.Log(newResult.Len())
 }
 
 func TestFirstChargePool(t *testing.T) {
@@ -200,4 +207,15 @@ func TestRedisKeys(t *testing.T) {
 	})
 	t.Log(len(result))
 	t.Log(ReservedKeys())
+}
+
+func TestLegionWarPlayerMedal(t *testing.T) {
+	result, err := config.RedisDefault.HGetAll(context.TODO(), LegionWarPlayerMedal()).Result()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	types.Map[string](result).ForEach(func(key string, value string) {
+		t.Log(key, value, len(value))
+	})
 }
