@@ -14,6 +14,51 @@ import (
 )
 
 func modifyRedis() error {
+	if err := clearRedisKeys(); err != nil {
+		return err
+	}
+	if err := modifyChargeDiamondPool(); err != nil {
+		return err
+	}
+	if err := modifyFirstChargePool(); err != nil {
+		return err
+	}
+	if err := modifyHighestQualityPool(); err != nil {
+		return err
+	}
+	if err := modifyPlayerProficiencyExp(); err != nil {
+		return err
+	}
+	if err := modifyResetTrophyPool(); err != nil {
+		return err
+	}
+	if err := modifyShopDailyChestPool(); err != nil {
+		return err
+	}
+	if err := modifyVeteranChargePool(); err != nil {
+		return err
+	}
+	if err := modifyWeeklyChestPlayer(); err != nil {
+		return err
+	}
+	if err := modifyChestKey(); err != nil {
+		return err
+	}
+	if err := modifySignIn(); err != nil {
+		return err
+	}
+	if err := modifySVIP(); err != nil {
+		return err
+	}
+	if err := modifyCompetitivePlayerAward(); err != nil {
+		return err
+	}
+	if err := modifyShopMissionDiamond(); err != nil {
+		return err
+	}
+	if err := modifyLegionWarPlayerMedal(); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -41,22 +86,25 @@ func modifyRedisHash(key string) error {
 		err = errors.WithMessage(err, fmt.Sprintf("%s redis hgetall error", key))
 		return err
 	}
-	newResult := types.Map[string]{}
+	if result.IsEmpty() {
+		return nil
+	}
+
+	newResult := map[string]string{}
 	result.ForEach(func(key string, value string) {
 		newKey := cast.ToString(cast.ToInt(key) + playerIDIncrement)
 		newResult[newKey] = value
 	})
-
-	// 删除旧数据
-	err = config.RedisDefault.HDel(context.TODO(), key, result.Keys()...).Err()
-	if err != nil {
-		err = errors.WithMessage(err, fmt.Sprintf("%s redis hdel error", key))
-		return err
-	}
 	// 添加新数据
 	err = config.RedisDefault.HSet(context.TODO(), key, newResult).Err()
 	if err != nil {
 		err = errors.WithMessage(err, fmt.Sprintf("%s redis hset error", key))
+		return err
+	}
+	// 删除旧数据
+	err = config.RedisDefault.HDel(context.TODO(), key, result.Keys()...).Err()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hdel error", key))
 		return err
 	}
 	return nil
