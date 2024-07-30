@@ -6,8 +6,8 @@ import (
 
 const (
 	ErrInputIsNotDir     types.Error = "input is not a dir"
-	ErrInputPathIsEmpty              = "input path is empty"
-	ErrOutputNameIsEmpty             = "output name is empty"
-	ErrOutputExtIsEmpty              = "output ext is empty"
-	ErrDataIsEmpty                   = "data is empty"
+	ErrInputPathIsEmpty  types.Error = "input path is empty"
+	ErrOutputNameIsEmpty types.Error = "output name is empty"
+	ErrOutputExtIsEmpty  types.Error = "output ext is empty"
+	ErrDataIsEmpty       types.Error = "data is empty"
 )
