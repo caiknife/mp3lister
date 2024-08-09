@@ -10,6 +10,7 @@ import (
 
 	"github.com/caiknife/mp3lister/cmd/migrate_tankcn/rediskey"
 	"github.com/caiknife/mp3lister/config"
+	"github.com/caiknife/mp3lister/lib/fjson"
 	"github.com/caiknife/mp3lister/lib/types"
 )
 
@@ -59,6 +60,12 @@ func modifyRedis() error {
 	if err := modifyLegionWarPlayerMedal(); err != nil {
 		return err
 	}
+	if err := modifyLegionWarLegionChest(); err != nil {
+		return err
+	}
+	if err := modifyLegionWarPlayerChest(); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -70,7 +77,7 @@ func clearRedisKeys() error {
 		return err
 	}
 
-	result = lo.Without(result, rediskey.ReservedKeys()...)
+	result = lo.Without[string](result, rediskey.ReservedKeys()...)
 	err = config.RedisDefault.Del(context.TODO(), result...).Err()
 	if err != nil {
 		err = errors.WithMessage(err, "redis del error")
@@ -261,6 +268,73 @@ func modifyLegionWarPlayerMedal() error {
 	err := modifyRedisHash(rediskey.LegionWarPlayerMedal())
 	if err != nil {
 		err = errors.WithMessage(err, "redis legion war medal error")
+		return err
+	}
+	return nil
+}
+
+func modifyLegionWarLegionChest() error {
+	result := types.Map[string]{}
+	result, err := config.RedisDefault.HGetAll(context.TODO(), rediskey.LegionWarLegionChest()).Result()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hgetall error", rediskey.LegionWarLegionChest()))
+		return err
+	}
+	if result.IsEmpty() {
+		return nil
+	}
+
+	newResult := map[string]string{}
+	result.ForEach(func(key string, value string) {
+		newKey := cast.ToString(cast.ToInt(key) + legionIDIncrement)
+		newResult[newKey] = value
+	})
+	// 添加新数据
+	err = config.RedisDefault.HSet(context.TODO(), rediskey.LegionWarLegionChest(), newResult).Err()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hset error", rediskey.LegionWarLegionChest()))
+		return err
+	}
+	// 删除旧数据
+	err = config.RedisDefault.HDel(context.TODO(), rediskey.LegionWarLegionChest(), result.Keys()...).Err()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hdel error", rediskey.LegionWarLegionChest()))
+		return err
+	}
+	return nil
+}
+
+func modifyLegionWarPlayerChest() error {
+	result := types.Map[string]{}
+	result, err := config.RedisDefault.HGetAll(context.TODO(), rediskey.LegionWarPlayerChest()).Result()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hgetall error", rediskey.LegionWarPlayerChest()))
+		return err
+	}
+	if result.IsEmpty() {
+		return nil
+	}
+	newResult := map[string]*rediskey.PlayerChest{}
+	result.ForEach(func(key string, value string) {
+		newKey := cast.ToString(cast.ToInt(key) + playerIDIncrement)
+		c := rediskey.DefaultPlayerChest()
+		_ = fjson.UnmarshalFromString(value, c)
+		if c.NoLegion() {
+			return
+		}
+		c.LegionId += legionIDIncrement
+		newResult[newKey] = c
+	})
+	// 添加新数据
+	err = config.RedisDefault.HSet(context.TODO(), rediskey.LegionWarPlayerChest(), newResult).Err()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hset error", rediskey.LegionWarPlayerChest()))
+		return err
+	}
+	// 删除旧数据
+	err = config.RedisDefault.HDel(context.TODO(), rediskey.LegionWarPlayerChest(), result.Keys()...).Err()
+	if err != nil {
+		err = errors.WithMessage(err, fmt.Sprintf("%s redis hdel error", rediskey.LegionWarPlayerChest()))
 		return err
 	}
 	return nil

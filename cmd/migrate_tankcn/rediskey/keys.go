@@ -25,6 +25,8 @@ func ReservedKeys() types.Slice[string] {
 		CompetitivePlayerAward(),
 		ShopMissionDiamond(),
 		LegionWarPlayerMedal(),
+		LegionWarLegionChest(),
+		LegionWarPlayerChest(),
 	}
 }
 
@@ -86,4 +88,12 @@ func SVIP() string {
 
 func CompetitivePlayerAward() string {
 	return "TK:COMPETITIVE:PLAYER_AWARD"
+}
+
+func LegionWarLegionChest() string {
+	return "TK:LEGION_WAR:LEGION_CHEST"
+}
+
+func LegionWarPlayerChest() string {
+	return "TK:LEGION_WAR:PLAYER_CHEST"
 }
