@@ -29,3 +29,11 @@ func Test_modifyChargeDiamondPool(t *testing.T) {
 		return
 	}
 }
+
+func Test_modifyLegionWarPlayerChest(t *testing.T) {
+	err := modifyLegionWarPlayerChest()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+}

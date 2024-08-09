@@ -76,6 +76,9 @@ func clearRedisKeys() error {
 		err = errors.WithMessage(err, "redis keys error")
 		return err
 	}
+	if result.IsEmpty() {
+		return nil
+	}
 
 	result = lo.Without[string](result, rediskey.ReservedKeys()...)
 	err = config.RedisDefault.Del(context.TODO(), result...).Err()
@@ -314,16 +317,15 @@ func modifyLegionWarPlayerChest() error {
 	if result.IsEmpty() {
 		return nil
 	}
-	newResult := map[string]*rediskey.PlayerChest{}
+	newResult := map[string]string{}
 	result.ForEach(func(key string, value string) {
 		newKey := cast.ToString(cast.ToInt(key) + playerIDIncrement)
 		c := rediskey.DefaultPlayerChest()
 		_ = fjson.UnmarshalFromString(value, c)
-		if c.NoLegion() {
-			return
+		if !c.NoLegion() {
+			c.LegionId += legionIDIncrement
 		}
-		c.LegionId += legionIDIncrement
-		newResult[newKey] = c
+		newResult[newKey] = c.String()
 	})
 	// 添加新数据
 	err = config.RedisDefault.HSet(context.TODO(), rediskey.LegionWarPlayerChest(), newResult).Err()
