@@ -4,9 +4,10 @@ import (
 	"sort"
 
 	"github.com/duke-git/lancet/v2/maputil"
-	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
 	"golang.org/x/exp/constraints"
+
+	"github.com/caiknife/mp3lister/lib/fjson"
 )
 
 var (
@@ -52,18 +53,28 @@ func (msg ValueMessage[K]) IsEmpty() bool {
 	return msg.Len() == 0
 }
 
-func (msg ValueMessage[K]) ToSortedSlice() []gin.H {
+func (msg ValueMessage[K]) ToSortedSlice() Slice[*Entry[K]] {
 	entries := lo.Entries(msg)
 	sort.SliceStable(entries, func(i, j int) bool {
 		return entries[i].Key < entries[j].Key
 	})
 
-	codes := lo.Map[lo.Entry[K, string], gin.H](entries, func(item lo.Entry[K, string], index int) gin.H {
-		return gin.H{
-			"value": item.Key,
-			"msg":   item.Value,
+	codes := lo.Map[lo.Entry[K, string], *Entry[K]](entries, func(item lo.Entry[K, string], index int) *Entry[K] {
+		return &Entry[K]{
+			Value: item.Key,
+			Msg:   item.Value,
 		}
 	})
 
 	return codes
+}
+
+type Entry[V comparable] struct {
+	Value V      `json:"value"`
+	Msg   string `json:"msg"`
+}
+
+func (e *Entry[V]) String() string {
+	toString, _ := fjson.MarshalToString(e)
+	return toString
 }
