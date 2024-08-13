@@ -64,3 +64,7 @@ func (c *City) Name() string {
 	}
 	return c.city.City.Names["en"]
 }
+
+func (c *City) TimeZone() string {
+	return c.city.Location.TimeZone
+}

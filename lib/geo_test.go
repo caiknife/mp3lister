@@ -18,7 +18,7 @@ func TestGeoIP(t *testing.T) {
 			t.Error(err)
 			return
 		}
-		t.Log("城市名称", city.Name())
+		t.Log("城市名称", city.Name(), city.TimeZone())
 		t.Log("国家名称", city.CountryCode(), city.CountryName())
 		t.Log("大陆名称", city.ContinentCode(), city.ContinentName())
 	})
