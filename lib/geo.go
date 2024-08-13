@@ -41,8 +41,8 @@ func (c *City) ContinentCode() string {
 }
 
 func (c *City) ContinentName() string {
-	if c.city.Continent.Names["zh-CN"] != "" {
-		return c.city.Continent.Names["zh-CN"]
+	if v, ok := c.city.Continent.Names["zh-CN"]; ok {
+		return v
 	}
 	return c.city.Continent.Names["en"]
 }
@@ -52,15 +52,15 @@ func (c *City) CountryCode() string {
 }
 
 func (c *City) CountryName() string {
-	if c.city.Country.Names["zh-CN"] != "" {
-		return c.city.Country.Names["zh-CN"]
+	if v, ok := c.city.Country.Names["zh-CN"]; ok {
+		return v
 	}
 	return c.city.Country.Names["en"]
 }
 
 func (c *City) Name() string {
-	if c.city.City.Names["zh-CN"] != "" {
-		return c.city.City.Names["zh-CN"]
+	if v, ok := c.city.City.Names["zh-CN"]; ok {
+		return v
 	}
 	return c.city.City.Names["en"]
 }
