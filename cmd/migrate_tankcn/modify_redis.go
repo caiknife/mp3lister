@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"sync"
 
 	"github.com/pkg/errors"
 	"github.com/samber/lo"
@@ -11,60 +12,52 @@ import (
 	"github.com/caiknife/mp3lister/cmd/migrate_tankcn/rediskey"
 	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/fjson"
+	"github.com/caiknife/mp3lister/lib/logger"
 	"github.com/caiknife/mp3lister/lib/types"
 )
 
+func redisActions() []func() error {
+	return []func() error{
+		clearRedisKeys,
+		modifyChargeDiamondPool,
+		modifyFirstChargePool,
+		modifyHighestQualityPool,
+		modifyPlayerProficiencyExp,
+		modifyResetTrophyPool,
+		modifyShopDailyChestPool,
+		modifyVeteranChargePool,
+		modifyWeeklyChestPlayer,
+		modifyChestKey,
+		modifySignIn,
+		modifySVIP,
+		modifyCompetitivePlayerAward,
+		modifyShopMissionDiamond,
+		modifyLegionWarPlayerMedal,
+		modifyLegionWarPlayerChest,
+		modifyLegionWarLegionChest,
+	}
+}
+
 func modifyRedis() error {
-	if err := clearRedisKeys(); err != nil {
-		return err
+	errChan := make(chan error, len(redisActions()))
+	wg := &sync.WaitGroup{}
+	wg.Add(len(redisActions()))
+	for _, action := range redisActions() {
+		go func(wg *sync.WaitGroup) {
+			defer wg.Done()
+			err := action()
+			if err != nil {
+				logger.ConsoleLogger.Errorln(err)
+				errChan <- err
+			}
+		}(wg)
 	}
-	if err := modifyChargeDiamondPool(); err != nil {
-		return err
-	}
-	if err := modifyFirstChargePool(); err != nil {
-		return err
-	}
-	if err := modifyHighestQualityPool(); err != nil {
-		return err
-	}
-	if err := modifyPlayerProficiencyExp(); err != nil {
-		return err
-	}
-	if err := modifyResetTrophyPool(); err != nil {
-		return err
-	}
-	if err := modifyShopDailyChestPool(); err != nil {
-		return err
-	}
-	if err := modifyVeteranChargePool(); err != nil {
-		return err
-	}
-	if err := modifyWeeklyChestPlayer(); err != nil {
-		return err
-	}
-	if err := modifyChestKey(); err != nil {
-		return err
-	}
-	if err := modifySignIn(); err != nil {
-		return err
-	}
-	if err := modifySVIP(); err != nil {
-		return err
-	}
-	if err := modifyCompetitivePlayerAward(); err != nil {
-		return err
-	}
-	if err := modifyShopMissionDiamond(); err != nil {
-		return err
-	}
-	if err := modifyLegionWarPlayerMedal(); err != nil {
-		return err
-	}
-	if err := modifyLegionWarLegionChest(); err != nil {
-		return err
-	}
-	if err := modifyLegionWarPlayerChest(); err != nil {
-		return err
+	wg.Wait()
+	close(errChan)
+	for err := range errChan {
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -81,6 +74,9 @@ func clearRedisKeys() error {
 	}
 
 	result = lo.Without[string](result, rediskey.ReservedKeys()...)
+	if result.IsEmpty() {
+		return nil
+	}
 	err = config.RedisDefault.Del(context.TODO(), result...).Err()
 	if err != nil {
 		err = errors.WithMessage(err, "redis del error")
