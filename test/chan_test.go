@@ -1,6 +1,7 @@
 package test
 
 import (
+	"sync"
 	"testing"
 )
 
@@ -40,5 +41,22 @@ LoopFor:
 			}
 			t.Log(v)
 		}
+	}
+}
+
+func TestChan_RandomLoad_1(t *testing.T) {
+	intChan := make(chan int, 10)
+	wg := &sync.WaitGroup{}
+	wg.Add(10)
+	for i := range 10 {
+		go func(wg *sync.WaitGroup, ch chan int, i int) {
+			defer wg.Done()
+			ch <- i
+		}(wg, intChan, i)
+	}
+	wg.Wait()
+	close(intChan)
+	for v := range intChan {
+		t.Log(v)
 	}
 }
