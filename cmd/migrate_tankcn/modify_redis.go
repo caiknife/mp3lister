@@ -43,14 +43,14 @@ func modifyRedis() error {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(redisActions()))
 	for _, action := range redisActions() {
-		go func(wg *sync.WaitGroup) {
+		go func(wg *sync.WaitGroup, errChan chan<- error) {
 			defer wg.Done()
 			err := action()
 			if err != nil {
 				logger.ConsoleLogger.Errorln(err)
 				errChan <- err
 			}
-		}(wg)
+		}(wg, errChan)
 	}
 	wg.Wait()
 	close(errChan)
