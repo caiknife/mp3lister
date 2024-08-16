@@ -1,9 +1,12 @@
 package test
 
 import (
+	"maps"
+
 	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/logger"
+	"github.com/caiknife/mp3lister/lib/types"
 	"github.com/caiknife/mp3lister/orm/music"
 )
 
@@ -41,4 +44,18 @@ func initTables() {
 
 func snowflakeMachineID() uint16 {
 	return lib.SnowflakeMachineID()
+}
+
+var apiServers = types.Map[string]{
+	"api":    "overseas server",
+	"api_cn": "cn server",
+}
+
+func getServer(isCNBundle bool) types.Map[string] {
+	servers := maps.Clone(apiServers)
+	if isCNBundle {
+		servers["api"] = servers["api_cn"]
+	}
+	delete(servers, "api_cn")
+	return servers
 }
