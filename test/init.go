@@ -2,6 +2,7 @@ package test
 
 import (
 	"maps"
+	"slices"
 
 	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib"
@@ -51,11 +52,25 @@ var apiServers = types.Map[string]{
 	"api_cn": "cn server",
 }
 
-func getServer(isCNBundle bool) types.Map[string] {
+var backendServers = types.Slice[string]{
+	"overseas server",
+	"cn server",
+}
+
+func getApiServer(isCNBundle bool) types.Map[string] {
 	servers := maps.Clone(apiServers)
 	if isCNBundle {
 		servers["api"] = servers["api_cn"]
 	}
 	delete(servers, "api_cn")
 	return servers
+}
+
+func getBackendServer(isCNBundle bool) types.Slice[string] {
+	s := slices.Clone(backendServers)
+	if isCNBundle {
+		s[0] = s[1]
+	}
+	s = s[0:1]
+	return s
 }

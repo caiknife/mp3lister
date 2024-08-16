@@ -75,8 +75,14 @@ func TestNamesTxtToJson(t *testing.T) {
 	}
 }
 
-func Test_getServers(t *testing.T) {
-	t.Log(getServer(false))
-	t.Log(getServer(true))
+func Test_getApiServers(t *testing.T) {
+	t.Log(getApiServer(false))
+	t.Log(getApiServer(true))
 	t.Log(apiServers)
+}
+
+func Test_getBackendServer(t *testing.T) {
+	t.Log(getBackendServer(false))
+	t.Log(getBackendServer(true))
+	t.Log(backendServers)
 }
