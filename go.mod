@@ -3,6 +3,7 @@ module github.com/caiknife/mp3lister
 go 1.22
 
 require (
+	github.com/XiaoMengXinX/Music163Api-Go v0.1.30
 	github.com/bogem/id3v2/v2 v2.1.4
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/bwmarrin/snowflake v0.3.0
@@ -12,6 +13,7 @@ require (
 	github.com/fatih/color v1.17.0
 	github.com/go-pay/gopay v1.5.103
 	github.com/go-resty/resty/v2 v2.13.1
+	github.com/gocolly/colly/v2 v2.1.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
 	github.com/json-iterator/go v1.1.12
@@ -30,7 +32,7 @@ require (
 	github.com/urfave/cli/v2 v2.27.3
 	github.com/vicanso/go-charts/v2 v2.6.9
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
-	golang.org/x/text v0.16.0
+	golang.org/x/text v0.17.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/datatypes v1.2.1
 	gorm.io/driver/mysql v1.5.7
@@ -42,6 +44,11 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/PuerkitoBio/goquery v1.9.2 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
+	github.com/antchfx/htmlquery v1.3.2 // indirect
+	github.com/antchfx/xmlquery v1.4.1 // indirect
+	github.com/antchfx/xpath v1.3.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -54,9 +61,14 @@ require (
 	github.com/go-pay/xlog v0.0.3 // indirect
 	github.com/go-pay/xtime v0.0.2 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
+	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
@@ -67,7 +79,9 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
+	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/wcharczuk/go-chart/v2 v2.1.0 // indirect
@@ -75,9 +89,11 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
 	golang.org/x/mod v0.19.0 // indirect
-	golang.org/x/net v0.27.0 // indirect
-	golang.org/x/sync v0.7.0 // indirect
+	golang.org/x/net v0.28.0 // indirect
+	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.24.0 // indirect
 	golang.org/x/tools v0.23.0 // indirect
+	google.golang.org/appengine v1.6.8 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
 	gorm.io/hints v1.1.0 // indirect
 )

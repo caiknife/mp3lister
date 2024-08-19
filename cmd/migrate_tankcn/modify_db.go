@@ -45,6 +45,13 @@ func modifyDB() error {
 			return err
 		}
 		logger.ConsoleLogger.Info("处理", tx.WtPlayer.TableName(), "影响行数", num)
+
+		// 处理 Gift 数据
+		num, err = tbGift(tx)
+		if err != nil {
+			err = errors.WithMessage(err, "modify gift")
+			return err
+		}
 		return nil
 	})
 	if err != nil {
@@ -52,6 +59,18 @@ func modifyDB() error {
 		return err
 	}
 	return nil
+}
+
+func tbGift(tx *wartankcn.Query) (n int64, err error) {
+	tbG := tx.WtGift
+	resultInfo, err := tbG.Where(tbG.ID).UpdateSimple(
+		tbG.ID.Add(giftIDIncrement),
+	)
+	if err != nil {
+		err = errors.WithMessage(err, "update gift")
+		return 0, err
+	}
+	return resultInfo.RowsAffected, nil
 }
 
 func tbPlayer(tx *wartankcn.Query) (n int64, err error) {
