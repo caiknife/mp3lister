@@ -5,5 +5,5 @@ const (
 
 	playerIDIncrement = 10000000
 	legionIDIncrement = 20000
-	giftIDIncrement   = 100000
+	giftIDIncrement   = 200000
 )
