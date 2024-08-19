@@ -12,17 +12,17 @@ const TableNameWtGift = "wt_gift"
 
 // WtGift 礼品码表
 type WtGift struct {
-	ID            int64     `gorm:"column:id;type:bigint(20);primaryKey;autoIncrement:true;comment:主键" json:"id"`                                 // 主键
+	ID            int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true;comment:主键" json:"id"`                                     // 主键
 	GiftCode      string    `gorm:"column:gift_code;type:varchar(32);not null;uniqueIndex:uni_gift_code,priority:1;comment:礼品码" json:"gift_code"` // 礼品码
 	GiftProductID string    `gorm:"column:gift_product_id;type:varchar(64);not null;comment:奖励商品ID" json:"gift_product_id"`                       // 奖励商品ID
-	GiftType      int32     `gorm:"column:gift_type;type:tinyint(4);not null;default:1;comment:礼品码类型" json:"gift_type"`                           // 礼品码类型
+	GiftType      int32     `gorm:"column:gift_type;type:tinyint;not null;default:1;comment:礼品码类型" json:"gift_type"`                              // 礼品码类型
 	BundleID      string    `gorm:"column:bundle_id;type:varchar(64);not null;comment:bundle_id" json:"bundle_id"`                                // bundle_id
-	EffectiveTime time.Time `gorm:"column:effective_time;type:timestamp;not null;default:current_timestamp();comment:生效时间" json:"effective_time"` // 生效时间
-	ExpireTime    time.Time `gorm:"column:expire_time;type:timestamp;not null;default:current_timestamp();comment:过期时间" json:"expire_time"`       // 过期时间
-	GiftStatus    int32     `gorm:"column:gift_status;type:tinyint(4);not null;comment:状态" json:"gift_status"`                                    // 状态
-	CreateTime    time.Time `gorm:"column:create_time;type:timestamp;not null;default:current_timestamp();comment:创建时间" json:"create_time"`       // 创建时间
-	UpdateTime    time.Time `gorm:"column:update_time;type:timestamp;not null;default:current_timestamp();comment:更新时间" json:"update_time"`       // 更新时间
-	Version       int64     `gorm:"column:version;type:bigint(20);not null;comment:数据版本锁" json:"version"`                                         // 数据版本锁
+	EffectiveTime time.Time `gorm:"column:effective_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:生效时间" json:"effective_time"`   // 生效时间
+	ExpireTime    time.Time `gorm:"column:expire_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:过期时间" json:"expire_time"`         // 过期时间
+	GiftStatus    int32     `gorm:"column:gift_status;type:tinyint;not null;comment:状态" json:"gift_status"`                                       // 状态
+	CreateTime    time.Time `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"create_time"`         // 创建时间
+	UpdateTime    time.Time `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:更新时间" json:"update_time"`         // 更新时间
+	Version       int64     `gorm:"column:version;type:bigint;not null;comment:数据版本锁" json:"version"`                                             // 数据版本锁
 }
 
 // TableName WtGift's table name

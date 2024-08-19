@@ -13,7 +13,7 @@ import (
 
 func main() {
 	genDB("music", "music")
-	// genDB("wartank_cn", "wartankcn")
+	genDB("wartank_cn", "wartankcn")
 }
 
 func genDB(dbName, ormName string) {

@@ -14,42 +14,42 @@ const TableNameWtPlayer = "wt_player"
 
 // WtPlayer 玩家表
 type WtPlayer struct {
-	ID               uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true;comment:玩家ID" json:"id"`                // 玩家ID
+	ID               uint64         `gorm:"column:id;type:bigint unsigned;primaryKey;autoIncrement:true;comment:玩家ID" json:"id"`                    // 玩家ID
 	VisitorID        string         `gorm:"column:visitor_id;type:varchar(64);not null;index:visitor_id,priority:1;comment:访问ID" json:"visitor_id"` // 访问ID
 	Tag              string         `gorm:"column:tag;type:varchar(10);not null;uniqueIndex:tag,priority:1;comment:8位简码" json:"tag"`                // 8位简码
-	PlayerLvl        int32          `gorm:"column:player_lvl;type:int(11);not null;default:1;comment:玩家等级" json:"player_lvl"`                       // 玩家等级
-	PlayerExp        int32          `gorm:"column:player_exp;type:int(11);not null;comment:玩家经验值" json:"player_exp"`                                // 玩家经验值
+	PlayerLvl        int32          `gorm:"column:player_lvl;type:int;not null;default:1;comment:玩家等级" json:"player_lvl"`                           // 玩家等级
+	PlayerExp        int32          `gorm:"column:player_exp;type:int;not null;comment:玩家经验值" json:"player_exp"`                                    // 玩家经验值
 	Nickname         string         `gorm:"column:nickname;type:varchar(100);not null;comment:玩家名称" json:"nickname"`                                // 玩家名称
-	Icons            datatypes.JSON `gorm:"column:icons;type:longtext;not null;comment:头像" json:"icons"`                                            // 头像
-	GoldPool         int32          `gorm:"column:gold_pool;type:int(11);not null;default:600;comment:金币池" json:"gold_pool"`                        // 金币池
-	GoldPoolTs       int32          `gorm:"column:gold_pool_ts;type:int(11);not null;comment:金币池上次更新的秒数" json:"gold_pool_ts"`                       // 金币池上次更新的秒数
-	Diamond          int32          `gorm:"column:diamond;type:int(11);not null;comment:钻石" json:"diamond"`                                         // 钻石
-	Gold             int64          `gorm:"column:gold;type:bigint(20);not null;comment:金币" json:"gold"`                                            // 金币
-	LegionID         int32          `gorm:"column:legion_id;type:int(11);not null;index:legion_id,priority:1;comment:军团ID" json:"legion_id"`        // 军团ID
+	Icons            datatypes.JSON `gorm:"column:icons;type:json;not null;comment:头像" json:"icons"`                                                // 头像
+	GoldPool         int32          `gorm:"column:gold_pool;type:int;not null;default:600;comment:金币池" json:"gold_pool"`                            // 金币池
+	GoldPoolTs       int32          `gorm:"column:gold_pool_ts;type:int;not null;comment:金币池上次更新的秒数" json:"gold_pool_ts"`                           // 金币池上次更新的秒数
+	Diamond          int32          `gorm:"column:diamond;type:int;not null;comment:钻石" json:"diamond"`                                             // 钻石
+	Gold             int64          `gorm:"column:gold;type:bigint;not null;comment:金币" json:"gold"`                                                // 金币
+	LegionID         int32          `gorm:"column:legion_id;type:int;not null;index:legion_id,priority:1;comment:军团ID" json:"legion_id"`            // 军团ID
 	LegionName       string         `gorm:"column:legion_name;type:varchar(100);not null;comment:军团名" json:"legion_name"`                           // 军团名
-	LegionPosition   int32          `gorm:"column:legion_position;type:tinyint(4);not null;comment:军团职位" json:"legion_position"`                    // 军团职位
-	Tier             int32          `gorm:"column:tier;type:int(11);not null;default:1;comment:战场级别" json:"tier"`                                   // 战场级别
-	Trophy           int32          `gorm:"column:trophy;type:int(11);not null;index:trophy,priority:1;comment:奖杯数" json:"trophy"`                  // 奖杯数
-	TrophyRoad       datatypes.JSON `gorm:"column:trophy_road;type:longtext;not null;comment:荣耀之路" json:"trophy_road"`                              // 荣耀之路
-	Vip              datatypes.JSON `gorm:"column:vip;type:longtext;not null" json:"vip"`
-	ChestInfo        datatypes.JSON `gorm:"column:chest_info;type:longtext;not null;comment:宝箱信息" json:"chest_info"`                                          // 宝箱信息
-	Garage           datatypes.JSON `gorm:"column:garage;type:longtext;not null;comment:车库" json:"garage"`                                                    // 车库
-	Inventory        datatypes.JSON `gorm:"column:inventory;type:longtext;not null;comment:库存信息" json:"inventory"`                                            // 库存信息
-	PathOfValor      datatypes.JSON `gorm:"column:path_of_valor;type:longtext;not null;comment:英勇之路" json:"path_of_valor"`                                    // 英勇之路
-	IPRegion         string         `gorm:"column:ip_region;type:varchar(5);not null;comment:IP地区" json:"ip_region"`                                          // IP地区
-	DeviceRegion     string         `gorm:"column:device_region;type:varchar(5);not null;comment:设备地区" json:"device_region"`                                  // 设备地区
-	RenameTimes      int32          `gorm:"column:rename_times;type:int(11);not null;comment:改名次数" json:"rename_times"`                                       // 改名次数
-	SettlementTrophy int32          `gorm:"column:settlement_trophy;type:int(11);not null;comment:结算奖杯数" json:"settlement_trophy"`                            // 结算奖杯数
-	StatisticsInfo   datatypes.JSON `gorm:"column:statistics_info;type:longtext;not null;comment:统计信息" json:"statistics_info"`                                // 统计信息
-	GuideInfo        datatypes.JSON `gorm:"column:guide_info;type:longtext;not null;comment:新手信息" json:"guide_info"`                                          // 新手信息
-	Status           int32          `gorm:"column:status;type:int(11);not null;default:1;comment:账号状态" json:"status"`                                         // 账号状态
-	CreateTime       time.Time      `gorm:"column:create_time;type:timestamp;not null;default:current_timestamp();comment:创建时间" json:"create_time"`           // 创建时间
-	UpdateTime       time.Time      `gorm:"column:update_time;type:timestamp;not null;default:current_timestamp();comment:更新时间" json:"update_time"`           // 更新时间
-	LastLoginTime    time.Time      `gorm:"column:last_login_time;type:timestamp;not null;default:current_timestamp();comment:最后登录时间" json:"last_login_time"` // 最后登录时间
-	Version          int64          `gorm:"column:version;type:bigint(20);not null;index:version,priority:1;comment:锁版本" json:"version"`                      // 锁版本
-	JoinWar          int32          `gorm:"column:join_war;type:tinyint(4);not null;comment:是否加入军团战" json:"join_war"`                                         // 是否加入军团战
-	TankTeam         datatypes.JSON `gorm:"column:tank_team;type:longtext;comment:军团战坦克编组" json:"tank_team"`                                                  // 军团战坦克编组
-	CompetitiveRank  datatypes.JSON `gorm:"column:competitive_rank;type:longtext;comment:竞技模式排行数据" json:"competitive_rank"`                                   // 竞技模式排行数据
+	LegionPosition   int32          `gorm:"column:legion_position;type:tinyint;not null;comment:军团职位" json:"legion_position"`                       // 军团职位
+	Tier             int32          `gorm:"column:tier;type:int;not null;default:1;comment:战场级别" json:"tier"`                                       // 战场级别
+	Trophy           int32          `gorm:"column:trophy;type:int;not null;index:trophy,priority:1;comment:奖杯数" json:"trophy"`                      // 奖杯数
+	TrophyRoad       datatypes.JSON `gorm:"column:trophy_road;type:json;not null;comment:荣耀之路" json:"trophy_road"`                                  // 荣耀之路
+	Vip              datatypes.JSON `gorm:"column:vip;type:json;not null" json:"vip"`
+	ChestInfo        datatypes.JSON `gorm:"column:chest_info;type:json;not null;comment:宝箱信息" json:"chest_info"`                                            // 宝箱信息
+	Garage           datatypes.JSON `gorm:"column:garage;type:json;not null;comment:车库" json:"garage"`                                                      // 车库
+	Inventory        datatypes.JSON `gorm:"column:inventory;type:json;not null;comment:库存信息" json:"inventory"`                                              // 库存信息
+	PathOfValor      datatypes.JSON `gorm:"column:path_of_valor;type:json;not null;comment:英勇之路" json:"path_of_valor"`                                      // 英勇之路
+	IPRegion         string         `gorm:"column:ip_region;type:varchar(5);not null;comment:IP地区" json:"ip_region"`                                        // IP地区
+	DeviceRegion     string         `gorm:"column:device_region;type:varchar(5);not null;comment:设备地区" json:"device_region"`                                // 设备地区
+	RenameTimes      int32          `gorm:"column:rename_times;type:int;not null;comment:改名次数" json:"rename_times"`                                         // 改名次数
+	SettlementTrophy int32          `gorm:"column:settlement_trophy;type:int;not null;comment:结算奖杯数" json:"settlement_trophy"`                              // 结算奖杯数
+	StatisticsInfo   datatypes.JSON `gorm:"column:statistics_info;type:json;not null;comment:统计信息" json:"statistics_info"`                                  // 统计信息
+	GuideInfo        datatypes.JSON `gorm:"column:guide_info;type:json;not null;comment:新手信息" json:"guide_info"`                                            // 新手信息
+	Status           int32          `gorm:"column:status;type:int;not null;default:1;comment:账号状态" json:"status"`                                           // 账号状态
+	CreateTime       time.Time      `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"create_time"`           // 创建时间
+	UpdateTime       time.Time      `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:更新时间" json:"update_time"`           // 更新时间
+	LastLoginTime    time.Time      `gorm:"column:last_login_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:最后登录时间" json:"last_login_time"` // 最后登录时间
+	Version          int64          `gorm:"column:version;type:bigint;not null;index:version,priority:1;comment:锁版本" json:"version"`                        // 锁版本
+	JoinWar          int32          `gorm:"column:join_war;type:tinyint;not null;comment:是否加入军团战" json:"join_war"`                                          // 是否加入军团战
+	TankTeam         datatypes.JSON `gorm:"column:tank_team;type:json;comment:军团战坦克编组" json:"tank_team"`                                                    // 军团战坦克编组
+	CompetitiveRank  datatypes.JSON `gorm:"column:competitive_rank;type:json;comment:竞技模式排行数据" json:"competitive_rank"`                                     // 竞技模式排行数据
 }
 
 // TableName WtPlayer's table name

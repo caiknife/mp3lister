@@ -12,11 +12,11 @@ const TableNameWtSocial = "wt_social"
 
 // WtSocial 玩家与社交账号绑定信息表
 type WtSocial struct {
-	ID         string    `gorm:"column:id;type:varchar(60);primaryKey;comment:社交账号ID" json:"id"`                                         // 社交账号ID
-	PlayerID   int64     `gorm:"column:player_id;type:bigint(20);primaryKey;comment:玩家ID" json:"player_id"`                              // 玩家ID
-	SocialType int32     `gorm:"column:social_type;type:tinyint(4);not null;comment:社交账号类型" json:"social_type"`                          // 社交账号类型
-	CreateTime time.Time `gorm:"column:create_time;type:timestamp;not null;default:current_timestamp();comment:创建时间" json:"create_time"` // 创建时间
-	UpdateTime time.Time `gorm:"column:update_time;type:timestamp;not null;default:current_timestamp();comment:更新时间" json:"update_time"` // 更新时间
+	ID         string    `gorm:"column:id;type:varchar(60);primaryKey;comment:社交账号ID" json:"id"`                                       // 社交账号ID
+	PlayerID   int64     `gorm:"column:player_id;type:bigint;primaryKey;comment:玩家ID" json:"player_id"`                                // 玩家ID
+	SocialType int32     `gorm:"column:social_type;type:tinyint;not null;comment:社交账号类型" json:"social_type"`                           // 社交账号类型
+	CreateTime time.Time `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"create_time"` // 创建时间
+	UpdateTime time.Time `gorm:"column:update_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;comment:更新时间" json:"update_time"` // 更新时间
 }
 
 // TableName WtSocial's table name
