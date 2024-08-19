@@ -19,5 +19,10 @@ WHERE id >= 20000
 
 DELETE
 FROM wt_player
+WHERE id >= 20000000
+  AND id < 30000000;
+
+DELETE
+FROM wt_order
 WHERE player_id >= 20000000
   AND player_id < 30000000;

@@ -14,16 +14,16 @@ const TableNameCar = "cars"
 
 // Car mapped from table <cars>
 type Car struct {
-	ID           uint64         `gorm:"column:id;type:bigint(20) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	CreatedAt    time.Time      `gorm:"column:created_at;type:datetime;not null;default:current_timestamp()" json:"created_at"`
-	UpdatedAt    time.Time      `gorm:"column:updated_at;type:datetime;not null;default:current_timestamp()" json:"updated_at"`
+	ID           uint64         `gorm:"column:id;type:bigint unsigned;primaryKey;autoIncrement:true" json:"id"`
+	CreatedAt    time.Time      `gorm:"column:created_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt    time.Time      `gorm:"column:updated_at;type:datetime;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at;type:datetime;index:deleted_at,priority:1" json:"deleted_at"`
 	Type         string         `gorm:"column:type;type:varchar(200);not null;comment:车辆类型" json:"type"`                 // 车辆类型
 	Fuel         string         `gorm:"column:fuel;type:varchar(200);not null;comment:燃料" json:"fuel"`                   // 燃料
 	Transmission string         `gorm:"column:transmission;type:varchar(200);not null;comment:传动结构" json:"transmission"` // 传动结构
 	Brand        string         `gorm:"column:brand;type:varchar(200);not null;comment:品牌" json:"brand"`                 // 品牌
 	Model        string         `gorm:"column:model;type:varchar(200);not null;comment:型号" json:"model"`                 // 型号
-	Year         int32          `gorm:"column:year;type:int(11);not null;comment:生产年份" json:"year"`                      // 生产年份
+	Year         int32          `gorm:"column:year;type:int;not null;comment:生产年份" json:"year"`                          // 生产年份
 }
 
 // TableName Car's table name
