@@ -21,13 +21,19 @@ var (
 )
 
 func TestUserTag(t *testing.T) {
-	testFile := "/Users/caiknife/Music/网易云音乐/Cats and Dinosaurs/Kapitalismen är en dröm/Cats and Dinosaurs - Ojämlikheten skördar människoliv.mp3"
-	mp3, err := NewMP3(testFile)
-	if err != nil {
-		t.Error(err)
-		return
+	testFiles := Slice[string]{
+		"/Users/caiknife/Music/网易云音乐/The Bourbon Street Stompers/Caution Hot!/The Bourbon Street Stompers - Amazing Grace.mp3",
+		"/Users/caiknife/Music/网易云音乐/Cats and Dinosaurs/Kapitalismen är en dröm/Cats and Dinosaurs - Ojämlikheten skördar människoliv.mp3",
 	}
-	t.Log(mp3)
+
+	testFiles.ForEach(func(testFile string, i int) {
+		mp3, err := NewMP3(testFile)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		t.Log(mp3.Memo)
+	})
 }
 
 func TestM4aFile(t *testing.T) {
