@@ -11,6 +11,10 @@ import (
 	"github.com/caiknife/mp3lister/lib/fjson"
 )
 
+const (
+	TagQuodLibetMemo = "QuodLibet::memo"
+)
+
 type MP3 struct {
 	OriginFile string  `json:"origin_file"`
 	BPM        string  `json:"bpm"`
@@ -67,11 +71,9 @@ func (m *MP3) loadMemo(tag *id3v2.Tag) error {
 	for _, frame := range frames {
 		switch frame := frame.(type) {
 		case id3v2.UserDefinedTextFrame:
-			if frame.Description == "QuodLibet::memo" {
+			if frame.Description == TagQuodLibetMemo {
 				m.Memo = CutInvisibleSeparator(frame.Value)
 			}
-		default:
-			m.Memo = ""
 		}
 	}
 	return nil
