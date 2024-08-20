@@ -27,3 +27,4 @@ out/
 
 test.json
 *.p8
+dist

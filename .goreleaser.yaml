@@ -1,0 +1,44 @@
+# .goreleaser.yaml
+version: 2
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/ncm_cleaner
+    id: "ncm_cleaner"
+    binary: ncm_cleaner
+    goos:
+      - linux
+      - darwin
+      - windows
+
+  - main: ./cmd/mp3_lister
+    id: "mp3_lister"
+    binary: mp3_lister
+    goos:
+      - linux
+      - darwin
+      - windows
+
+  - main: ./cmd/mp3_db
+    id: "mp3_db"
+    binary: mp3_db
+    goos:
+      - linux
+      - darwin
+      - windows
+
+archives:
+  - format: tar.gz
+    # this name template makes the OS and Arch compatible with the results of `uname`.
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    # use zip for windows archives
+    format_overrides:
+      - goos: windows
+        format: zip
