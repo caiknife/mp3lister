@@ -71,7 +71,8 @@ func (m *MP3) loadMemo(tag *id3v2.Tag) error {
 	for _, frame := range frames {
 		switch frame := frame.(type) {
 		case id3v2.UserDefinedTextFrame:
-			if frame.Description == TagQuodLibetMemo {
+			switch frame.Description {
+			case TagQuodLibetMemo:
 				m.Memo = CutInvisibleSeparator(frame.Value)
 			}
 		}
