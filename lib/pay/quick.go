@@ -51,6 +51,7 @@ func (q *QuickClient) VerifyUser(c *QuickCheckUserInfo) string {
 	v.Set("channel_code", c.ChannelCode)
 	v.Encode()
 	reqURL := checkUserInfoURL + "?" + v.Encode()
+	fmt.Println(reqURL)
 	get, err := resty.New().R().Get(reqURL)
 	if err != nil {
 		return ""
@@ -147,4 +148,20 @@ func (n *QuicksdkMessage) XML() string {
 		return ""
 	}
 	return string(marshal)
+}
+
+func (n *QuicksdkMessage) IsTest() bool {
+	return n.Message.IsTest == "1"
+}
+
+func (n *QuicksdkMessage) Success() bool {
+	return n.Message.Status == "0"
+}
+
+func (n *QuicksdkMessage) GameOrder() string {
+	return n.Message.GameOrder
+}
+
+func (n *QuicksdkMessage) OrderNo() string {
+	return n.Message.OrderNo
 }
