@@ -43,15 +43,17 @@ func (c *QuickCheckUserInfo) String() string {
 	return toString
 }
 
-func (q *QuickClient) VerifyUser(c *QuickCheckUserInfo) string {
+func (c *QuickCheckUserInfo) Encode() string {
 	v := url.Values{}
 	v.Set("token", c.Token)
 	v.Set("uid", c.UID)
 	v.Set("product_code", c.ProductCode)
 	v.Set("channel_code", c.ChannelCode)
-	v.Encode()
-	reqURL := checkUserInfoURL + "?" + v.Encode()
-	fmt.Println(reqURL)
+	return v.Encode()
+}
+
+func (q *QuickClient) VerifyUser(c *QuickCheckUserInfo) string {
+	reqURL := checkUserInfoURL + "?" + c.Encode()
 	get, err := resty.New().R().Get(reqURL)
 	if err != nil {
 		return ""
