@@ -35,7 +35,7 @@ type formData struct {
 	Email string `json:"email" form:"email" url:"email"`
 }
 
-func TestResty_Post(t *testing.T) {
+func TestResty_Post_Form(t *testing.T) {
 	client := resty.New()
 	req := client.R()
 	data := url.Values{}
@@ -50,4 +50,19 @@ func TestResty_Post(t *testing.T) {
 		return
 	}
 	t.Log(resp.String())
+}
+
+func TestResty_Post_Json(t *testing.T) {
+	client := resty.New()
+	req := client.R()
+	req.SetBody(types.Map[string]{
+		"name":  "caiknife",
+		"email": "caiknife@hotmail.com",
+	})
+	post, err := req.Post("https://httpbin.org/post")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(post.String())
 }
