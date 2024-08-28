@@ -11,8 +11,8 @@ require (
 	github.com/duke-git/lancet/v2 v2.3.2
 	github.com/emirpasic/gods/v2 v2.0.0-alpha
 	github.com/fatih/color v1.17.0
-	github.com/go-pay/gopay v1.5.103
-	github.com/go-resty/resty/v2 v2.13.1
+	github.com/go-pay/gopay v1.5.104
+	github.com/go-resty/resty/v2 v2.14.0
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.12
@@ -22,24 +22,24 @@ require (
 	github.com/oschwald/geoip2-golang v1.11.0
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.6.1
-	github.com/samber/lo v1.46.0
+	github.com/samber/lo v1.47.0
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/sirupsen/logrus v1.9.3
 	github.com/sony/sonyflake v1.2.0
-	github.com/spf13/cast v1.6.0
+	github.com/spf13/cast v1.7.0
 	github.com/stretchr/testify v1.9.0
 	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
-	github.com/urfave/cli/v2 v2.27.3
-	github.com/vicanso/go-charts/v2 v2.6.9
-	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
+	github.com/urfave/cli/v2 v2.27.4
+	github.com/vicanso/go-charts/v2 v2.6.10
+	golang.org/x/exp v0.0.0-20240823005443-9b4947da3948
 	golang.org/x/text v0.17.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/datatypes v1.2.1
 	gorm.io/driver/mysql v1.5.7
-	gorm.io/driver/sqlite v1.5.6
+	gorm.io/driver/sqlite v1.4.3
 	gorm.io/gen v0.3.26
-	gorm.io/gorm v1.25.11
+	gorm.io/gorm v1.25.9
 	gorm.io/plugin/dbresolver v1.5.2
 )
 
@@ -58,7 +58,7 @@ require (
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-pay/crypto v0.0.1 // indirect
 	github.com/go-pay/errgroup v0.0.2 // indirect
-	github.com/go-pay/util v0.0.2 // indirect
+	github.com/go-pay/util v0.0.3 // indirect
 	github.com/go-pay/xlog v0.0.3 // indirect
 	github.com/go-pay/xtime v0.0.2 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
@@ -90,11 +90,11 @@ require (
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
-	golang.org/x/mod v0.19.0 // indirect
+	golang.org/x/mod v0.20.0 // indirect
 	golang.org/x/net v0.28.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/tools v0.23.0 // indirect
+	golang.org/x/tools v0.24.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gorm.io/hints v1.1.0 // indirect
