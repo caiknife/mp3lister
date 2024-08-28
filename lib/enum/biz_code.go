@@ -1,6 +1,6 @@
 package enum
 
-//go:generate stringer -type BizCode -linecomment
+//go:generate stringer -type BizCode -linecomment -output=biz_code_string.go
 type BizCode int
 
 const (

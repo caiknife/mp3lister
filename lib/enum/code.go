@@ -1,6 +1,6 @@
 package enum
 
-//go:generate stringer -type Code -linecomment
+//go:generate stringer -type Code -linecomment -output=code_string.go
 type Code int
 
 const (
