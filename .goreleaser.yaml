@@ -7,6 +7,8 @@ builds:
   - main: ./cmd/ncm_cleaner
     id: "ncm_cleaner"
     binary: ncm_cleaner
+    flags:
+      - -tags=jsoniter
     goos:
       - linux
       - darwin
@@ -15,6 +17,8 @@ builds:
   - main: ./cmd/mp3_lister
     id: "mp3_lister"
     binary: mp3_lister
+    flags:
+      - -tags=jsoniter
     goos:
       - linux
       - darwin
@@ -23,6 +27,8 @@ builds:
   - main: ./cmd/mp3_db
     id: "mp3_db"
     binary: mp3_db
+    flags:
+      - -tags=jsoniter
     goos:
       - linux
       - darwin
