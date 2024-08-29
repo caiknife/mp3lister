@@ -22,7 +22,7 @@ type Player struct {
 
 func NewPlayer(player *model.Player) *Player {
 	p := &Player{}
-	p.Scan(player)
+	_ = p.Scan(player)
 	return p
 }
 
