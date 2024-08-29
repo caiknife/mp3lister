@@ -43,7 +43,7 @@ func newApp() *cli.App {
 			},
 			&cli.StringFlag{
 				Name: "input",
-				// Value:   "",
+				// Model:   "",
 				Aliases: []string{"i"},
 				Usage:   "input path for mp3 lister, default value is current dir",
 			},

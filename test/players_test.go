@@ -26,7 +26,7 @@ func TestPlayers_Create(t *testing.T) {
 		p := entity.NewPlayer(e)
 		p.Extra.Address = *b.Address
 		p.Extra.CreditCard = *b.CreditCard
-		entries = append(entries, p.Value())
+		entries = append(entries, p.Model())
 	}
 
 	err := player.CreateInBatches(entries, 100)

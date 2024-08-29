@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding"
 	"sync"
 )
 
@@ -40,4 +41,17 @@ func parallelForEach[K comparable, V any](m map[K]V, f func(K, V)) {
 	}
 
 	wg.Wait()
+}
+
+// RedisValue
+//
+//	@Description:	凡是存储在redis中的结构体，都需要实现这个接口
+type RedisValue interface {
+	encoding.BinaryMarshaler
+	encoding.BinaryUnmarshaler
+}
+
+type Entity[T any] interface {
+	Scan(v T) error
+	Model() T
 }

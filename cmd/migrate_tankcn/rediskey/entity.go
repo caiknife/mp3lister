@@ -1,18 +1,9 @@
 package rediskey
 
 import (
-	"encoding"
-
 	"github.com/caiknife/mp3lister/lib/fjson"
+	"github.com/caiknife/mp3lister/lib/types"
 )
-
-// RedisValue
-//
-//	@Description:	凡是存储在redis中的结构体，都需要实现这个接口
-type RedisValue interface {
-	encoding.BinaryMarshaler
-	encoding.BinaryUnmarshaler
-}
 
 type PlayerChest struct {
 	ChestProgress       int  `json:"chest_progress"`
@@ -48,4 +39,4 @@ func (p *PlayerChest) String() string {
 	return toString
 }
 
-var _ RedisValue = (*PlayerChest)(nil)
+var _ types.RedisValue = (*PlayerChest)(nil)
