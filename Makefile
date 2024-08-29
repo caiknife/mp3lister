@@ -1,9 +1,12 @@
-.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn install
+.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn install generate
 
-build: ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn
+build: generate ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn
 
 install:
 	go install golang.org/x/tools/cmd/stringer@latest
+
+generate:
+	go generate ./...
 
 migrate_tankcn:
 	go mod tidy
