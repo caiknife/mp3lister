@@ -2,11 +2,14 @@ package main
 
 import (
 	"github.com/caiknife/mp3lister/lib/fjson"
+	"github.com/caiknife/mp3lister/lib/types"
 )
 
 const (
 	defaultDiamonds = 200
 )
+
+var _ types.RedisValue = (*ChargeRefund)(nil)
 
 type ChargeRefund struct {
 	PlayerID     int64   `json:"player_id"`
@@ -14,6 +17,14 @@ type ChargeRefund struct {
 	TotalCharge  float64 `json:"total_charge"`
 	Diamonds     int64   `json:"diamonds"`
 	Acquired     bool    `json:"acquired"`
+}
+
+func (c *ChargeRefund) MarshalBinary() (data []byte, err error) {
+	return fjson.Marshal(c)
+}
+
+func (c *ChargeRefund) UnmarshalBinary(data []byte) error {
+	return fjson.Unmarshal(data, c)
 }
 
 func (c *ChargeRefund) CalcDiamonds() {

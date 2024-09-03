@@ -1,17 +1,21 @@
 package main
 
 import (
+	"context"
+
 	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"gorm.io/gen"
 
+	"github.com/caiknife/mp3lister/config"
 	"github.com/caiknife/mp3lister/lib/types"
 	"github.com/caiknife/mp3lister/orm/wartankcn"
 	"github.com/caiknife/mp3lister/orm/wartankcn/model"
 )
 
 const (
-	defaultBatchSize = 500
+	defaultBatchSize     = 500
+	redisKeyChargeRefund = "TK:CHARGE_REFUND"
 )
 
 func doRefund() error {
@@ -34,10 +38,37 @@ func doRefund() error {
 
 	err = saveToDB(refund)
 	if err != nil {
-		err = errors.WithMessage(err, "save refund")
+		err = errors.WithMessage(err, "save refund to db")
 		return err
 	}
 
+	err = saveToRedis(refund)
+	if err != nil {
+		err = errors.WithMessage(err, "save refund to redis")
+		return err
+	}
+
+	return nil
+}
+
+func saveToRedis(refund types.Hash[string, *ChargeRefund]) error {
+	ctx := context.TODO()
+	_, err := config.RedisDefault.Del(ctx, redisKeyChargeRefund).Result()
+	if err != nil {
+		err = errors.WithMessage(err, "delete charge refund")
+		return err
+	}
+
+	saveValue := map[string]string{}
+	refund.ForEach(func(s string, refund *ChargeRefund) {
+		saveValue[s] = refund.String()
+	})
+
+	_, err = config.RedisDefault.HSet(ctx, redisKeyChargeRefund, saveValue).Result()
+	if err != nil {
+		err = errors.WithMessage(err, "set charge refund")
+		return err
+	}
 	return nil
 }
 
