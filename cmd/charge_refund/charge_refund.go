@@ -25,6 +25,18 @@ func newApp() *cli.App {
 		Usage: "tank内测中指返还 ",
 		Flags: []cli.Flag{
 			config.EnvFlag,
+			&cli.BoolFlag{
+				Name:    "full",
+				Aliases: []string{"f"},
+				Usage:   "完整流程，从order表读取数据处理之后，存入charge_refund表，并存入redis",
+				Value:   false,
+			},
+			&cli.BoolFlag{
+				Name:    "redis",
+				Aliases: []string{"r"},
+				Usage:   "只从charge_refund表读取数据并存入redis",
+				Value:   false,
+			},
 		},
 		Action: action(),
 	}
@@ -42,9 +54,18 @@ func action() cli.ActionFunc {
 			return err
 		}
 
-		if err := doRefund(); err != nil {
-			err = errors.WithMessage(err, "do refund")
-			return err
+		if ctx.Bool("full") {
+			if err := doRefund(); err != nil {
+				err = errors.WithMessage(err, "do refund")
+				return err
+			}
+		}
+
+		if ctx.Bool("redis") {
+			if err := doRedis(); err != nil {
+				err = errors.WithMessage(err, "do redis")
+				return err
+			}
 		}
 
 		return nil

@@ -173,3 +173,40 @@ func loadDB() (types.Slice[*model.WtOrder], error) {
 	}
 	return batch, nil
 }
+
+func loadFromChargeRefund() (types.Hash[string, *ChargeRefund], error) {
+	tableChargeRefund := wartankcn.ChargeRefund
+	batch, err := tableChargeRefund.Where(
+		tableChargeRefund.ID,
+	).FindInBatch(defaultBatchSize, func(tx gen.Dao, batch int) error {
+		return nil
+	})
+	if err != nil {
+		err = errors.WithMessage(err, "table charge refund find in batch")
+		return nil, err
+	}
+	refunds := lo.SliceToMap[*model.ChargeRefund, string, *ChargeRefund](batch, func(item *model.ChargeRefund) (string, *ChargeRefund) {
+		return item.GameCenterID, &ChargeRefund{
+			PlayerID:     item.PlayerID,
+			GameCenterID: item.GameCenterID,
+			TotalCharge:  item.TotalCharge,
+			Diamonds:     item.Diamonds,
+			Acquired:     item.Acquired,
+		}
+	})
+	return refunds, nil
+}
+
+func doRedis() error {
+	refund, err := loadFromChargeRefund()
+	if err != nil {
+		err = errors.WithMessage(err, "load from charge refund")
+		return err
+	}
+	err = saveToRedis(refund)
+	if err != nil {
+		err = errors.WithMessage(err, "save to redis")
+		return err
+	}
+	return nil
+}
