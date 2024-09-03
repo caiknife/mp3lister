@@ -11,7 +11,7 @@ import (
 )
 
 // 1USD=6RMB=400钻石
-// 返还300% 6RMB=1200RMB
+// 返还300% 6RMB=1200钻石
 func main() {
 	if err := newApp().Run(os.Args); err != nil {
 		logger.ConsoleLogger.Fatalln(err)

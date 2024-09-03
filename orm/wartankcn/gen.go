@@ -17,6 +17,7 @@ import (
 
 var (
 	Q            = new(Query)
+	ChargeRefund *chargeRefund
 	WtDevice     *wtDevice
 	WtGamecenter *wtGamecenter
 	WtGift       *wtGift
@@ -28,6 +29,7 @@ var (
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
+	ChargeRefund = &Q.ChargeRefund
 	WtDevice = &Q.WtDevice
 	WtGamecenter = &Q.WtGamecenter
 	WtGift = &Q.WtGift
@@ -40,6 +42,7 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:           db,
+		ChargeRefund: newChargeRefund(db, opts...),
 		WtDevice:     newWtDevice(db, opts...),
 		WtGamecenter: newWtGamecenter(db, opts...),
 		WtGift:       newWtGift(db, opts...),
@@ -53,6 +56,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 type Query struct {
 	db *gorm.DB
 
+	ChargeRefund chargeRefund
 	WtDevice     wtDevice
 	WtGamecenter wtGamecenter
 	WtGift       wtGift
@@ -67,6 +71,7 @@ func (q *Query) Available() bool { return q.db != nil }
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:           db,
+		ChargeRefund: q.ChargeRefund.clone(db),
 		WtDevice:     q.WtDevice.clone(db),
 		WtGamecenter: q.WtGamecenter.clone(db),
 		WtGift:       q.WtGift.clone(db),
@@ -88,6 +93,7 @@ func (q *Query) WriteDB() *Query {
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:           db,
+		ChargeRefund: q.ChargeRefund.replaceDB(db),
 		WtDevice:     q.WtDevice.replaceDB(db),
 		WtGamecenter: q.WtGamecenter.replaceDB(db),
 		WtGift:       q.WtGift.replaceDB(db),
@@ -99,6 +105,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 }
 
 type queryCtx struct {
+	ChargeRefund *chargeRefundDo
 	WtDevice     *wtDeviceDo
 	WtGamecenter *wtGamecenterDo
 	WtGift       *wtGiftDo
@@ -110,6 +117,7 @@ type queryCtx struct {
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
+		ChargeRefund: q.ChargeRefund.WithContext(ctx),
 		WtDevice:     q.WtDevice.WithContext(ctx),
 		WtGamecenter: q.WtGamecenter.WithContext(ctx),
 		WtGift:       q.WtGift.WithContext(ctx),

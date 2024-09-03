@@ -77,6 +77,7 @@ func Test_WithContext(t *testing.T) {
 	qCtx := query.WithContext(context.WithValue(context.Background(), key, value))
 
 	for _, ctx := range []context.Context{
+		qCtx.ChargeRefund.UnderlyingDB().Statement.Context,
 		qCtx.WtDevice.UnderlyingDB().Statement.Context,
 		qCtx.WtGamecenter.UnderlyingDB().Statement.Context,
 		qCtx.WtGift.UnderlyingDB().Statement.Context,

@@ -1,12 +1,16 @@
-.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn install generate
+.PHONY: build ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn install generate charge_refund
 
-build: generate ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn
+build: generate ncm_cleaner mp3_lister mp3_db list_exporter list_emotion fcm migrate_tankcn charge_refund
 
 install:
 	go install golang.org/x/tools/cmd/stringer@latest
 
 generate:
 	go generate ./...
+
+charge_refund:
+	go mod tidy
+	go build -ldflags="-s -w" -tags=jsoniter -o ./out/charge_refund ./cmd/charge_refund
 
 migrate_tankcn:
 	go mod tidy
