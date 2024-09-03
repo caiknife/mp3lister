@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	genDB("music", "music")
-	// genDB("wartank_cn", "wartankcn")
+	// genDB("music", "music")
+	genDB("wartank_cn", "wartankcn")
 }
 
 func genDB(dbName, ormName string) {
@@ -34,9 +34,9 @@ var (
 		// "longtext": func(columnType gorm.ColumnType) (dataType string) {
 		// 	return "datatypes.JSON"
 		// },
-		"tinyint": func(columnType gorm.ColumnType) (dataType string) {
-			return "bool"
-		},
+		// "tinyint": func(columnType gorm.ColumnType) (dataType string) {
+		// 	return "bool"
+		// },
 	}
 )
 

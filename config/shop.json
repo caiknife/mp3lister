@@ -1,0 +1,204 @@
+{
+  "diamonds1": {
+    "price": 30.00,
+    "diamond": 2000,
+    "extra_diamond": 0,
+    "first_extra_diamond": 2000,
+    "name": "DIAMONDS1",
+    "displayname": "满手钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 0
+  },
+  "diamonds2": {
+    "price": 68.00,
+    "diamond": 4000,
+    "extra_diamond": 800,
+    "first_extra_diamond": 4000,
+    "name": "DIAMONDS2",
+    "displayname": "小堆钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 1
+  },
+  "diamonds3": {
+    "price": 128.00,
+    "diamond": 8000,
+    "extra_diamond": 2000,
+    "first_extra_diamond": 8000,
+    "name": "DIAMONDS3",
+    "displayname": "小袋钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 2
+  },
+  "diamonds4": {
+    "price": 198.00,
+    "diamond": 12000,
+    "extra_diamond": 4000,
+    "first_extra_diamond": 12000,
+    "name": "DIAMONDS4",
+    "displayname": "大袋钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 3
+  },
+  "diamonds5": {
+    "price": 328.00,
+    "diamond": 20000,
+    "extra_diamond": 7000,
+    "first_extra_diamond": 20000,
+    "name": "DIAMONDS5",
+    "displayname": "小盒钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 4
+  },
+  "diamonds6": {
+    "price": 648.00,
+    "diamond": 40000,
+    "extra_diamond": 16000,
+    "first_extra_diamond": 40000,
+    "name": "DIAMONDS6",
+    "displayname": "大箱钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 5
+  },
+  "pass": {
+    "price": 68.00,
+    "diamond": 2000,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "gold": 200000,
+    "name": "VALORPASSPLUS",
+    "displayname": "英勇手册豪华包",
+    "desc": "英勇手册可以让你获得高阶奖励。",
+    "sort_idx": 6
+  },
+  "spass": {
+    "price": 30.00,
+    "diamond": 0,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "gold": 0,
+    "name": "VALORPASS",
+    "displayname": "英勇手册",
+    "desc": "英勇手册可以让你获得高阶奖励。",
+    "sort_idx": 6
+  },
+  "first": {
+    "price": 6.00,
+    "diamond": 0,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "name": "FIRST",
+    "displayname": "新兵礼包",
+    "desc": "给予新兵的礼物。",
+    "sort_idx": 7
+  },
+  "second": {
+    "price": 68.00,
+    "diamond": 0,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "name": "SECOND",
+    "displayname": "老兵礼包",
+    "desc": "给予老兵的礼物。",
+    "sort_idx": 8
+  },
+  "diamonds0": {
+    "price": 6.00,
+    "diamond": 500,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "name": "DIAMOND0",
+    "displayname": "每日钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 10
+  },
+  "vip": {
+    "price": 30.00,
+    "diamond": 600,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "name": "VIP",
+    "displayname": "30日VIP",
+    "desc": "VIP可以获得日常奖励和特权。",
+    "sort_idx": 11
+  },
+  "svip": {
+    "price": 6.00,
+    "diamond": 200,
+    "extra_diamond": 0,
+    "first_extra_diamond": 0,
+    "name": "SVIP",
+    "displayname": "10日VIP",
+    "desc": "VIP可以获得日常奖励和特权。",
+    "sort_idx": 12
+  },
+  "event_diamonds1": {
+    "price": 30.00,
+    "diamond": 2000,
+    "extra_diamond": 0,
+    "first_extra_diamond": 2000,
+    "name": "DIAMONDS1",
+    "displayname": "满手钻石-活动",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 0
+  },
+  "event_diamonds2": {
+    "price": 68.00,
+    "diamond": 4000,
+    "extra_diamond": 800,
+    "first_extra_diamond": 4000,
+    "name": "DIAMONDS2",
+    "displayname": "小堆钻石-活动",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 1
+  },
+  "event_diamonds3": {
+    "price": 128.00,
+    "diamond": 8000,
+    "extra_diamond": 2000,
+    "first_extra_diamond": 8000,
+    "name": "DIAMONDS3",
+    "displayname": "小袋钻石-活动",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 2
+  },
+  "event_diamonds4": {
+    "price": 198.00,
+    "diamond": 12000,
+    "extra_diamond": 4000,
+    "first_extra_diamond": 12000,
+    "name": "DIAMONDS4",
+    "displayname": "大袋钻石-活动",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 3
+  },
+  "event_diamonds5": {
+    "price": 328.00,
+    "diamond": 20000,
+    "extra_diamond": 7000,
+    "first_extra_diamond": 20000,
+    "name": "DIAMONDS5",
+    "displayname": "小盒钻石-活动",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 4
+  },
+  "event_diamonds6": {
+    "price": 648.00,
+    "diamond": 40000,
+    "extra_diamond": 16000,
+    "first_extra_diamond": 40000,
+    "name": "DIAMONDS6",
+    "displayname": "大箱钻石-活动",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 5
+  },
+  "test": {
+    "price": 30.00,
+    "diamond": 2000,
+    "extra_diamond": 0,
+    "first_extra_diamond": 2000,
+    "name": "DIAMONDS1",
+    "displayname": "测试钻石",
+    "desc": "钻石是游戏里最重要的货币。",
+    "sort_idx": 99
+  }
+}
