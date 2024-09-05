@@ -23,8 +23,9 @@ go.work
 
 .idea
 *.csv
-out/
+out
 
 test.json
 *.p8
 dist
+tmp
