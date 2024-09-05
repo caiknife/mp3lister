@@ -52,6 +52,10 @@ func doRefund() error {
 }
 
 func saveToRedis(refund types.Hash[string, *ChargeRefund]) error {
+	if refund.IsEmpty() {
+		return nil
+	}
+
 	ctx := context.TODO()
 	_, err := config.RedisDefault.Del(ctx, redisKeyChargeRefund).Result()
 	if err != nil {
@@ -73,6 +77,10 @@ func saveToRedis(refund types.Hash[string, *ChargeRefund]) error {
 }
 
 func saveToDB(refund types.Hash[string, *ChargeRefund]) error {
+	if refund.IsEmpty() {
+		return nil
+	}
+
 	// 先清空charge_refund表
 	tbChargeRefund := wartankcn.ChargeRefund
 	_, err := tbChargeRefund.Unscoped().Where(tbChargeRefund.ID).Delete()
@@ -117,6 +125,10 @@ func orderToPlayerOrder(order *model.WtOrder) *PlayerOrder {
 }
 
 func chargeRefund(charges types.Hash[int64, float64]) (types.Hash[string, *ChargeRefund], error) {
+	if charges.IsEmpty() {
+		return nil, nil
+	}
+
 	tableGameCenter := wartankcn.WtGamecenter
 	batch, err := tableGameCenter.Where(
 		tableGameCenter.PlayerID.In(charges.Keys()...),
@@ -142,6 +154,10 @@ func chargeRefund(charges types.Hash[int64, float64]) (types.Hash[string, *Charg
 }
 
 func transformOrder(orders types.Slice[*model.WtOrder]) (types.Hash[int64, float64], error) {
+	if orders.IsEmpty() {
+		return nil, nil
+	}
+
 	playerOrders := types.Hash[int64, types.Slice[*PlayerOrder]]{}
 	orders.ForEach(func(order *model.WtOrder, i int) {
 		if playerOrders.HasKey(order.PlayerID) {
