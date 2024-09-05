@@ -1,27 +1,28 @@
 package lib
 
 import (
+	"fmt"
 	"net"
 
 	"github.com/oschwald/geoip2-golang"
 	"github.com/pkg/errors"
 )
 
-const file = "GeoLite2-City.mmdb"
+const geoFile = "GeoLite2-City.mmdb"
 
 type City struct {
 	city *geoip2.City
 }
 
 func IP2City(ipv4 string) (*City, error) {
-	configFile, err := SearchConfigFile(file)
+	configFile, err := SearchConfigFile(geoFile)
 	if err != nil {
-		err = errors.WithMessage(err, "failed to search config file")
+		err = errors.WithMessage(err, "failed to search config geoFile")
 		return nil, err
 	}
 	open, err := geoip2.Open(configFile)
 	if err != nil {
-		err = errors.WithMessage(err, "failed to open GeoLite2-Country.mmdb")
+		err = errors.WithMessage(err, fmt.Sprintf("failed to open %s", geoFile))
 		return nil, err
 	}
 	defer open.Close()
