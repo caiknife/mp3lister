@@ -10,8 +10,10 @@ import (
 
 const geoFile = "GeoLite2-City.mmdb"
 
+type city = geoip2.City
+
 type City struct {
-	city *geoip2.City
+	*city
 }
 
 func IP2City(ipv4 string) (*City, error) {
@@ -38,34 +40,34 @@ func IP2City(ipv4 string) (*City, error) {
 }
 
 func (c *City) ContinentCode() string {
-	return c.city.Continent.Code
+	return c.Continent.Code
 }
 
 func (c *City) ContinentName() string {
-	if v, ok := c.city.Continent.Names["zh-CN"]; ok {
+	if v, ok := c.Continent.Names["zh-CN"]; ok {
 		return v
 	}
-	return c.city.Continent.Names["en"]
+	return c.Continent.Names["en"]
 }
 
 func (c *City) CountryCode() string {
-	return c.city.Country.IsoCode
+	return c.Country.IsoCode
 }
 
 func (c *City) CountryName() string {
-	if v, ok := c.city.Country.Names["zh-CN"]; ok {
+	if v, ok := c.Country.Names["zh-CN"]; ok {
 		return v
 	}
-	return c.city.Country.Names["en"]
+	return c.Country.Names["en"]
 }
 
 func (c *City) Name() string {
-	if v, ok := c.city.City.Names["zh-CN"]; ok {
+	if v, ok := c.City.Names["zh-CN"]; ok {
 		return v
 	}
-	return c.city.City.Names["en"]
+	return c.City.Names["en"]
 }
 
 func (c *City) TimeZone() string {
-	return c.city.Location.TimeZone
+	return c.Location.TimeZone
 }
