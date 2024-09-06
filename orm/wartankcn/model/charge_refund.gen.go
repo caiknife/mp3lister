@@ -14,7 +14,7 @@ const TableNameChargeRefund = "charge_refund"
 
 // ChargeRefund mapped from table <charge_refund>
 type ChargeRefund struct {
-	ID           uint64         `gorm:"column:id;type:bigint unsigned;primaryKey" json:"id"`
+	ID           uint64         `gorm:"column:id;type:bigint unsigned;primaryKey;autoIncrement:true" json:"id"`
 	GameCenterID string         `gorm:"column:game_center_id;type:varchar(255);not null;index:game_center_id,priority:1" json:"game_center_id"`
 	PlayerID     int64          `gorm:"column:player_id;type:bigint;not null;index:player_id,priority:1" json:"player_id"`
 	TotalCharge  float64        `gorm:"column:total_charge;type:double;not null" json:"total_charge"`

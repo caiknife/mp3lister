@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/pkg/errors"
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
 	"gorm.io/gorm"
@@ -12,7 +13,7 @@ import (
 )
 
 func main() {
-	// genDB("music", "music")
+	genDB("music", "music")
 	genDB("wartank_cn", "wartankcn")
 }
 
@@ -43,6 +44,7 @@ var (
 func genORM(dsn, ormName string) {
 	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
+		err = errors.WithMessage(err, "gen ORM")
 		logger.ConsoleLogger.Fatalln(err)
 		return
 	}
