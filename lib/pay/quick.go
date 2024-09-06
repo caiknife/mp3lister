@@ -31,11 +31,22 @@ func NewQuickClient(md5Key, callbackKey string) *QuickClient {
 	return c
 }
 
+type QuickCallbackRequest struct {
+	NTData  string `json:"nt_data"`
+	Sign    string `json:"sign"`
+	MD5Sign string `json:"md5Sign"`
+}
+
+func (q *QuickCallbackRequest) String() string {
+	toString, _ := fjson.MarshalToString(q)
+	return toString
+}
+
 type QuickCheckUserInfo struct {
-	Token       string `json:"token"`
-	UID         string `json:"uid"`
-	ProductCode string `json:"product_code"`
-	ChannelCode string `json:"channel_code"`
+	Token       string `json:"token" url:"token"`
+	UID         string `json:"uid" url:"uid"`
+	ProductCode string `json:"product_code" url:"product_code"`
+	ChannelCode string `json:"channel_code" url:"channel_code"`
 }
 
 func (c *QuickCheckUserInfo) String() string {
@@ -61,14 +72,14 @@ func (q *QuickClient) VerifyUser(c *QuickCheckUserInfo) string {
 	return get.String()
 }
 
-func (q *QuickClient) VerifyOrder(ndData, sign, md5Sign string) bool {
-	d := fmt.Sprintf("%s%s%s", ndData, sign, q.MD5Key)
-	return cryptor.Md5String(d) == md5Sign
+func (q *QuickClient) VerifyOrder(req *QuickCallbackRequest) bool {
+	d := fmt.Sprintf("%s%s%s", req.NTData, req.Sign, q.MD5Key)
+	return cryptor.Md5String(d) == req.MD5Sign
 }
 
-func (q *QuickClient) Decode(ndData string) (i *QuickCheckUserInfo, err error) {
+func (q *QuickClient) Decode(ndData string) (i *QuicksdkMessage, err error) {
 	data := decryptData(ndData, q.CallbackKey)
-	i = &QuickCheckUserInfo{}
+	i = &QuicksdkMessage{}
 	err = xml.Unmarshal([]byte(data), i)
 	if err != nil {
 		err = errors.WithMessage(err, "xml unmarshal")
@@ -140,7 +151,7 @@ type QuicksdkMessage struct {
 }
 
 func (n *QuicksdkMessage) String() string {
-	toString, _ := fjson.MarshalToString(n)
+	toString, _ := fjson.MarshalToString(n.Message)
 	return toString
 }
 
