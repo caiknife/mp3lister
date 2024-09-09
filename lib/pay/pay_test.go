@@ -72,11 +72,25 @@ func (q *quickConf) String() string {
 	return toString
 }
 
+type appleConf struct {
+	IssID        string `json:"iss_id"`
+	BundleID     string `json:"bundle_id"`
+	KeyID        string `json:"key_id"`
+	PrivateKey   string `json:"private_key"`
+	IsProduction bool   `json:"is_production"`
+}
+
+func (a *appleConf) String() string {
+	toString, _ := fjson.MarshalToString(a)
+	return toString
+}
+
 type pay struct {
 	Alipay  *alipayConf  `json:"alipay"`
 	Wxpay   *wxpayConf   `json:"wxpay"`
 	RuStore *rustoreConf `json:"rustore"`
 	Quick   *quickConf   `json:"quick"`
+	Apple   *appleConf   `json:"apple"`
 }
 
 func TestConf(t *testing.T) {
