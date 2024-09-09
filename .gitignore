@@ -27,6 +27,8 @@ out
 
 test.json
 *.p8
+*.pem
 dist
 tmp
 config.yml
+vendor

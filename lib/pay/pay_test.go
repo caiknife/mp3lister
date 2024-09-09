@@ -78,6 +78,8 @@ type appleConf struct {
 	KeyID        string `json:"key_id"`
 	PrivateKey   string `json:"private_key"`
 	IsProduction bool   `json:"is_production"`
+	TransID      string `json:"trans_id"`
+	OrderID      string `json:"order_id"`
 }
 
 func (a *appleConf) String() string {
