@@ -54,6 +54,7 @@ func TestApp_Order(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	t.Log(id.SignedTransactions)
 	for _, transaction := range id.SignedTransactions {
 		ti := &apple2.TransactionsItem{}
 		err := apple2.ExtractClaims(string(transaction), ti)
