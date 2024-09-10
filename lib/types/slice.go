@@ -1,6 +1,7 @@
 package types
 
 import (
+	"slices"
 	"sort"
 	"time"
 
@@ -81,9 +82,7 @@ func (s Slice[T]) Sort(less func(i, j int) bool) {
 }
 
 func (s Slice[T]) Clone() Slice[T] {
-	v := make(Slice[T], len(s))
-	copy(v, s)
-	return v
+	return slices.Clone(s)
 }
 
 func (s Slice[T]) Swap(i, j int) {
