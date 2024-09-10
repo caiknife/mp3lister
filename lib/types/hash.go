@@ -1,6 +1,8 @@
 package types
 
 import (
+	"maps"
+
 	"github.com/duke-git/lancet/v2/maputil"
 	"github.com/samber/lo"
 
@@ -62,4 +64,8 @@ func (h Hash[K, V]) ForEach(f func(K, V)) {
 
 func (h Hash[K, V]) ParallelForEach(f func(K, V)) {
 	parallelForEach(h, f)
+}
+
+func (h Hash[K, V]) Clone() Hash[K, V] {
+	return maps.Clone(h)
 }

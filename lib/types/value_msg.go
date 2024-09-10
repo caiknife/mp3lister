@@ -1,6 +1,7 @@
 package types
 
 import (
+	"maps"
 	"sort"
 
 	"github.com/duke-git/lancet/v2/maputil"
@@ -51,6 +52,10 @@ func (msg ValueMessage[K]) Len() int {
 
 func (msg ValueMessage[K]) IsEmpty() bool {
 	return msg.Len() == 0
+}
+
+func (msg ValueMessage[K]) Clone() ValueMessage[K] {
+	return maps.Clone(msg)
 }
 
 func (msg ValueMessage[K]) ToSortedSlice() Slice[*Entry[K]] {
