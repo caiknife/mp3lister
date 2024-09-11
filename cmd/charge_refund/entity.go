@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	defaultDiamonds = 200
+	defaultDiamonds = 400
 )
 
 var _ types.RedisValue = (*ChargeRefund)(nil)
