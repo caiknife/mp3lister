@@ -6,7 +6,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/pkg/errors"
 	"github.com/redis/go-redis/v9"
 	"github.com/urfave/cli/v2"
 	"gorm.io/driver/mysql"
@@ -33,7 +32,7 @@ func LoadConfigFile(e *Environment, callbacks ...func()) error {
 	lib.InitYAMLConfig(f, "config.yml")
 	get, b := f.Get(e.Env)
 	if !b {
-		return errors.New(fmt.Sprintf("config file %s section not found", e.Env))
+		return fmt.Errorf("config file %s section not found", e.Env)
 	}
 	Config = get
 	for _, callback := range callbacks {
