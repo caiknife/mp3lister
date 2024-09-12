@@ -43,7 +43,7 @@ func LoadConfigFile(e *Environment, callbacks ...func()) error {
 }
 
 func InitRedisDefault() {
-	red, b := Config.Redis.Get(Redis_Default)
+	red, b := Config.Redis.Get(redis_default)
 	if !b {
 		logger.ConsoleLogger.Fatalln(RedisDefault, "redis config not exist")
 		return
@@ -53,6 +53,34 @@ func InitRedisDefault() {
 		Password: red.Password, // 没有密码，默认值
 		DB:       red.DB,       // 默认DB 0
 	})
+}
+
+func InitDBWarTank() {
+	newLogger := gLogger.New(
+		log.New(os.Stdout, "", log.LstdFlags), // io writer
+		gLogger.Config{
+			SlowThreshold:             time.Second * 2, // Slow SQL threshold
+			LogLevel:                  gLogger.Info,    // Log level
+			IgnoreRecordNotFoundError: true,            // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      false,           // Don't include params in the SQL log
+			Colorful:                  true,            // Disable color
+		},
+	)
+
+	var err error
+	db, b := Config.MySQL.Get(dbWarTank)
+	if !b {
+		logger.ConsoleLogger.Fatalln(dbWarTank, "mysql config not exist")
+		return
+	}
+	DBWarTank, err = gorm.Open(mysql.Open(db), &gorm.Config{
+		Logger: newLogger,
+	})
+	if err != nil {
+		logger.ConsoleLogger.Fatalln(err)
+		return
+	}
+	wartankcn.SetDefault(DBWarTank)
 }
 
 func InitDBWarTankCN() {
