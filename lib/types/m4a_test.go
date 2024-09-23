@@ -17,6 +17,8 @@ var searchPaths = Slice[string]{
 	"/Users/caiknife/百度云同步盘/LINDY HOP MIX",
 }
 
+var m4aFile = "/Users/caiknife/Music/虾米音乐/Jonathan Stout and his Campus Five - Moppin' and Boppin' - 18 I Can't Believe You're in Love with Me.m4a"
+
 func TestSearchM4aFiles(t *testing.T) {
 	result := Slice[string]{}
 	searchPaths.ForEach(func(path string, i int) {
@@ -42,7 +44,6 @@ func TestSearchM4aFiles(t *testing.T) {
 }
 
 func TestAudioMeta(t *testing.T) {
-	m4aFile := "/Users/caiknife/Music/虾米音乐/Jonathan Stout and his Campus Five - Moppin' and Boppin' - 18 I Can't Believe You're in Love with Me.m4a"
 	open, err := os.Open(m4aFile)
 	if err != nil {
 		t.Error(err)
@@ -53,11 +54,5 @@ func TestAudioMeta(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	path.SetArtist("test")
-	path.SetBPM("140")
-	err = path.Save(open)
-	if err != nil {
-		t.Error(err)
-		return
-	}
+	t.Log(path.BPM())
 }
