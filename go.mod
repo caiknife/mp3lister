@@ -13,6 +13,7 @@ require (
 	github.com/duke-git/lancet/v2 v2.3.2
 	github.com/emirpasic/gods/v2 v2.0.0-alpha
 	github.com/fatih/color v1.17.0
+	github.com/gcottom/audiometa/v2 v2.3.0
 	github.com/go-pay/gopay v1.5.104
 	github.com/go-resty/resty/v2 v2.15.2
 	github.com/gocolly/colly/v2 v2.1.0
@@ -48,6 +49,8 @@ require (
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/PuerkitoBio/goquery v1.5.1 // indirect
+	github.com/abema/go-mp4 v1.2.0 // indirect
+	github.com/aler9/writerseeker v1.1.0 // indirect
 	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/antchfx/xmlquery v1.2.4 // indirect
@@ -69,7 +72,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/google/uuid v1.3.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
@@ -85,6 +88,7 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
+	github.com/sunfish-shogi/bufseekio v0.1.0 // indirect
 	github.com/temoto/robotstxt v1.1.1 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
