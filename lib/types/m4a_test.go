@@ -18,6 +18,7 @@ var searchPaths = Slice[string]{
 }
 
 var m4aFile = "/Users/caiknife/Music/虾米音乐/Jonathan Stout and his Campus Five - Moppin' and Boppin' - 18 I Can't Believe You're in Love with Me.m4a"
+var mp3File = "/Users/caiknife/Music/网易云音乐/Jonathan Stout and his Campus Five,Hilary Alexander/Moppin' And Boppin'/Jonathan Stout and his Campus Five,Hilary Alexander - 9-20 Special.mp3"
 
 func TestSearchM4aFiles(t *testing.T) {
 	result := Slice[string]{}
@@ -43,16 +44,30 @@ func TestSearchM4aFiles(t *testing.T) {
 	})
 }
 
-func TestAudioMeta(t *testing.T) {
+func TestAudioMeta_MP4(t *testing.T) {
 	open, err := os.Open(m4aFile)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	path, err := audiometa.Open(open, audiometa.ParseOptions{Format: audiometa.M4A})
+	tag, err := audiometa.Open(open, audiometa.ParseOptions{Format: audiometa.M4A})
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	t.Log(path.BPM())
+	t.Log(tag)
+}
+
+func TestAudioMeta_MP3(t *testing.T) {
+	open, err := os.Open(mp3File)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	tag, err := audiometa.Open(open, audiometa.ParseOptions{Format: audiometa.MP3})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(tag.BPM())
 }
