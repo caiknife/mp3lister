@@ -5,5 +5,5 @@ import (
 )
 
 const (
-	defaultTimeOut = 10 * time.Second
+	defaultTimeOut = 20 * time.Second
 )

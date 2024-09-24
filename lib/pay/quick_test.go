@@ -12,15 +12,17 @@ const (
 )
 
 func TestQuickClient_VerifyUser(t *testing.T) {
-	c := NewQuickClient(Pay.Quick.MD5Key, Pay.Quick.CallbackKey)
-	req := &QuickCheckUserInfo{}
-	err := fjson.UnmarshalFromString(quickCheckUserInfoReq, req)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	user := c.VerifyUser(req)
-	t.Log(user)
+	Pay.Quick.ForEach(func(conf *quickConf, i int) {
+		c := NewQuickClient(conf.MD5Key, conf.CallbackKey)
+		req := &QuickCheckUserInfo{}
+		err := fjson.UnmarshalFromString(quickCheckUserInfoReq, req)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		user := c.VerifyUser(req)
+		t.Log(user)
+	})
 }
 
 const (
@@ -57,20 +59,22 @@ const (
 )
 
 func TestQuickClient(t *testing.T) {
-	c := NewQuickClient(Pay.Quick.MD5Key, Pay.Quick.CallbackKey)
-	req := &QuickCallbackRequest{}
-	err := fjson.UnmarshalFromString(quickCallbackReq, req)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	ok := c.VerifyOrder(req)
-	t.Log(ok)
+	Pay.Quick.ForEach(func(conf *quickConf, i int) {
+		c := NewQuickClient(conf.MD5Key, conf.CallbackKey)
+		req := &QuickCallbackRequest{}
+		err := fjson.UnmarshalFromString(quickCallbackReq, req)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		ok := c.VerifyOrder(req)
+		t.Log(ok)
 
-	decode, err := c.Decode(req.NTData)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	t.Log(decode)
+		decode, err := c.Decode(req.NTData)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		t.Log(decode)
+	})
 }

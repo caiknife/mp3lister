@@ -5,6 +5,7 @@ import (
 
 	"github.com/caiknife/mp3lister/lib"
 	"github.com/caiknife/mp3lister/lib/fjson"
+	"github.com/caiknife/mp3lister/lib/types"
 )
 
 var (
@@ -36,11 +37,12 @@ func (w *wxpayConf) String() string {
 }
 
 type rustoreConf struct {
-	KeyID         string `json:"key_id"`
-	CompanyID     string `json:"company_id"`
-	PrivateKey    string `json:"private_key"`
-	PackageName   string `json:"package_name"`
-	PurchaseToken string `json:"purchase_token"`
+	KeyID                string `json:"key_id"`
+	CompanyID            string `json:"company_id"`
+	PrivateKey           string `json:"private_key"`
+	PackageName          string `json:"package_name"`
+	PurchaseToken        string `json:"purchase_token"`
+	SandboxPurchaseToken string `json:"sandbox_purchase_token"`
 }
 
 func (r *rustoreConf) String() string {
@@ -88,11 +90,11 @@ func (a *appleConf) String() string {
 }
 
 type pay struct {
-	Alipay  *alipayConf  `json:"alipay"`
-	Wxpay   *wxpayConf   `json:"wxpay"`
-	RuStore *rustoreConf `json:"rustore"`
-	Quick   *quickConf   `json:"quick"`
-	Apple   *appleConf   `json:"apple"`
+	Alipay  types.Slice[*alipayConf]  `json:"alipay"`
+	Wxpay   types.Slice[*wxpayConf]   `json:"wxpay"`
+	RuStore types.Slice[*rustoreConf] `json:"rustore"`
+	Quick   types.Slice[*quickConf]   `json:"quick"`
+	Apple   types.Slice[*appleConf]   `json:"apple"`
 }
 
 func TestConf(t *testing.T) {
