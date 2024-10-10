@@ -43,6 +43,7 @@ func newWtLegion(db *gorm.DB, opts ...gen.DOOption) wtLegion {
 	_wtLegion.WarScore = field.NewInt32(tableName, "war_score")
 	_wtLegion.JoinWar = field.NewInt32(tableName, "join_war")
 	_wtLegion.TankNumLimit = field.NewInt32(tableName, "tank_num_limit")
+	_wtLegion.Language = field.NewString(tableName, "language")
 
 	_wtLegion.fillFieldMap()
 
@@ -70,6 +71,7 @@ type wtLegion struct {
 	WarScore     field.Int32  // 军团战分数
 	JoinWar      field.Int32  // 是否加入军团战
 	TankNumLimit field.Int32  // 加入军团的坦克限制
+	Language     field.String // 军团语言设置
 
 	fieldMap map[string]field.Expr
 }
@@ -102,6 +104,7 @@ func (w *wtLegion) updateTableName(table string) *wtLegion {
 	w.WarScore = field.NewInt32(table, "war_score")
 	w.JoinWar = field.NewInt32(table, "join_war")
 	w.TankNumLimit = field.NewInt32(table, "tank_num_limit")
+	w.Language = field.NewString(table, "language")
 
 	w.fillFieldMap()
 
@@ -118,7 +121,7 @@ func (w *wtLegion) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (w *wtLegion) fillFieldMap() {
-	w.fieldMap = make(map[string]field.Expr, 16)
+	w.fieldMap = make(map[string]field.Expr, 17)
 	w.fieldMap["id"] = w.ID
 	w.fieldMap["tag"] = w.Tag
 	w.fieldMap["legion_name"] = w.LegionName
@@ -135,6 +138,7 @@ func (w *wtLegion) fillFieldMap() {
 	w.fieldMap["war_score"] = w.WarScore
 	w.fieldMap["join_war"] = w.JoinWar
 	w.fieldMap["tank_num_limit"] = w.TankNumLimit
+	w.fieldMap["language"] = w.Language
 }
 
 func (w wtLegion) clone(db *gorm.DB) wtLegion {

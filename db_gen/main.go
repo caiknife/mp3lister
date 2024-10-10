@@ -1,6 +1,8 @@
 package main
 
 import (
+	"path/filepath"
+
 	"github.com/pkg/errors"
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
@@ -50,9 +52,9 @@ func genORM(dsn, ormName string) {
 	}
 
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "./orm/" + ormName,
+		OutPath: filepath.Join(".", "orm", ormName),
 		// OutFile:        "",
-		ModelPkgPath:  "./orm/" + ormName + "/model",
+		ModelPkgPath:  filepath.Join(".", "orm", ormName, "model"),
 		WithUnitTest:  true,
 		FieldSignable: true,
 		// FieldNullable:     true,

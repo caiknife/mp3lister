@@ -30,6 +30,7 @@ type WtLegion struct {
 	WarScore     int32          `gorm:"column:war_score;type:int;not null;comment:军团战分数" json:"war_score"`                                         // 军团战分数
 	JoinWar      int32          `gorm:"column:join_war;type:tinyint;not null;comment:是否加入军团战" json:"join_war"`                                     // 是否加入军团战
 	TankNumLimit int32          `gorm:"column:tank_num_limit;type:tinyint;not null;comment:加入军团的坦克限制" json:"tank_num_limit"`                       // 加入军团的坦克限制
+	Language     string         `gorm:"column:language;type:varchar(20);not null;comment:军团语言设置" json:"language"`                                  // 军团语言设置
 }
 
 // TableName WtLegion's table name
