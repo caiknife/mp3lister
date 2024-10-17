@@ -997,7 +997,7 @@ func Test_Sort_SliceStable(t *testing.T) {
 		if sl[i].Language != language && sl[j].Language != language {
 			return false
 		}
-		return true
+		return false
 	})
 
 	strings = lo.Map[*e, string](sl, func(item *e, index int) string {
