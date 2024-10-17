@@ -3,8 +3,6 @@ package test
 import (
 	"context"
 	"fmt"
-	"slices"
-	"sort"
 	"testing"
 	"time"
 
@@ -206,7 +204,7 @@ const jsonStr = `[
                 "slogan": "555",
                 "join_war": 1,
                 "tank_num_limit": 0,
-                "language": "en",
+                "language": "zh",
                 "members_count": 1
             },
             {
@@ -984,23 +982,15 @@ func Test_Sort_SliceStable(t *testing.T) {
 		return item.ID
 	})
 	t.Log(strings)
-	sort.SliceStable(sl, func(i, j int) bool {
-		if sl[i].Language == language && sl[j].Language == language {
-			return false
-		}
-		if sl[i].Language == language && sl[j].Language != language {
-			return true
-		}
-		if sl[i].Language != language && sl[j].Language == language {
-			return false
-		}
-		if sl[i].Language != language && sl[j].Language != language {
-			return false
-		}
-		return false
+	first := lo.Filter(sl, func(item *e, index int) bool {
+		return item.Language == language
 	})
+	second := lo.Filter(sl, func(item *e, index int) bool {
+		return item.Language != language
+	})
+	first = append(first, second...)
 
-	strings = lo.Map[*e, string](sl, func(item *e, index int) string {
+	strings = lo.Map[*e, string](first, func(item *e, index int) string {
 		return item.ID
 	})
 	t.Log(strings)
@@ -1012,65 +1002,15 @@ func Test_Slice_SortStable(t *testing.T) {
 		return item.ID
 	})
 	t.Log(strings)
-	slices.SortStableFunc(sl, func(a, b *e) int {
-		if a.Language == language && b.Language == language {
-			return 0
-		}
-		if a.Language == language && b.Language != language {
-			return -1
-		}
-		if a.Language != language && b.Language == language {
-			return 1
-		}
-		if a.Language != language && b.Language != language {
-			return 0
-		}
-		return 0
+	first := lo.Filter(sl, func(item *e, index int) bool {
+		return item.Language == language
 	})
-	strings = lo.Map[*e, string](sl, func(item *e, index int) string {
+	second := lo.Filter(sl, func(item *e, index int) bool {
+		return item.Language != language
+	})
+	first = append(first, second...)
+	strings = lo.Map[*e, string](first, func(item *e, index int) string {
 		return item.ID
 	})
 	t.Log(strings)
-}
-
-func Benchmark_Sort_SliceStable(b *testing.B) {
-	language := "zh"
-	for i := 0; i < b.N; i++ {
-		sort.SliceStable(sl, func(i, j int) bool {
-			if sl[i].Language == language && sl[j].Language == language {
-				return false
-			}
-			if sl[i].Language == language && sl[j].Language != language {
-				return true
-			}
-			if sl[i].Language != language && sl[j].Language == language {
-				return false
-			}
-			if sl[i].Language != language && sl[j].Language != language {
-				return false
-			}
-			return false
-		})
-	}
-}
-
-func Benchmark_Slice_SortStable(b *testing.B) {
-	language := "zh"
-	for i := 0; i < b.N; i++ {
-		slices.SortStableFunc(sl, func(a, b *e) int {
-			if a.Language == language && b.Language == language {
-				return 0
-			}
-			if a.Language == language && b.Language != language {
-				return -1
-			}
-			if a.Language != language && b.Language == language {
-				return 1
-			}
-			if a.Language != language && b.Language != language {
-				return 0
-			}
-			return 0
-		})
-	}
 }
