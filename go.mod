@@ -10,6 +10,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dhowden/tag v0.0.0-20240417053706-3d75831295e8
+	github.com/dromara/carbon/v2 v2.5.2
 	github.com/duke-git/lancet/v2 v2.3.3
 	github.com/emirpasic/gods/v2 v2.0.0-alpha
 	github.com/fatih/color v1.18.0
@@ -18,7 +19,6 @@ require (
 	github.com/go-resty/resty/v2 v2.15.3
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/golang-module/carbon/v2 v2.4.1
 	github.com/json-iterator/go v1.1.12
 	github.com/levigross/grequests v0.0.0-20231203190023-9c307ef1f48d
 	github.com/oklog/ulid/v2 v2.1.0
@@ -30,7 +30,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.7.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
 	github.com/urfave/cli/v2 v2.27.5
