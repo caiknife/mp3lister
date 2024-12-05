@@ -11,12 +11,12 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dhowden/tag v0.0.0-20240417053706-3d75831295e8
 	github.com/dromara/carbon/v2 v2.5.2
-	github.com/duke-git/lancet/v2 v2.3.3
+	github.com/duke-git/lancet/v2 v2.3.4
 	github.com/emirpasic/gods/v2 v2.0.0-alpha
 	github.com/fatih/color v1.18.0
 	github.com/gcottom/audiometa/v2 v2.3.0
 	github.com/go-pay/gopay v1.5.106
-	github.com/go-resty/resty/v2 v2.15.3
+	github.com/go-resty/resty/v2 v2.16.2
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/json-iterator/go v1.1.12
@@ -35,8 +35,8 @@ require (
 	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
 	github.com/urfave/cli/v2 v2.27.5
 	github.com/vicanso/go-charts/v2 v2.6.10
-	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c
-	golang.org/x/text v0.19.0
+	golang.org/x/exp v0.0.0-20241204233417-43b7b7cde48d
+	golang.org/x/text v0.21.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/datatypes v1.2.4
 	gorm.io/driver/mysql v1.5.7
@@ -96,11 +96,11 @@ require (
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
-	golang.org/x/mod v0.21.0 // indirect
-	golang.org/x/net v0.30.0 // indirect
-	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/tools v0.26.0 // indirect
+	golang.org/x/mod v0.22.0 // indirect
+	golang.org/x/net v0.32.0 // indirect
+	golang.org/x/sync v0.10.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/tools v0.28.0 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
 	gorm.io/hints v1.1.0 // indirect
